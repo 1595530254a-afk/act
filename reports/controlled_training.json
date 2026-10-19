@@ -1,0 +1,371 @@
+{
+  "started_at": "2026-10-19T22:06:29.742696+08:00",
+  "steps": 1000,
+  "batch_size": 4,
+  "learning_rate": 1e-06,
+  "eval_every": 250,
+  "seed": 1000,
+  "split_seed": 20261019,
+  "episode_split": {
+    "train": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      41,
+      42,
+      43,
+      46,
+      47,
+      49
+    ],
+    "validation": [
+      0,
+      30,
+      39,
+      40,
+      44
+    ],
+    "assessment": [
+      13,
+      14,
+      21,
+      45,
+      48
+    ]
+  },
+  "frames_per_validation_episode": 10,
+  "selection_metric": "normalized_chunk_mae",
+  "selection_direction": "minimize",
+  "minimum_selection_improvement": 0.0001,
+  "source_model": "D:\\外置大脑\\ACT\\models\\act_rebot_cube",
+  "source_sha256": "1accf25df80c3fecde13748c16a5df2ef658e322eb04c899929dbe9ac9dd3175",
+  "dataset_revision": "c5cdae89d2e1f474a8e2f1ac5f16302126d0c33f",
+  "precision": "float32",
+  "deterministic_algorithms": true,
+  "normalization": "Preserve the published model processors and statistics",
+  "assessment_caveat": "Partitions exclude this fine-tuning only; the pretrained model already used all episodes.",
+  "batch_plan_sha256": "d8ce7de8db91a1752fad7974e1b6ddf55efe29786b39efd8bc651325145ebde7",
+  "status": "complete",
+  "completed_steps": 1000,
+  "best_step": 1000,
+  "best_validation_mae": 0.03731636869030692,
+  "selected_model_directory": "D:\\外置大脑\\ACT\\runs\\act_controlled_20261019_220629\\checkpoints\\step_001000\\pretrained_model",
+  "last_checkpoint": "D:\\外置大脑\\ACT\\runs\\act_controlled_20261019_220629\\checkpoints\\step_001000",
+  "validation_history": [
+    {
+      "step": 0,
+      "sampled_observations": 50,
+      "episodes": 5,
+      "valid_target_steps": 4225,
+      "normalized_chunk_mae": 0.03865648770070338,
+      "normalized_chunk_mae_by_channel": [
+        0.03701074224957348,
+        0.022146082107837382,
+        0.023147793747264254,
+        0.04025988488507694,
+        0.08203602006449502,
+        0.031735473694885975,
+        0.03425941715579061
+      ],
+      "episode_macro_normalized_mae": 0.034863693062216046,
+      "raw_chunk_mae_by_channel": [
+        0.760069943490113,
+        0.9515905549540322,
+        0.766109089145999,
+        0.8276114099265556,
+        0.6119323676295534,
+        0.5631692387507512,
+        2.3539704958221614
+      ],
+      "raw_first_action_mae_by_channel": [
+        0.7315295600891113,
+        0.7601104497909545,
+        0.6288093161582947,
+        0.7105551970005035,
+        0.5221436810493469,
+        0.5164841723442077,
+        2.027737855911255
+      ],
+      "normalized_action_delta_error_by_channel": [
+        0.005770124289803876,
+        0.004162841814006874,
+        0.004586973161754494,
+        0.007268018893852919,
+        0.018146800238215282,
+        0.005912211305367019,
+        0.009602513713037183
+      ],
+      "outside_observed_dataset_range_fraction_by_channel": [
+        0.0035502958579881655,
+        0.02698224852071006,
+        0.010414201183431953,
+        0.0,
+        0.0026035502958579883,
+        0.0,
+        0.25846153846153846
+      ],
+      "wall_s": 2.4905274999982794,
+      "all_predictions_finite": true
+    },
+    {
+      "step": 250,
+      "sampled_observations": 50,
+      "episodes": 5,
+      "valid_target_steps": 4225,
+      "normalized_chunk_mae": 0.038529107667386084,
+      "normalized_chunk_mae_by_channel": [
+        0.03458661674747806,
+        0.02337739003480539,
+        0.025741872138525607,
+        0.04254447787471072,
+        0.07870843063444781,
+        0.031012316653008996,
+        0.033732649588725974
+      ],
+      "episode_macro_normalized_mae": 0.03485292237251997,
+      "raw_chunk_mae_by_channel": [
+        0.7102870846358982,
+        1.0044983998134998,
+        0.8519638264672996,
+        0.8745750901261731,
+        0.5871106986322346,
+        0.5503362450232873,
+        2.31777585543119
+      ],
+      "raw_first_action_mae_by_channel": [
+        0.7202626943588257,
+        0.8237230360507966,
+        0.6687338525056838,
+        0.7483930373191834,
+        0.511940336227417,
+        0.5347312021255494,
+        2.0648139667510987
+      ],
+      "normalized_action_delta_error_by_channel": [
+        0.005703749915439925,
+        0.004128904271268559,
+        0.0045391512345411104,
+        0.007281945365631651,
+        0.017996905649493553,
+        0.005889662804003961,
+        0.009548436567454995
+      ],
+      "outside_observed_dataset_range_fraction_by_channel": [
+        0.00378698224852071,
+        0.022485207100591716,
+        0.009467455621301775,
+        0.0,
+        0.0033136094674556214,
+        0.0,
+        0.1285207100591716
+      ],
+      "wall_s": 2.0691737000015564,
+      "all_predictions_finite": true
+    },
+    {
+      "step": 500,
+      "sampled_observations": 50,
+      "episodes": 5,
+      "valid_target_steps": 4225,
+      "normalized_chunk_mae": 0.03766206000280501,
+      "normalized_chunk_mae_by_channel": [
+        0.03364677017257058,
+        0.02282515414367766,
+        0.023551043307287453,
+        0.03927717770345112,
+        0.07862745172173313,
+        0.031195892920860877,
+        0.03451093005005425
+      ],
+      "episode_macro_normalized_mae": 0.0339423980563879,
+      "raw_chunk_mae_by_channel": [
+        0.6909859089597442,
+        0.9807694722914837,
+        0.779454978401139,
+        0.807410203832141,
+        0.5865066383858404,
+        0.5535940840681629,
+        2.371251000398715
+      ],
+      "raw_first_action_mae_by_channel": [
+        0.6825328588485717,
+        0.8528145945072174,
+        0.6515236932039261,
+        0.7249362349510193,
+        0.48029135942459106,
+        0.5272151708602906,
+        2.117287588119507
+      ],
+      "normalized_action_delta_error_by_channel": [
+        0.00567749612881038,
+        0.0040926167779340005,
+        0.004511899791077939,
+        0.007232527304552272,
+        0.017919184876059344,
+        0.005873939723311784,
+        0.009514491572351513
+      ],
+      "outside_observed_dataset_range_fraction_by_channel": [
+        0.004260355029585799,
+        0.02106508875739645,
+        0.009230769230769232,
+        0.0,
+        0.0033136094674556214,
+        0.0,
+        0.13846153846153847
+      ],
+      "wall_s": 2.0341327999994974,
+      "all_predictions_finite": true
+    },
+    {
+      "step": 750,
+      "sampled_observations": 50,
+      "episodes": 5,
+      "valid_target_steps": 4225,
+      "normalized_chunk_mae": 0.037722990921968534,
+      "normalized_chunk_mae_by_channel": [
+        0.03407374659938925,
+        0.022545281119600556,
+        0.024356849941276234,
+        0.03974169979434042,
+        0.07871007614587186,
+        0.03175798263775526,
+        0.032875300215546195
+      ],
+      "episode_macro_normalized_mae": 0.03391614004969597,
+      "raw_chunk_mae_by_channel": [
+        0.6997544991758449,
+        0.9687436323899489,
+        0.8061244402552498,
+        0.8169593440851516,
+        0.5871229643511349,
+        0.5635688379953598,
+        2.258868000098234
+      ],
+      "raw_first_action_mae_by_channel": [
+        0.7172985076904297,
+        0.8408603572845459,
+        0.6368678545951844,
+        0.7540150427818298,
+        0.48316189765930173,
+        0.5318241119384766,
+        2.060875749588013
+      ],
+      "normalized_action_delta_error_by_channel": [
+        0.005670554973408134,
+        0.004118401219031054,
+        0.0045315804024656375,
+        0.007273824571849343,
+        0.01801671152343293,
+        0.005876805368297829,
+        0.00946696437047627
+      ],
+      "outside_observed_dataset_range_fraction_by_channel": [
+        0.004023668639053254,
+        0.02745562130177515,
+        0.009704142011834319,
+        0.0,
+        0.0033136094674556214,
+        0.0,
+        0.15171597633136094
+      ],
+      "wall_s": 1.9903373000051943,
+      "all_predictions_finite": true
+    },
+    {
+      "step": 1000,
+      "sampled_observations": 50,
+      "episodes": 5,
+      "valid_target_steps": 4225,
+      "normalized_chunk_mae": 0.03731636869030692,
+      "normalized_chunk_mae_by_channel": [
+        0.0319368352551432,
+        0.02277978664319191,
+        0.024967679046314847,
+        0.039686054365169365,
+        0.07730905431262135,
+        0.03171023961354995,
+        0.03282493159615782
+      ],
+      "episode_macro_normalized_mae": 0.03343957800418139,
+      "raw_chunk_mae_by_channel": [
+        0.6558698685775847,
+        0.9788199516160954,
+        0.8263407663198618,
+        0.8158154983069065,
+        0.5766722978219478,
+        0.5627214230870354,
+        2.255406999757304
+      ],
+      "raw_first_action_mae_by_channel": [
+        0.6798731231689453,
+        0.8585699188709259,
+        0.6460650897026062,
+        0.7644987654685974,
+        0.48169646739959715,
+        0.5482780790328979,
+        2.176012773513794
+      ],
+      "normalized_action_delta_error_by_channel": [
+        0.0056773479684384285,
+        0.004115648769332977,
+        0.004523098240355531,
+        0.0072439802763704765,
+        0.018018289526065667,
+        0.005879828451636308,
+        0.00942472957565399
+      ],
+      "outside_observed_dataset_range_fraction_by_channel": [
+        0.0033136094674556214,
+        0.02272189349112426,
+        0.008520710059171597,
+        0.0,
+        0.004023668639053254,
+        0.0,
+        0.11952662721893491
+      ],
+      "wall_s": 1.9827827000044635,
+      "all_predictions_finite": true
+    }
+  ],
+  "resume_check": "bitwise_model_optimizer_loss_and_sample_order_match",
+  "training_wall_s": 268.1894608000075,
+  "cuda_peak_allocated_mib": 2248.6005859375,
+  "selected_checkpoint_reload_check": "passed",
+  "selected_model_sha256": "94f6d02a35d4a0b41216188889ce7523366c3577f74efdfe86e926ddb1e1b4d8",
+  "run_directory": "D:\\外置大脑\\ACT\\runs\\act_controlled_20261019_220629",
+  "robot_commands_sent": 0,
+  "robot_connected": false,
+  "deployment_baseline": "Published original remains the deployment baseline pending real-robot evidence."
+}
