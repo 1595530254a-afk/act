@@ -1,0 +1,11 @@
+/.venv/
+/.python/
+/tools/
+/cache/
+/tmp/
+/data/
+/models/
+/runs/
+/local/
+__pycache__/
+*.pyc

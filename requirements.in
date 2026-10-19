@@ -1,0 +1,4 @@
+torch==2.10.0+cu130
+torchvision==0.25.0+cu130
+lerobot[training]==0.6.1
+numpy==2.2.6

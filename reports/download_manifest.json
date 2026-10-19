@@ -1,0 +1,151 @@
+{
+  "model": {
+    "repo_id": "nikodembartnik/act_rebot_cube",
+    "revision": "409b639946cc4140b3934a6e3d2c255f4335ee9d",
+    "directory": "models/act_rebot_cube",
+    "verified_files": [
+      {
+        "file": "README.md",
+        "bytes": 5632,
+        "sha256": "a2d7cf608a15d8c32af61167b536eb79ee62fbab84e52953f29a6be5d09e7616",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "e28f8b5a8ee5d2947d61dc0edc1b52877952895c"
+      },
+      {
+        "file": "config.json",
+        "bytes": 1743,
+        "sha256": "2d565602966a6993b300ac63df521b6abe0551fcafbdc7aee39fc10fdff218dd",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "8a11fb0026985bce22e1467c5b66f5b4ce5412f3"
+      },
+      {
+        "file": "model.safetensors",
+        "bytes": 206707964,
+        "sha256": "1accf25df80c3fecde13748c16a5df2ef658e322eb04c899929dbe9ac9dd3175",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "1accf25df80c3fecde13748c16a5df2ef658e322eb04c899929dbe9ac9dd3175"
+      },
+      {
+        "file": "policy_postprocessor.json",
+        "bytes": 660,
+        "sha256": "c27cf6f42b42352f9b8f9c40da155fd4459e0ee9b85b9f23072941eb52b3ffb5",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "c59e0238ceecf61b384605ad3c55770ad00e856d"
+      },
+      {
+        "file": "policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+        "bytes": 7608,
+        "sha256": "44eacd425cb919400040b7e770b246643cecd31ae85735ebb0a8571abaed7916",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "44eacd425cb919400040b7e770b246643cecd31ae85735ebb0a8571abaed7916"
+      },
+      {
+        "file": "policy_preprocessor.json",
+        "bytes": 1326,
+        "sha256": "9d3c37b92d3130155fe881a7c1bf885ec1663814707694d1ebd708affc69fc47",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "ace1c0c705141ddf066cecd64be71b76f65e1c06"
+      },
+      {
+        "file": "policy_preprocessor_step_3_normalizer_processor.safetensors",
+        "bytes": 7616,
+        "sha256": "86be9745c8c76e4c7c0dad4e1f13493a2de957240bf8c7f0d8fa79c0728e2dca",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "86be9745c8c76e4c7c0dad4e1f13493a2de957240bf8c7f0d8fa79c0728e2dca"
+      },
+      {
+        "file": "train_config.json",
+        "bytes": 7401,
+        "sha256": "3f7062f1c4ac7cb7ed9fc4648c1d83a06142c9e265b65212454a20053fedcf95",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "2a0647c8b53ffa11973beb4ce616060b562ed42d"
+      }
+    ],
+    "total_bytes": 206739950
+  },
+  "dataset": {
+    "repo_id": "nikodembartnik/rebot_cube",
+    "revision": "c5cdae89d2e1f474a8e2f1ac5f16302126d0c33f",
+    "directory": "data/rebot_cube",
+    "verified_files": [
+      {
+        "file": "README.md",
+        "bytes": 4640,
+        "sha256": "4484531206ddb2d8df8d5cfa574c4c2eb823d0372e718881c1db131fd72b6963",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "c8a763c7db4443eb5fb33f23d91790cb4c696c63"
+      },
+      {
+        "file": "data/chunk-000/file-000.parquet",
+        "bytes": 1303356,
+        "sha256": "562a0ec5ab1b61e4e0a4173daa4b10ec1942d745e2da526a2f9f9a1b46f30b44",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "562a0ec5ab1b61e4e0a4173daa4b10ec1942d745e2da526a2f9f9a1b46f30b44"
+      },
+      {
+        "file": "meta/episodes/chunk-000/file-000.parquet",
+        "bytes": 242457,
+        "sha256": "9a089c21d6f4eb2014ccb46330b380e46d78e813342e3b58d2ebd761cfc44378",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "9a089c21d6f4eb2014ccb46330b380e46d78e813342e3b58d2ebd761cfc44378"
+      },
+      {
+        "file": "meta/info.json",
+        "bytes": 3745,
+        "sha256": "dbf3d191a8e383111a26f5b2c8626bde59abf18a083fb8ba044419efb5d39ac5",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "db8a55fc5849c0404ad449d0fab606b8b78dd936"
+      },
+      {
+        "file": "meta/stats.json",
+        "bytes": 13591,
+        "sha256": "d9c28af55487282c334f54a297dca5737d7220e9d32af323c21075746bb12980",
+        "upstream_hash_algorithm": "git-blob-sha1",
+        "upstream_hash": "b79637c17b6c58bb191c9b60b33ad7474025a6c0"
+      },
+      {
+        "file": "meta/tasks.parquet",
+        "bytes": 2160,
+        "sha256": "2a27175d56cb28996da6efbd3ce57f4b759167ef4986966d30d77166d40817e6",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "2a27175d56cb28996da6efbd3ce57f4b759167ef4986966d30d77166d40817e6"
+      },
+      {
+        "file": "videos/observation.images.top/chunk-000/file-000.mp4",
+        "bytes": 202542005,
+        "sha256": "b7d2c8008607070e1861d8f5e0241c8612a7b18d5496b75faa937f809d997012",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "b7d2c8008607070e1861d8f5e0241c8612a7b18d5496b75faa937f809d997012"
+      },
+      {
+        "file": "videos/observation.images.top/chunk-000/file-001.mp4",
+        "bytes": 206043062,
+        "sha256": "99f813612aecc1ecde4ce173f01c164b51107a2881bb558b96b5100e2f13aca8",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "99f813612aecc1ecde4ce173f01c164b51107a2881bb558b96b5100e2f13aca8"
+      },
+      {
+        "file": "videos/observation.images.top/chunk-000/file-002.mp4",
+        "bytes": 165564437,
+        "sha256": "744965d1b714077fe93004f97655fe27f851b0ff9bb9ed5c91676b10148679d5",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "744965d1b714077fe93004f97655fe27f851b0ff9bb9ed5c91676b10148679d5"
+      },
+      {
+        "file": "videos/observation.images.wrist/chunk-000/file-000.mp4",
+        "bytes": 207050905,
+        "sha256": "35f9eafcaa7ee091616baf1393524bed0b92c9446d00ee0ae5bf32e1da07724f",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "35f9eafcaa7ee091616baf1393524bed0b92c9446d00ee0ae5bf32e1da07724f"
+      },
+      {
+        "file": "videos/observation.images.wrist/chunk-000/file-001.mp4",
+        "bytes": 86471859,
+        "sha256": "dd332111f00c70ce65ec30362697b13e5edda1d0ce81ceec92fe1f667af42510",
+        "upstream_hash_algorithm": "sha256",
+        "upstream_hash": "dd332111f00c70ce65ec30362697b13e5edda1d0ce81ceec92fe1f667af42510"
+      }
+    ],
+    "total_bytes": 869242217
+  }
+}
