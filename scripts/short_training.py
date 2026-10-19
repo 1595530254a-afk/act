@@ -19,6 +19,8 @@ os.environ['HF_DATASETS_OFFLINE'] = '1'
 os.environ.setdefault('HF_HOME', str(ROOT / 'cache/huggingface'))
 os.environ.setdefault('TORCH_HOME', str(ROOT / 'cache/torch'))
 
+from cpu_budget import CPU_BUDGET, configure_torch
+
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
@@ -79,7 +81,7 @@ def main():
         parser.error('steps and batch-size must be positive')
     if not torch.cuda.is_available():
         raise RuntimeError('This training verification requires CUDA.')
-    torch.set_num_threads(min(8, os.cpu_count() or 1))
+    configure_torch()
     seed = 1000
     set_seed(seed)
     started_at = datetime.now(timezone(timedelta(hours=8)))
@@ -238,6 +240,7 @@ def main():
     np.save(run_dir / 'probe_predictions_after.npy', after_predictions.numpy())
     report = {
         **run_config, 'status': 'passed', 'completed_at': datetime.now(timezone(timedelta(hours=8))).isoformat(),
+        'cpu_budget': CPU_BUDGET,
         'platform': platform.platform(), 'python': platform.python_version(),
         'versions': {name: importlib.metadata.version(name) for name in ['torch', 'torchvision', 'lerobot', 'av', 'datasets']},
         'gpu': torch.cuda.get_device_name(), 'torch_cuda_version': torch.version.cuda,

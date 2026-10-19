@@ -15,6 +15,8 @@ os.environ['HF_DATASETS_OFFLINE'] = '1'
 os.environ.setdefault('HF_HOME', str(ROOT / 'cache/huggingface'))
 os.environ.setdefault('TORCH_HOME', str(ROOT / 'cache/torch'))
 
+from cpu_budget import CPU_BUDGET, configure_torch
+
 import numpy as np
 import torch
 from PIL import Image
@@ -34,7 +36,7 @@ def main():
     run_name = args.run_name or f'offline_inference_{"custom_" if args.model_dir else ""}{args.device}'
     if run_name in ['.', '..'] or '/' in run_name or '\\' in run_name or ':' in run_name:
         parser.error('run-name must be a simple filename without path separators')
-    torch.set_num_threads(min(8, os.cpu_count() or 1))
+    configure_torch()
     torch.manual_seed(0)
     device = torch.device(args.device)
     if device.type == 'cuda':
@@ -142,6 +144,7 @@ def main():
         model_sha256 = hashlib.file_digest(model_stream, 'sha256').hexdigest()
     report = {
         'status': 'passed', 'scope': 'offline_inference_only',
+        'cpu_budget': CPU_BUDGET,
         'robot_connected': False, 'robot_commands_sent': 0,
         'device': device.type, 'platform': platform.platform(),
         'python': platform.python_version(),
