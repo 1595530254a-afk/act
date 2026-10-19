@@ -1,6 +1,7 @@
-"""Run the published ACT on real dataset frames without a robot connection."""
+"""Run a local ACT model on real dataset frames without a robot connection."""
 
 import argparse
+import hashlib
 import importlib.metadata
 import json
 import os
@@ -27,7 +28,12 @@ from lerobot.policies.factory import make_pre_post_processors
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--device', choices=['cuda', 'cpu'], default='cuda')
+    parser.add_argument('--model-dir', type=Path, help='Local saved model; defaults to the published policy.')
+    parser.add_argument('--run-name', help='Separate output/report name, preserving the published baseline.')
     args = parser.parse_args()
+    run_name = args.run_name or f'offline_inference_{"custom_" if args.model_dir else ""}{args.device}'
+    if run_name in ['.', '..'] or '/' in run_name or '\\' in run_name or ':' in run_name:
+        parser.error('run-name must be a simple filename without path separators')
     torch.set_num_threads(min(8, os.cpu_count() or 1))
     torch.manual_seed(0)
     device = torch.device(args.device)
@@ -39,9 +45,10 @@ def main():
         torch.cuda.synchronize()
 
     manifest = json.loads((ROOT / 'resources/resource_manifest.json').read_text(encoding='utf-8'))
-    model_dir = ROOT / 'models/act_rebot_cube'
+    published_dir = ROOT / 'models/act_rebot_cube'
+    model_dir = args.model_dir.resolve() if args.model_dir else published_dir
     dataset_dir = ROOT / 'data/rebot_cube'
-    output_dir = ROOT / 'runs' / f'offline_inference_{device.type}'
+    output_dir = ROOT / 'runs' / run_name
     output_dir.mkdir(parents=True, exist_ok=True)
     report_dir = ROOT / 'reports'
     report_dir.mkdir(exist_ok=True)
@@ -131,6 +138,8 @@ def main():
             print(f'Frame {index}: shape={list(actions.shape)}, mean={row["inference_mean_ms"]:.1f} ms', flush=True)
 
     np.save(output_dir / 'predicted_action_chunks.npy', np.stack(chunks))
+    with (model_dir / 'model.safetensors').open('rb') as model_stream:
+        model_sha256 = hashlib.file_digest(model_stream, 'sha256').hexdigest()
     report = {
         'status': 'passed', 'scope': 'offline_inference_only',
         'robot_connected': False, 'robot_commands_sent': 0,
@@ -139,7 +148,9 @@ def main():
         'versions': {name: importlib.metadata.version(name) for name in ['torch', 'torchvision', 'lerobot', 'av', 'datasets']},
         'torch_cuda_version': torch.version.cuda,
         'gpu': torch.cuda.get_device_name() if device.type == 'cuda' else None,
-        'model_revision': manifest['model']['revision'],
+        'model_revision': manifest['model']['revision'] if model_dir == published_dir else None,
+        'model_directory': str(model_dir),
+        'model_sha256': model_sha256,
         'dataset_revision': manifest['dataset']['revision'],
         'dataset_frames': len(dataset), 'sampled_frames': len(rows),
         'warmup_runs': 3, 'timed_runs': len(timings),
@@ -159,7 +170,7 @@ def main():
         ],
         'artifacts_directory': str(output_dir.relative_to(ROOT)),
     }
-    report_path = report_dir / f'offline_inference_{device.type}.json'
+    report_path = report_dir / f'{run_name}.json'
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({key: report[key] for key in ['status', 'gpu', 'latency_ms', 'cuda_peak_allocated_mib', 'output_shape_per_sample']}, ensure_ascii=False, indent=2))
 
