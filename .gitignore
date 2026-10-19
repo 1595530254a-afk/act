@@ -7,6 +7,7 @@
 /models/
 /runs/
 /local/
+/delivery/
 /reports/training_cli_help.txt
 __pycache__/
 *.pyc

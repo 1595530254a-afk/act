@@ -1,0 +1,147 @@
+{
+  "status": "passed",
+  "scope": "desktop_validation_of_laptop_delivery_not_laptop_measurement",
+  "package": {
+    "bundle_directory": "D:\\外置大脑\\ACT\\delivery\\ACT_laptop_20261019_v2",
+    "archive": "D:\\外置大脑\\ACT\\delivery\\ACT_laptop_20261019_v2.zip",
+    "instructions": "D:\\外置大脑\\ACT\\delivery\\ACT_laptop_20261019_v2_给Codex.md",
+    "zip_bytes": 214590118,
+    "zip_sha256": "5bd920aec4ae8b88e99f65defabb133db67e858692843ba630162443180b5d59",
+    "payload_file_count": 25,
+    "uncompressed_payload_bytes": 246105805
+  },
+  "zip_crc_test": "passed",
+  "payload_hash_check": "passed",
+  "fresh_windows_powershell_install": "passed",
+  "installed_dependency_count": 77,
+  "python_executable": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\.venv\\Scripts\\python.exe",
+  "python_base_prefix": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\.python\\cpython-3.12.15-windows-x86_64-none",
+  "lerobot_module": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\.venv\\Lib\\site-packages\\lerobot\\__init__.py",
+  "torch_module": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\.venv\\Lib\\site-packages\\torch\\__init__.py",
+  "local_runtime_paths": {
+    "datasets_offline": "1",
+    "runtime_temp": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\local\\runtime\\tmp",
+    "python_install": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\.python",
+    "hub_offline": "1",
+    "runtime_cache": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2\\local\\runtime\\cache\\huggingface"
+  },
+  "inference_reports": {
+    "cuda": {
+      "status": "passed",
+      "scope": "bundled_fixture_offline_inference_only",
+      "bundle_id": "ACT_laptop_20261019_v2",
+      "device": "cuda",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python": "3.12.15",
+      "machine": "AMD64",
+      "versions": {
+        "torch": "2.10.0+cu130",
+        "torchvision": "0.25.0+cu130",
+        "lerobot": "0.6.1",
+        "numpy": "2.2.6"
+      },
+      "gpu": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_total_memory_mib": 8150.5625,
+      "torch_cuda_version": "13.0",
+      "model_revision": "409b639946cc4140b3934a6e3d2c255f4335ee9d",
+      "model_and_fixture_hashes": "passed",
+      "sampled_frames": 5,
+      "warmup_runs": 3,
+      "timed_runs": 25,
+      "output_shape": [
+        5,
+        100,
+        7
+      ],
+      "reference_check": "passed",
+      "reference_max_abs_difference": 0.0,
+      "reference_device": "cuda",
+      "reference_tolerance": {
+        "rtol": 0.0001,
+        "atol": 0.005
+      },
+      "latency_ms": {
+        "mean": 13.901236000529025,
+        "p95": 14.816040004370734,
+        "max": 16.456400000606664
+      },
+      "latency_scope": "CPU float observations -> processors -> model -> CPU actions; excludes fixture decompression and uint8 conversion",
+      "cuda_peak_allocated_mib": 271.78955078125,
+      "cuda_peak_reserved_mib": 302.0,
+      "robot_connected": false,
+      "robot_commands_sent": 0,
+      "training_steps": 0,
+      "bundle_directory": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2",
+      "limitations": [
+        "Five observations are from the published training dataset, not a generalization benchmark.",
+        "Reference tolerances allow small float32 CPU/GPU differences; they are not physical action tolerances.",
+        "This check does not establish camera integration, CAN/SDK compatibility, closed-loop timing or grasp success.",
+        "PyTorch memory metrics exclude driver/display memory; CPU passing does not establish CUDA readiness."
+      ],
+      "started_at": "2026-10-19T21:49:17.825242+08:00",
+      "completed_at": "2026-10-19T21:49:19.405872+08:00"
+    },
+    "cpu": {
+      "status": "passed",
+      "scope": "bundled_fixture_offline_inference_only",
+      "bundle_id": "ACT_laptop_20261019_v2",
+      "device": "cpu",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python": "3.12.15",
+      "machine": "AMD64",
+      "versions": {
+        "torch": "2.10.0+cu130",
+        "torchvision": "0.25.0+cu130",
+        "lerobot": "0.6.1",
+        "numpy": "2.2.6"
+      },
+      "gpu": null,
+      "gpu_total_memory_mib": null,
+      "torch_cuda_version": "13.0",
+      "model_revision": "409b639946cc4140b3934a6e3d2c255f4335ee9d",
+      "model_and_fixture_hashes": "passed",
+      "sampled_frames": 5,
+      "warmup_runs": 3,
+      "timed_runs": 25,
+      "output_shape": [
+        5,
+        100,
+        7
+      ],
+      "reference_check": "passed",
+      "reference_max_abs_difference": 0.0,
+      "reference_device": "cpu",
+      "reference_tolerance": {
+        "rtol": 0.0001,
+        "atol": 0.005
+      },
+      "latency_ms": {
+        "mean": 174.29737600061344,
+        "p95": 181.07816000119783,
+        "max": 183.0582000038703
+      },
+      "latency_scope": "CPU float observations -> processors -> model -> CPU actions; excludes fixture decompression and uint8 conversion",
+      "cuda_peak_allocated_mib": null,
+      "cuda_peak_reserved_mib": null,
+      "robot_connected": false,
+      "robot_commands_sent": 0,
+      "training_steps": 0,
+      "bundle_directory": "D:\\外置大脑\\ACT\\runs\\laptop_bundle_verification_20261019_v2\\ACT_laptop_20261019_v2",
+      "limitations": [
+        "Five observations are from the published training dataset, not a generalization benchmark.",
+        "Reference tolerances allow small float32 CPU/GPU differences; they are not physical action tolerances.",
+        "This check does not establish camera integration, CAN/SDK compatibility, closed-loop timing or grasp success.",
+        "PyTorch memory metrics exclude driver/display memory; CPU passing does not establish CUDA readiness."
+      ],
+      "started_at": "2026-10-19T21:49:37.944396+08:00",
+      "completed_at": "2026-10-19T21:49:43.519368+08:00"
+    }
+  },
+  "runtime_network_test": "HTTP(S) proxy pointed to unused localhost port; inference succeeded using only local files",
+  "runtime_temp_test": "Parent TEMP/TMP pointed to unavailable Z: directory; entrypoint correctly reset to local runtime tmp",
+  "installation_cache_test": "Used existing desktop ACT cache at a separate root to avoid duplicate downloads; physical USB throughput not tested",
+  "limitations": [
+    "Actual laptop GPU, driver, free space and performance still require on-laptop verification.",
+    "No real camera, robot SDK/CAN connection, motion or grasp validation is included."
+  ]
+}
