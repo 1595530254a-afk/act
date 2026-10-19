@@ -1,0 +1,325 @@
+{
+  "status": "passed",
+  "scope": "offline_inference_only",
+  "robot_connected": false,
+  "robot_commands_sent": 0,
+  "device": "cuda",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.15",
+  "versions": {
+    "torch": "2.10.0+cu130",
+    "torchvision": "0.25.0+cu130",
+    "lerobot": "0.6.1",
+    "av": "15.1.0",
+    "datasets": "4.8.5"
+  },
+  "torch_cuda_version": "13.0",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "model_revision": "409b639946cc4140b3934a6e3d2c255f4335ee9d",
+  "dataset_revision": "c5cdae89d2e1f474a8e2f1ac5f16302126d0c33f",
+  "dataset_frames": 20948,
+  "sampled_frames": 5,
+  "warmup_runs": 3,
+  "timed_runs": 25,
+  "latency_scope": "CPU observation tensors -> preprocessing -> full action chunk -> postprocessing -> CPU actions; excludes video decoding",
+  "latency_ms": {
+    "mean": 20.400091999035794,
+    "median": 21.687699998437893,
+    "p95": 22.367280001344625,
+    "max": 22.589399995922577
+  },
+  "cuda_peak_allocated_mib": 271.78955078125,
+  "cuda_peak_reserved_mib": 302.0,
+  "output_shape_per_sample": [
+    1,
+    100,
+    7
+  ],
+  "first_action_mae_by_channel": [
+    0.6361398339271546,
+    0.4864810109138489,
+    0.5587597608566284,
+    0.6504318952560425,
+    0.10523152351379395,
+    0.3947426021099091,
+    1.1814700365066528
+  ],
+  "action_names": [
+    "shoulder_pan.pos",
+    "shoulder_lift.pos",
+    "elbow_flex.pos",
+    "wrist_flex.pos",
+    "wrist_yaw.pos",
+    "wrist_roll.pos",
+    "gripper.pos"
+  ],
+  "samples": [
+    {
+      "frame_index": 0,
+      "episode_index": 0,
+      "timestamp_s": 0.0,
+      "video_decode_and_read_ms": 28.057900002750102,
+      "inference_mean_ms": 14.830839997739531,
+      "state": [
+        3.3619022369384766,
+        -0.087890625,
+        0.41748046875,
+        0.4614258110523224,
+        -2.3731327056884766,
+        -0.02197265625,
+        -0.68115234375
+      ],
+      "first_predicted_action": [
+        2.7949323654174805,
+        -0.7395744323730469,
+        -0.110870361328125,
+        0.19123458862304688,
+        -1.6047019958496094,
+        0.1049966812133789,
+        -0.05249786376953125
+      ],
+      "dataset_action": [
+        3.5999999046325684,
+        -0.4000000059604645,
+        0.0,
+        0.30000001192092896,
+        -1.7000000476837158,
+        -0.10000000149011612,
+        0.0
+      ],
+      "first_action_absolute_error": [
+        0.8050675392150879,
+        0.3395744264125824,
+        0.110870361328125,
+        0.10876542329788208,
+        0.09529805183410645,
+        0.20499667525291443,
+        0.05249786376953125
+      ],
+      "first_action_outside_dataset_range": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "frame_index": 5236,
+      "episode_index": 13,
+      "timestamp_s": 5.833333492279053,
+      "video_decode_and_read_ms": 29.431399998429697,
+      "inference_mean_ms": 21.955680000246502,
+      "state": [
+        -0.1098632887005806,
+        -107.27377319335938,
+        -76.5330810546875,
+        36.82728576660156,
+        -3.1861209869384766,
+        -15.227479934692383,
+        -93.6942367553711
+      ],
+      "first_predicted_action": [
+        -0.6983301639556885,
+        -98.82584381103516,
+        -77.52715301513672,
+        39.94414138793945,
+        -5.151706695556641,
+        -16.3016300201416,
+        -85.52068328857422
+      ],
+      "dataset_action": [
+        -0.30000001192092896,
+        -98.9000015258789,
+        -77.0999984741211,
+        39.0,
+        -4.900000095367432,
+        -15.899999618530273,
+        -85.80000305175781
+      ],
+      "first_action_absolute_error": [
+        0.3983301520347595,
+        0.07415771484375,
+        0.427154541015625,
+        0.9441413879394531,
+        0.251706600189209,
+        0.4016304016113281,
+        0.27931976318359375
+      ],
+      "first_action_outside_dataset_range": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "frame_index": 10473,
+      "episode_index": 26,
+      "timestamp_s": 10.199999809265137,
+      "video_decode_and_read_ms": 30.612300004577264,
+      "inference_mean_ms": 21.427399999811314,
+      "state": [
+        -30.938444137573242,
+        -89.82696533203125,
+        -57.76791763305664,
+        17.53469467163086,
+        -0.59326171875,
+        -17.79836654663086,
+        -142.76072692871094
+      ],
+      "first_predicted_action": [
+        -31.210325241088867,
+        -82.73014068603516,
+        -55.57610321044922,
+        14.982366561889648,
+        -1.5224480628967285,
+        -17.287395477294922,
+        -142.82106018066406
+      ],
+      "dataset_action": [
+        -30.0,
+        -83.80000305175781,
+        -57.099998474121094,
+        16.299999237060547,
+        -1.5,
+        -17.700000762939453,
+        -141.60000610351562
+      ],
+      "first_action_absolute_error": [
+        1.2103252410888672,
+        1.0698623657226562,
+        1.523895263671875,
+        1.3176326751708984,
+        0.022448062896728516,
+        0.41260528564453125,
+        1.2210540771484375
+      ],
+      "first_action_outside_dataset_range": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "frame_index": 15710,
+      "episode_index": 39,
+      "timestamp_s": 1.4666666984558105,
+      "video_decode_and_read_ms": 29.012699997110758,
+      "inference_mean_ms": 21.639359997061547,
+      "state": [
+        -1.6480350494384766,
+        -0.087890625,
+        0.1098632887005806,
+        0.3735351860523224,
+        -3.1641483306884766,
+        -0.28564453125,
+        -1.0107421875
+      ],
+      "first_predicted_action": [
+        -1.8034274578094482,
+        -0.7148704528808594,
+        0.2559623718261719,
+        -0.33292388916015625,
+        -3.847700595855713,
+        -0.3334369659423828,
+        0.0037384033203125
+      ],
+      "dataset_action": [
+        -1.100000023841858,
+        -0.4000000059604645,
+        0.0,
+        0.30000001192092896,
+        -3.9000000953674316,
+        -1.0,
+        -0.6000000238418579
+      ],
+      "first_action_absolute_error": [
+        0.7034274339675903,
+        0.3148704469203949,
+        0.2559623718261719,
+        0.6329239010810852,
+        0.05229949951171875,
+        0.6665630340576172,
+        0.6037384271621704
+      ],
+      "first_action_outside_dataset_range": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "frame_index": 20947,
+      "episode_index": 49,
+      "timestamp_s": 21.733333587646484,
+      "video_decode_and_read_ms": 25.556100001267623,
+      "inference_mean_ms": 22.147180000320077,
+      "state": [
+        3.2520389556884766,
+        -0.087890625,
+        -0.94482421875,
+        3.2959845066070557,
+        -3.3179569244384766,
+        -4.526538848876953,
+        -78.42282104492188
+      ],
+      "first_predicted_action": [
+        3.363548755645752,
+        0.23394012451171875,
+        -0.9240837097167969,
+        3.0513038635253906,
+        -3.7044053077697754,
+        -4.587917804718018,
+        -82.35074615478516
+      ],
+      "dataset_action": [
+        3.299999952316284,
+        -0.4000000059604645,
+        -1.399999976158142,
+        3.299999952316284,
+        -3.5999999046325684,
+        -4.300000190734863,
+        -78.60000610351562
+      ],
+      "first_action_absolute_error": [
+        0.06354880332946777,
+        0.6339401006698608,
+        0.4759162664413452,
+        0.24869608879089355,
+        0.10440540313720703,
+        0.2879176139831543,
+        3.7507400512695312
+      ],
+      "first_action_outside_dataset_range": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "limitations": [
+    "Frames come from the published training dataset, not a held-out generalization benchmark.",
+    "Action errors use dataset coordinate units; these are not verified physical joint limits.",
+    "This check establishes loading, decoding, preprocessing and finite action generation, not grasp success or robot safety.",
+    "Desktop timings do not establish laptop performance."
+  ],
+  "artifacts_directory": "runs\\offline_inference_cuda"
+}

@@ -20,8 +20,8 @@
 
 | 项目 | 已知情况 | 验证边界 |
 | --- | --- | --- |
-| 台式机 | i5-13600KF、32GB 内存、RTX 5060 Ti 8GB、Windows 11 | 本机已读取硬件信息；尚未运行 ACT |
-| Python | `D:\Python\python.exe`，3.10.10 | 此解释器内未发现 PyTorch、LeRobot、huggingface_hub；不代表其他环境均未安装 |
+| 台式机 | i5-13600KF、32GB 内存、RTX 5060 Ti 8GB、Windows 11 | 已完成 CUDA 运算及 ACT 离线推理 |
+| 独立环境 | `.venv` 内 Python 3.12.15、PyTorch 2.10.0+cu130、torchvision 0.25.0+cu130、LeRobot 0.6.1 | 77 个软件包已锁定，依赖兼容性检查和训练 CLI 帮助检查通过 |
 | 磁盘 | D 盘检查时约剩余 122GiB | 瞬时值，下载和训练前重新确认 |
 | 笔记本 | 用户报告为联想拯救者，约 2021 年购买，R9000P 或 Y9000P，Windows，疑似 NVIDIA 30 系显卡 | CPU、GPU、显存、内存、驱动和推理性能均待读取，不能按系列名称推定 |
 | 机械臂 | B601-RS，已装配；上位机可以驱动机械臂 | 用户报告；尚未验证 Python SDK / LeRobot 的状态读取和动作接口 |
@@ -57,19 +57,43 @@
 - 读取台式机 GPU、Python 和磁盘状态。
 - 核实公开数据集和模型的输入输出，固定仓库 revision。
 - 保存配置快照及其本地 SHA-256，详见 `resources/resource_manifest.json`。
-- 建立项目内的 Python 3.12.15 和虚拟环境；CUDA 版 PyTorch 与 LeRobot 正在安装。
+- 建立项目内的 Python 3.12.15 和虚拟环境，安装 CUDA 版 PyTorch 与 LeRobot 训练依赖。
 - 按固定 revision 下载最终模型、预处理/后处理与归一化文件，以及完整数据集。
 - 校验 8 个模型文件、11 个数据文件的上游内容哈希；记录见 `reports/download_manifest.json`。
+- 在完全使用本地资源的模式下，从数据集抽取 5 帧，完成 3 次预热和 25 次推理测量；严格加载模型权重及配套归一化信息，全部输出形状正确且数值有限。
+- 保存版本锁定文件 `requirements.lock.txt`、推理脚本、原始测量 JSON、图像样例和中文验证报告。
 
-当前模型文件约 197MiB，数据文件约 829MiB，均已下载并校验。**尚未开始训练或真机测试；离线推理等待环境安装完成后执行。**
+当前模型文件约 197MiB，数据文件约 829MiB，均已下载并校验。**离线推理已通过；本次未更新模型参数，未连接或驱动真机。**
 
-安装、缓存和下载均位于本目录。`scripts/setup_environment.ps1` 用于建立环境；`scripts/download_resources.py` 用于固定版本下载及哈希核对。Python 推理脚本和 PowerShell 启动器在验证通过后记录正式运行结果。
+本机平均推理耗时约 20.4ms，P95 约 22.4ms，PyTorch 活跃张量峰值显存约 271.8MiB。每次生成 `[1, 100, 7]` 动作段。耗时包括预处理、模型前向和反归一化，但不包括视频解码；显存数值也不包括桌面显示、驱动等总占用。结果不代表真机抓放成功率或笔记本性能。
+
+完整结果：[离线推理验证报告](reports/离线推理验证报告.md)，原始记录：[offline_inference_cuda.json](reports/offline_inference_cuda.json)。
+
+## 复现命令
+
+在 PowerShell 中执行：
+
+```powershell
+Set-Location 'D:\外置大脑\ACT'
+.\scripts\run_offline.ps1
+```
+
+重新建立环境时使用 `.\scripts\setup_environment.ps1`；默认使用已锁定的 77 个软件包，Python、安装工具、缓存和临时文件均位于项目内，不依赖全局环境里的 PyTorch。
+
+重新下载或校验资源：
+
+```powershell
+. .\scripts\act_env.ps1
+.\.venv\Scripts\python.exe .\scripts\download_resources.py
+```
+
+`scripts/offline_inference.py` 只读取公开数据并生成动作，不建立机械臂连接。CPU 模式可以通过 `.\scripts\run_offline.ps1 -Device cpu` 另行测量；本次报告仅为台式机 CUDA 测量。
 
 ## 下一步与验收
 
-1. **建立独立训练环境。**选择与候选模型和 RTX 50 系相兼容的 Python、PyTorch、LeRobot 版本，记录实际版本；验证 CUDA 张量运算。现有 Python 3.10 不直接当作已就绪的训练环境。
-2. **准备完整模型与公开数据。**按固定 revision 获取最终模型及配套预处理、后处理、归一化文件；数据、模型和缓存放在 ACT 目录内。部署不需要下载全部历史训练检查点及优化器状态。
-3. **台式机离线推理。**从公开示范读取真实图像和状态，检查完整处理流程、动作形状、有限值和目标范围，不向真机发送动作。
+1. **独立训练环境：已完成。**CUDA 张量运算、依赖检查和训练 CLI 帮助检查均通过，尚未执行训练。
+2. **完整模型与公开数据：已完成。**固定 revision，全部下载文件内容校验通过。
+3. **台式机离线推理：已完成。**真实双视角图像和状态通过完整处理流程，动作形状和有限值检查通过；数据观测范围不是物理关节限位，边界偏差见报告。
 4. **小规模训练验证。**先用保守 batch 测量显存与每步耗时，保存并重新加载检查点。是否继续完整训练，依据学习目的和验证结果决定；不直接照抄发布者的 batch 16 与 100,000 步。
 5. **笔记本离线测速。**读取具体硬件，迁移完整模型部署包和兼容环境，测量持续推理的延迟、抖动与内存占用。模型能加载不等于已经满足动作供给和闭环反应需求。
 6. **核对真机接口后低速测试。**先检查本机标定、关节单位和方向、夹爪范围、两个视角和可达区域。模型输出先检查，再通过限位和速度限制执行；记录抓空、滑落、放错及超时。根据表现决定是否补采现场数据。
@@ -84,8 +108,13 @@
 - `resources/model_train_config.json`：发布者训练配置快照；作为来源记录，不直接作为本机执行命令。
 - `resources/model_preprocessor.json`、`resources/model_postprocessor.json`：处理流程配置快照；其引用的张量文件还未下载。
 - `resources/dataset_info.json`：数据结构快照。
+- `requirements.in`、`requirements.lock.txt`：顶层依赖与完整版本锁定。
+- `scripts/`：项目内环境配置、安装、下载校验和离线推理入口。
+- `reports/`：下载哈希、原始测量、源数据图像样例和中文验证报告，可随代码存档。
+- `.python/`、`.venv/`、`tools/`、`cache/`、`tmp/`：本地运行环境及缓存，Git 忽略。
+- `data/`、`models/`、`runs/`：完整数据、模型及动作数组等运行产物，Git 忽略。
 
-后续按实际需要在本目录内建立独立环境、`data`、`models`、`runs` 和部署包目录，避免将 ACT 项目输出散落到其他工作区。
+后续部署包与训练输出继续保存在本目录内。
 
 ## 官方参考
 
