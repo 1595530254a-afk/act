@@ -1,7 +1,9 @@
 {
   "author": "请输入名字QaQ",
-  "report": "reports/ACT仿真训练复现与调参复盘.docx",
-  "report_sha256": "189caac8eef2fd829f83796f45147819420cf3acf34ab4bf03d96380d2f33a75",
+  "report": "reports/ACT仿真训练复现与调参复盘_修订版.docx",
+  "report_sha256": "06bf3ca4f5820b9784346e75b68ea1e9df67848e44301445b7fb8e0779a60105",
+  "pdf": "reports/ACT仿真训练复现与调参复盘.pdf",
+  "pdf_sha256": "75a19a8c7878bbfc799406451c2b32ca4a7e45717e9ff413f348e1806d631690",
   "pages_visually_reviewed": [
     1,
     2,
@@ -11,12 +13,24 @@
     6,
     7,
     8,
-    9
+    9,
+    10,
+    11,
+    12
   ],
-  "hyperlinks": 23,
+  "pdf_hyperlinks": 22,
+  "pdf_font_names": [
+    "/CWLLTB+Arial-BoldMT",
+    "/QHIUOC+Consolas",
+    "/TZCMBP+SymbolMT",
+    "/VMBCQV+ArialMT",
+    "/YMVEVT+MicrosoftYaHei",
+    "/YWSWBG+MicrosoftYaHei-Bold"
+  ],
+  "hyperlinks": 22,
   "embedded_videos": 0,
   "video_links": 0,
-  "plots": 2,
+  "plots_and_diagrams": 3,
   "training_csv_rows": 5000,
   "authored_video_count": 13,
   "video_sha256_and_frame_counts_verified": true,

@@ -19,5 +19,10 @@
 /ACT仿真/local/
 /ACT仿真/output/
 /ACT仿真/delivery/
+# Retain the previous Word locally while its open view can still be used.
+/ACT仿真/reports/ACT仿真训练复现与调参复盘.docx
+/ACT真机/local/
+/ACT真机/delivery/
 __pycache__/
 *.pyc
+~$*

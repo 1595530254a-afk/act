@@ -20,13 +20,18 @@
   "files": [
     {
       "path": "docs/stage1_20261024/ACT仿真训练复现与调参复盘.md",
-      "bytes": 21175,
-      "sha256": "e6dae78604e71722e15fb5f6aa6bb3cffd60535791299e003438444709f6cf3b"
+      "bytes": 26771,
+      "sha256": "27a29918d8ef21965d88db0181c22fecf24e0d8cf61860bee037eea0ee2ed903"
+    },
+    {
+      "path": "docs/stage1_20261024/pipeline.png",
+      "bytes": 51223,
+      "sha256": "4b7f97160d928dda2d77e9bc03cef7ac49ce854ffdc9f3830d299fb4b1570ece"
     },
     {
       "path": "docs/stage1_20261024/positions.png",
-      "bytes": 54644,
-      "sha256": "b33b1c9890fb523e3efa1ccfda225a01833cc05e150da415fb06674e64948b8b"
+      "bytes": 72029,
+      "sha256": "4017992a6bebbd6f789bfe9a5c22ff32bde16154f08b09aa552e7a6f2ec8b9ba"
     },
     {
       "path": "docs/stage1_20261024/public_reproduction.md",
@@ -75,8 +80,8 @@
     },
     {
       "path": "docs/stage1_20261024/training.png",
-      "bytes": 90378,
-      "sha256": "92bc78646a299adf75976e2aed9dd1e4d992097ba123f33906f1d30eee51862c"
+      "bytes": 111272,
+      "sha256": "9c19103ce0dfde8878af28357ef47e9612e7f4cc77cbd12ba9be49309ead4de6"
     },
     {
       "path": "docs/stage1_20261024/教学图表数据.json",
@@ -90,13 +95,18 @@
     },
     {
       "path": "README.md",
-      "bytes": 2546,
-      "sha256": "281c42834938c4e53cf31559b10d12c0d3cd10c54cc7fb596bf177a88a08c1b9"
+      "bytes": 2692,
+      "sha256": "0e7a8abf0d8b444d8462cd6004495061ff59a0eff72021fe3d19fecb175aeadc"
     },
     {
-      "path": "reports/ACT仿真训练复现与调参复盘.docx",
-      "bytes": 187445,
-      "sha256": "189caac8eef2fd829f83796f45147819420cf3acf34ab4bf03d96380d2f33a75"
+      "path": "reports/ACT仿真训练复现与调参复盘.pdf",
+      "bytes": 773024,
+      "sha256": "75a19a8c7878bbfc799406451c2b32ca4a7e45717e9ff413f348e1806d631690"
+    },
+    {
+      "path": "reports/ACT仿真训练复现与调参复盘_修订版.docx",
+      "bytes": 273317,
+      "sha256": "06bf3ca4f5820b9784346e75b68ea1e9df67848e44301445b7fb8e0779a60105"
     },
     {
       "path": "requirements.in",
@@ -140,8 +150,8 @@
     },
     {
       "path": "results/stage1_20261024/publication_checks.json",
-      "bytes": 673,
-      "sha256": "b3febc8cd8ff6a854b8a86cff808b127fdea33c7a62bf7ef2bc8cf7666a2e9aa"
+      "bytes": 1093,
+      "sha256": "4e021fc36311c9d3725c82dabbd8388514a5221c925ca4112501676224f6167d"
     },
     {
       "path": "results/stage1_20261024/training_metrics.csv",
@@ -245,8 +255,8 @@
     },
     {
       "path": "scripts/build_simulation_tutorial_20261024.py",
-      "bytes": 10481,
-      "sha256": "c239b90cea7c59cb3e127bb8cfe1d3b41f9b1de9084781b40a1768140daf3e11"
+      "bytes": 13429,
+      "sha256": "844377eedcea666d9a60b4c78fe76ff7e9e43d30524e4c7aa59bedc032a82c13"
     },
     {
       "path": "scripts/controlled_training.py",
