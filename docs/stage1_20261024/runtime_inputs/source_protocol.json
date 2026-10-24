@@ -1,0 +1,129 @@
+{
+  "id": "ACT_frozen_flat40_position_generalization_20261023",
+  "preregistered_utc": "2026-10-23T13:24:55.539225+00:00",
+  "model_directory": "<ACT_ROOT>\\runs\\mujoco_iteration_20261023\\adapt_flat40_v1\\checkpoints\\step_000300\\pretrained_model",
+  "model_files_sha256": {
+    "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+    "model.safetensors": "e82c8794497ab288c6c58fd16008b78770eddb39bc5f5faab3143b1a530c6c76",
+    "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+    "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+    "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+    "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+  },
+  "camera_fit_path": "<ACT_ROOT>\\runs\\mujoco_iteration_20261023\\camera_fit\\camera_fit.json",
+  "camera_fit_sha256": "bc2623bf3bbaea2efc640717edb95d9ad01bf1d516af10cb24e49928452b1353",
+  "code_files_sha256": {
+    "simulation/run_position_generalization.py": "c07c8d9128c3f7c5d6f039db9474be6da480151926d21b92d30aefd2a5eb2b2e",
+    "simulation/run_task.py": "175206c8329af9cad3db90c1c46309e86ab033808778d2687dd5e0573a4be293",
+    "simulation/task_scene.py": "0cf42237958352bc8ad9097f9ffb399c9ad6cd25b109c41d726e54517bc988b7",
+    "simulation/task_dynamics.py": "a39a7c74ac029935bdfaf9c3b585ab46b2d6a25c64fea273fd9cbe1599ef4af0",
+    "simulation/joint_mapping.py": "1d5acd8f63e16fc62eafd0a477490a38c2dae6e0d665a5b016fb800272ac316d",
+    "simulation/policy_worker.py": "3f34f5d880187edd370d2154b32073e3a737d45f65fe4e43015783865a9a8dc4",
+    "scripts/cpu_budget.py": "56a80cf864e0b47857729572e1ca3542ba4d59f5495cdc340e731117ef2092eb"
+  },
+  "initial_public_joint_target_degrees": [
+    3.3619022369384766,
+    -0.087890625,
+    0.41748046875,
+    0.4614258110523224,
+    -2.3731327056884766,
+    -0.02197265625,
+    -0.68115234375
+  ],
+  "initial_pose_provenance": "Only frame0_state seven joint values extracted BEFORE evaluation from existing inputs.npz; evaluator reads only this protocol and never reads demonstration arrays.",
+  "successful_reference_scene": "<ACT_ROOT>\\runs\\mujoco_validation_20261023\\fixed_flat40_20261023\\policy_step300_progress_fix\\scene\\task_scene.xml",
+  "successful_reference_scene_sha256": "68706e05518c369e512510a0637e025e5ae6de47a580991afd5ef5818ed0b256",
+  "successful_reference_initial_public_state": [
+    3.3619022369404137,
+    -0.08789062500115048,
+    0.41748046875608413,
+    0.4614258110595666,
+    -2.373132705682458,
+    -0.021972656213840747,
+    -0.6811523466207908
+  ],
+  "reference_brick_center_m": [
+    0.34,
+    -0.025,
+    0.0105
+  ],
+  "fixed_brick_dimensions_m": [
+    0.04,
+    0.04,
+    0.02
+  ],
+  "fixed_brick_yaw_deg": 20,
+  "fixed_bin_outside_dimensions_m": [
+    0.12,
+    0.12,
+    0.05
+  ],
+  "fixed_bin_center_m": [
+    0.435,
+    0.18,
+    0.0
+  ],
+  "training_steps_allowed": 0,
+  "hardware_commands_allowed": 0,
+  "duration_s": 15,
+  "policy_hz": 30,
+  "executed_actions_per_chunk": 100,
+  "worker_seed": 0,
+  "policy_inputs": [
+    "state7_public_degrees",
+    "wrist_RGB_480x640x3",
+    "top_RGB_480x640x3"
+  ],
+  "truth_usage": "initial XML placement and final scoring only; never a policy input",
+  "trial_selection": "Five positions chosen before any new rollout outcome; no adaptive search or retuning. Baseline separate from five-position denominator.",
+  "trials": [
+    {
+      "id": "baseline",
+      "label": "原位置复核",
+      "offset_xy_m": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "x_plus30",
+      "label": "X +30 mm",
+      "offset_xy_m": [
+        0.03,
+        0.0
+      ]
+    },
+    {
+      "id": "x_minus30",
+      "label": "X -30 mm",
+      "offset_xy_m": [
+        -0.03,
+        0.0
+      ]
+    },
+    {
+      "id": "y_plus30",
+      "label": "Y +30 mm",
+      "offset_xy_m": [
+        0.0,
+        0.03
+      ]
+    },
+    {
+      "id": "y_minus30",
+      "label": "Y -30 mm",
+      "offset_xy_m": [
+        0.0,
+        -0.03
+      ]
+    },
+    {
+      "id": "xy_plus30_minus40",
+      "label": "X +30 / Y -40 mm",
+      "offset_xy_m": [
+        0.03,
+        -0.04
+      ]
+    }
+  ]
+}

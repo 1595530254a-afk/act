@@ -1,0 +1,601 @@
+{
+  "status": "inferred_attached_camera_candidate",
+  "method": "OpenCV iterative PnP; fixed candidate brick point transformed into moving gripper frame; one attached six-DOF camera fit",
+  "hardware_calibration": false,
+  "hardware_io": false,
+  "source_assets_modified": false,
+  "fovy_fixed_deg": 62.82,
+  "resolution": [
+    640,
+    480
+  ],
+  "intrinsics_assumed": [
+    [
+      393.0288506289644,
+      0.0,
+      320.0
+    ],
+    [
+      0.0,
+      393.0288506289644,
+      240.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "fixed_brick_point_world_m": [
+    0.34,
+    -0.025,
+    0.01
+  ],
+  "source_camera_local_position_m": [
+    -0.06400000000000007,
+    -1.734723475976807e-18,
+    0.05770000000000006
+  ],
+  "fitted_camera_local_position_m": [
+    -0.08550738913350135,
+    -0.001261798832040537,
+    0.09177559500388216
+  ],
+  "fitted_camera_local_rotation_columns": [
+    [
+      0.055215636988048655,
+      0.6625314504745512,
+      -0.7469961918002603
+    ],
+    [
+      -0.9959531489773559,
+      -0.0165877585166897,
+      -0.0883299004272094
+    ],
+    [
+      -0.07091232949278131,
+      0.7488504012147414,
+      0.6589343807439614
+    ]
+  ],
+  "xml_xyaxes": [
+    0.055215636988048655,
+    -0.9959531489773559,
+    -0.07091232949278131,
+    0.6625314504745512,
+    -0.0165877585166897,
+    0.7488504012147414
+  ],
+  "translation_change_m": 0.04031508524734857,
+  "rotation_change_deg": 12.561372547991613,
+  "within_loose_source_mount_prior": true,
+  "positive_depth_all_frames": true,
+  "before_training": {
+    "rmse_px": 71.57529323579506,
+    "median_px": 70.50192526377046,
+    "max_px": 85.65959595449537
+  },
+  "after_training": {
+    "rmse_px": 5.303113087740489,
+    "median_px": 4.063751721130561,
+    "max_px": 9.10197016453238
+  },
+  "before_held_out": {
+    "rmse_px": 76.9190594449658,
+    "median_px": 77.66461124607254,
+    "max_px": 88.20471567634017
+  },
+  "after_held_out": {
+    "rmse_px": 2.6473816426995116,
+    "median_px": 2.215613910664209,
+    "max_px": 4.240791222164233
+  },
+  "point_cloud_singular_values_m": [
+    0.10520750431097026,
+    0.022436837489041597,
+    0.009953994834628208
+  ],
+  "detections": [
+    {
+      "frame": 110,
+      "row": 10,
+      "centroid_px": [
+        319.96228638774306,
+        318.24366529169123
+      ],
+      "area_px": 6788,
+      "bbox_xywh_px": [
+        278,
+        276,
+        84,
+        86
+      ],
+      "held_out": true,
+      "before_px": [
+        275.2136447171333,
+        394.2543943776524
+      ],
+      "after_px": [
+        319.5899797422315,
+        317.9988152551914
+      ],
+      "before_error_px": 88.20471567634017,
+      "after_error_px": 0.44560495808063594
+    },
+    {
+      "frame": 115,
+      "row": 11,
+      "centroid_px": [
+        335.33108480176213,
+        316.9731552863436
+      ],
+      "area_px": 7264,
+      "bbox_xywh_px": [
+        292,
+        272,
+        88,
+        90
+      ],
+      "held_out": false,
+      "before_px": [
+        301.10335710629585,
+        395.4972218894712
+      ],
+      "after_px": [
+        339.2535452283727,
+        319.089589031181
+      ],
+      "before_error_px": 85.65959595449537,
+      "after_error_px": 4.457015547943721
+    },
+    {
+      "frame": 120,
+      "row": 12,
+      "centroid_px": [
+        358.70888178913737,
+        328.9658785942492
+      ],
+      "area_px": 7825,
+      "bbox_xywh_px": [
+        312,
+        280,
+        94,
+        98
+      ],
+      "held_out": false,
+      "before_px": [
+        319.21284981801097,
+        404.1778664956628
+      ],
+      "after_px": [
+        353.0259561615437,
+        325.564929677723
+      ],
+      "before_error_px": 84.95163132951963,
+      "after_error_px": 6.622846610150457
+    },
+    {
+      "frame": 125,
+      "row": 13,
+      "centroid_px": [
+        342.28917973598107,
+        323.24359697619315
+      ],
+      "area_px": 8863,
+      "bbox_xywh_px": [
+        294,
+        272,
+        98,
+        102
+      ],
+      "held_out": false,
+      "before_px": [
+        307.2350377307135,
+        398.6557452732058
+      ],
+      "after_px": [
+        343.94923031512246,
+        322.28771233083256
+      ],
+      "before_error_px": 83.16119877981615,
+      "after_error_px": 1.9155895647407928
+    },
+    {
+      "frame": 130,
+      "row": 14,
+      "centroid_px": [
+        346.97888637925956,
+        322.0718845134047
+      ],
+      "area_px": 10183,
+      "bbox_xywh_px": [
+        296,
+        266,
+        104,
+        112
+      ],
+      "held_out": true,
+      "before_px": [
+        309.82386738052423,
+        400.13065248622365
+      ],
+      "after_px": [
+        345.8457961362807,
+        323.82295812256865
+      ],
+      "before_error_px": 86.4503712787329,
+      "after_error_px": 2.085701868303416
+    },
+    {
+      "frame": 135,
+      "row": 15,
+      "centroid_px": [
+        344.1626723420006,
+        322.8926621634126
+      ],
+      "area_px": 10807,
+      "bbox_xywh_px": [
+        290,
+        266,
+        108,
+        114
+      ],
+      "held_out": false,
+      "before_px": [
+        312.1375412812286,
+        397.8253129894309
+      ],
+      "after_px": [
+        347.43984324213096,
+        322.70550673011724
+      ],
+      "before_error_px": 81.48933168994337,
+      "after_error_px": 3.282510664852953
+    },
+    {
+      "frame": 140,
+      "row": 16,
+      "centroid_px": [
+        350.7111965811966,
+        315.69957264957264
+      ],
+      "area_px": 11700,
+      "bbox_xywh_px": [
+        296,
+        256,
+        112,
+        120
+      ],
+      "held_out": false,
+      "before_px": [
+        321.11464395745014,
+        387.5430476400979
+      ],
+      "after_px": [
+        353.620165370162,
+        316.3041043099597
+      ],
+      "before_error_px": 77.70097055973251,
+      "after_error_px": 2.971120654498102
+    },
+    {
+      "frame": 145,
+      "row": 17,
+      "centroid_px": [
+        360.01551302588314,
+        303.76671444228987
+      ],
+      "area_px": 11861,
+      "bbox_xywh_px": [
+        304,
+        244,
+        116,
+        120
+      ],
+      "held_out": false,
+      "before_px": [
+        335.31697595346014,
+        370.2721721237386
+      ],
+      "after_px": [
+        363.47560433946995,
+        304.9915611608517
+      ],
+      "before_error_px": 70.94359474213877,
+      "after_error_px": 3.670487894317402
+    },
+    {
+      "frame": 150,
+      "row": 18,
+      "centroid_px": [
+        372.6413034689092,
+        291.5932724185332
+      ],
+      "area_px": 12367,
+      "bbox_xywh_px": [
+        315,
+        228,
+        117,
+        126
+      ],
+      "held_out": true,
+      "before_px": [
+        344.83656853841234,
+        354.61067366552356
+      ],
+      "after_px": [
+        369.9649771560114,
+        294.8828905813108
+      ],
+      "before_error_px": 68.87885121341218,
+      "after_error_px": 4.240791222164233
+    },
+    {
+      "frame": 155,
+      "row": 19,
+      "centroid_px": [
+        369.82431577282074,
+        283.33554817275746
+      ],
+      "area_px": 12642,
+      "bbox_xywh_px": [
+        312,
+        220,
+        118,
+        125
+      ],
+      "held_out": false,
+      "before_px": [
+        337.7589382935223,
+        345.6272089936577
+      ],
+      "after_px": [
+        364.7419912671206,
+        289.1455423770243
+      ],
+      "before_error_px": 70.06025578540215,
+      "after_error_px": 7.719200414217409
+    },
+    {
+      "frame": 160,
+      "row": 20,
+      "centroid_px": [
+        358.6073643114139,
+        280.11390951542523
+      ],
+      "area_px": 13063,
+      "bbox_xywh_px": [
+        294,
+        212,
+        134,
+        134
+      ],
+      "held_out": false,
+      "before_px": [
+        316.98806517882775,
+        334.4046852211251
+      ],
+      "after_px": [
+        349.80171340270385,
+        282.41746610252517
+      ],
+      "before_error_px": 68.4079994373048,
+      "after_error_px": 9.10197016453238
+    },
+    {
+      "frame": 165,
+      "row": 21,
+      "centroid_px": [
+        342.5967640094712,
+        284.64909234412
+      ],
+      "area_px": 12670,
+      "bbox_xywh_px": [
+        274,
+        206,
+        140,
+        145
+      ],
+      "held_out": false,
+      "before_px": [
+        299.70098620727964,
+        329.5689498664974
+      ],
+      "after_px": [
+        337.65742257157126,
+        279.7751309059861
+      ],
+      "before_error_px": 62.11152351283678,
+      "after_error_px": 6.939207010932284
+    },
+    {
+      "frame": 170,
+      "row": 22,
+      "centroid_px": [
+        327.48836126629425,
+        276.84124767225325
+      ],
+      "area_px": 12888,
+      "bbox_xywh_px": [
+        258,
+        196,
+        142,
+        146
+      ],
+      "held_out": true,
+      "before_px": [
+        286.26320284298595,
+        321.21036339830437
+      ],
+      "after_px": [
+        328.2390233492513,
+        274.61908691444916
+      ],
+      "before_error_px": 60.565106433808765,
+      "after_error_px": 2.345525953025002
+    },
+    {
+      "frame": 175,
+      "row": 23,
+      "centroid_px": [
+        328.89422570202515,
+        273.152902205827
+      ],
+      "area_px": 13283,
+      "bbox_xywh_px": [
+        260,
+        192,
+        144,
+        148
+      ],
+      "held_out": false,
+      "before_px": [
+        290.33352699536533,
+        314.4992553301317
+      ],
+      "after_px": [
+        331.02935244854035,
+        270.82179286628207
+      ],
+      "before_error_px": 56.53714178684219,
+      "after_error_px": 3.161144883835308
+    },
+    {
+      "frame": 180,
+      "row": 24,
+      "centroid_px": [
+        334.82815823054017,
+        269.25747908691335
+      ],
+      "area_px": 14106,
+      "bbox_xywh_px": [
+        264,
+        184,
+        148,
+        154
+      ],
+      "held_out": false,
+      "before_px": [
+        297.65194629582413,
+        309.1855268424618
+      ],
+      "after_px": [
+        336.0929016383287,
+        268.5852306075309
+      ],
+      "before_error_px": 54.55565718955533,
+      "after_error_px": 1.4323037057749466
+    },
+    {
+      "frame": 185,
+      "row": 25,
+      "centroid_px": [
+        349.0027333606669,
+        279.3059997266639
+      ],
+      "area_px": 14634,
+      "bbox_xywh_px": [
+        278,
+        190,
+        152,
+        157
+      ],
+      "held_out": false,
+      "before_px": [
+        325.0563770366408,
+        325.1651673967458
+      ],
+      "after_px": [
+        354.85425184740245,
+        279.6741137505765
+      ],
+      "before_error_px": 51.7348165222407,
+      "after_error_px": 5.863085922550408
+    }
+  ],
+  "excluded_partial_detections": [
+    {
+      "frame": 65,
+      "centroid_px": [
+        345.58921161825725,
+        452.24896265560164
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 75,
+      "centroid_px": [
+        344.54865556978234,
+        436.34507042253523
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 80,
+      "centroid_px": [
+        341.9474004256613,
+        426.2012769838857
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 85,
+      "centroid_px": [
+        332.53169548074004,
+        410.5192599332727
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 90,
+      "centroid_px": [
+        322.8210399032648,
+        384.4607013301088
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 95,
+      "centroid_px": [
+        317.8725447402881,
+        356.6219991270188
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 100,
+      "centroid_px": [
+        320.0635690579525,
+        336.4937452131733
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    },
+    {
+      "frame": 105,
+      "centroid_px": [
+        318.64755512943435,
+        320.34209012464044
+      ],
+      "reason": "Brick visibly occluded by the fingers/camera lower border in inspected real frames; partial-red centroid is not the whole brick centre."
+    }
+  ],
+  "cpu_budget": {
+    "logical_cpus_allowed": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "system_logical_cpu_count": 20,
+    "priority": "below_normal",
+    "torch_threads": 2,
+    "torch_interop_threads": 1,
+    "scope": "This ACT process only; CPU affinity is not a temperature or power limit."
+  },
+  "limitations": [
+    "Brick location, candidate robot zero/mapping, pixel centroid-to-3D-centre correspondence and camera focal length are assumptions.",
+    "This fit can absorb errors in assumed brick world coordinates and robot kinematics; it does not establish real hand-eye extrinsics.",
+    "Only red centroids are fitted, not robot landmarks, full-image texture or grasp success. Held-out samples come from the same episode.",
+    "A small residual is diagnostic evidence for a more similar virtual view, not independent camera calibration or policy success."
+  ]
+}

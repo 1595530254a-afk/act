@@ -1,0 +1,1136 @@
+{
+  "status": "completed_read_only_Git_publication_scope_audit",
+  "created_utc": "2026-10-24T04:21:53.277939+00:00",
+  "repository": {
+    "branch": "master",
+    "origin": "https://github.com/1595530254a-afk/act.git",
+    "HEAD_at_audit": "6e702dd7d9ab75c2bc2b3c95a0e515f9641c03cc",
+    "authorized_branch": "master",
+    "branch_switch_requested_or_performed": false,
+    "git_ls_remote_verified_exit0": true,
+    "remote_HEAD_at_initial_check": "6e702dd7d9ab75c2bc2b3c95a0e515f9641c03cc",
+    "gh_in_audit_shell": false,
+    "GCM_cached_GitHub_accounts": [
+      "1595530254a-afk"
+    ],
+    "token_requested_or_output": false,
+    "Git_identity_name_and_email_configured": true,
+    "push_permission_verified_by_auditor": false,
+    "note": "Normal authorized Git push by parent is the write-permission check; missing gh is not a blocker and no PR is needed.",
+    "working_tree_snapshot_entries": 107
+  },
+  "static_import_closure": {
+    "simulation_py_files": 57,
+    "AST_parse_errors": [],
+    "local_closure_resolved": true,
+    "per_file": {
+      "simulation/adapt_act_multisite.py": {
+        "local_modules": [
+          "adapt_act_sim",
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/adapt_act_multisite_20261024.py": {
+        "local_modules": [
+          "adapt_act_sim",
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/adapt_act_sim.py": {
+        "local_modules": [
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "lerobot",
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/aloha_baseline_20261024.py": {
+        "local_modules": [
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "PIL",
+          "dm_control",
+          "gym_aloha",
+          "gymnasium",
+          "lerobot",
+          "mujoco",
+          "numpy",
+          "safetensors",
+          "torch"
+        ]
+      },
+      "simulation/aloha_policy_worker_20261024.py": {
+        "local_modules": [
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "lerobot",
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/analyze_checkpoint_comparison.py": {
+        "local_modules": [
+          "analyze_position_generalization",
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "run_checkpoint_comparison",
+          "run_task"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/analyze_grasp_alignment.py": {
+        "local_modules": [
+          "check_task_reference",
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/analyze_multisite_phase.py": {
+        "local_modules": [
+          "cpu_budget",
+          "preview"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/analyze_multisite_validation.py": {
+        "local_modules": [
+          "cpu_budget",
+          "preview",
+          "run_task"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/analyze_position_generalization.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/benchmark_feedback_cuda_20261024.py": {
+        "local_modules": [
+          "cpu_budget",
+          "policy_process_cuda_20261024",
+          "run_task"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/check_task_reference.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/evaluate_act_ensemble.py": {
+        "local_modules": [
+          "analyze_position_generalization",
+          "cpu_budget",
+          "evaluate_multisite_act",
+          "joint_mapping",
+          "preview",
+          "run_checkpoint_comparison",
+          "run_position_generalization",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/evaluate_feedback_20261024.py": {
+        "local_modules": [
+          "analyze_position_generalization",
+          "cpu_budget",
+          "evaluate_act_ensemble",
+          "joint_mapping",
+          "policy_process_cuda_20261024",
+          "preview",
+          "run_checkpoint_comparison",
+          "run_position_generalization",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/evaluate_multisite_act.py": {
+        "local_modules": [
+          "analyze_position_generalization",
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "run_checkpoint_comparison",
+          "run_position_generalization",
+          "run_task"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/export_inputs.py": {
+        "local_modules": [
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "PIL",
+          "lerobot",
+          "numpy",
+          "pyarrow",
+          "torch"
+        ]
+      },
+      "simulation/export_multisite_rgb.py": {
+        "local_modules": [
+          "cpu_budget",
+          "export_sim_demonstration",
+          "preview"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/export_sim_demonstration.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "run_task",
+          "task_dynamics",
+          "task_scene"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/fetch_model.py": {
+        "local_modules": [],
+        "external_roots": []
+      },
+      "simulation/fit_wrist_camera.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview"
+        ],
+        "external_roots": [
+          "PIL",
+          "av",
+          "cv2",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/generate_multisite_teacher.py": {
+        "local_modules": [
+          "cpu_budget",
+          "export_sim_demonstration",
+          "preview",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/generate_recovery_teacher.py": {
+        "local_modules": [
+          "analyze_position_generalization",
+          "cpu_budget",
+          "export_sim_demonstration",
+          "generate_multisite_teacher",
+          "joint_mapping",
+          "preview",
+          "run_checkpoint_comparison",
+          "run_position_generalization",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/joint_mapping.py": {
+        "local_modules": [],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/policy_process_cuda_20261024.py": {
+        "local_modules": [
+          "run_task"
+        ],
+        "external_roots": []
+      },
+      "simulation/policy_worker.py": {
+        "local_modules": [
+          "cpu_budget"
+        ],
+        "external_roots": [
+          "lerobot",
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/policy_worker_cuda_20261024.py": {
+        "local_modules": [
+          "policy_worker"
+        ],
+        "external_roots": [
+          "lerobot"
+        ]
+      },
+      "simulation/preview.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/render_feedback_20261024.py": {
+        "local_modules": [
+          "cpu_budget",
+          "evaluate_feedback_20261024",
+          "preview",
+          "render_multisite_evaluation",
+          "render_policy_replay",
+          "run_position_generalization",
+          "run_task"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/render_multisite_evaluation.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "render_policy_replay"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/render_policy_replay.py": {
+        "local_modules": [
+          "cpu_budget",
+          "preview"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/render_position_generalization.py": {
+        "local_modules": [
+          "cpu_budget",
+          "preview",
+          "render_policy_replay"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/render_sim_teacher.py": {
+        "local_modules": [
+          "cpu_budget",
+          "preview"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/run_checkpoint_comparison.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "run_position_generalization",
+          "run_task",
+          "task_dynamics",
+          "task_scene"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/run_long5000_validation_20261024.py": {
+        "local_modules": [
+          "cpu_budget",
+          "evaluate_feedback_20261024",
+          "run_checkpoint_comparison",
+          "run_position_generalization",
+          "run_task"
+        ],
+        "external_roots": []
+      },
+      "simulation/run_long5000_validation_20261024_v2.py": {
+        "local_modules": [
+          "cpu_budget",
+          "evaluate_feedback_20261024",
+          "joint_mapping",
+          "preview",
+          "run_checkpoint_comparison",
+          "run_long5000_validation_20261024",
+          "run_position_generalization",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/run_position_generalization.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "run_task",
+          "task_scene"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/run_task.py": {
+        "local_modules": [
+          "cpu_budget",
+          "joint_mapping",
+          "preview",
+          "task_dynamics",
+          "task_scene"
+        ],
+        "external_roots": [
+          "PIL",
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/serve_report.py": {
+        "local_modules": [],
+        "external_roots": []
+      },
+      "simulation/task_dynamics.py": {
+        "local_modules": [
+          "joint_mapping"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/task_scene.py": {
+        "local_modules": [],
+        "external_roots": [
+          "PIL"
+        ]
+      },
+      "simulation/test_adapt_act_multisite.py": {
+        "local_modules": [
+          "adapt_act_multisite"
+        ],
+        "external_roots": [
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/test_adapt_act_multisite_20261024.py": {
+        "local_modules": [
+          "adapt_act_multisite_20261024"
+        ],
+        "external_roots": [
+          "numpy",
+          "torch"
+        ]
+      },
+      "simulation/test_evaluate_act_ensemble.py": {
+        "local_modules": [
+          "evaluate_act_ensemble"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/test_evaluate_feedback_20261024.py": {
+        "local_modules": [
+          "evaluate_feedback_20261024"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/test_export_inputs.py": {
+        "local_modules": [
+          "export_inputs"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/test_joint_mapping.py": {
+        "local_modules": [
+          "joint_mapping"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/test_policy_worker.py": {
+        "local_modules": [
+          "policy_worker"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/test_preview.py": {
+        "local_modules": [
+          "preview"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/test_run_long5000_validation_20261024.py": {
+        "local_modules": [
+          "run_long5000_validation_20261024"
+        ],
+        "external_roots": []
+      },
+      "simulation/test_run_long5000_validation_20261024_v2.py": {
+        "local_modules": [
+          "run_long5000_validation_20261024_v2",
+          "test_evaluate_feedback_20261024"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/test_run_task.py": {
+        "local_modules": [
+          "run_task"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/test_task_dynamics.py": {
+        "local_modules": [
+          "joint_mapping",
+          "preview",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/verify_feedback_outputs_20261024.py": {
+        "local_modules": [
+          "cpu_budget",
+          "policy_worker",
+          "policy_worker_cuda_20261024"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/verify_multisite_policy_outputs.py": {
+        "local_modules": [
+          "cpu_budget",
+          "verify_position_policy_outputs"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/verify_multisite_teacher.py": {
+        "local_modules": [
+          "cpu_budget",
+          "preview",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      },
+      "simulation/verify_position_policy_outputs.py": {
+        "local_modules": [
+          "cpu_budget",
+          "policy_worker"
+        ],
+        "external_roots": [
+          "numpy"
+        ]
+      },
+      "simulation/verify_recovery_teacher.py": {
+        "local_modules": [
+          "analyze_position_generalization",
+          "cpu_budget",
+          "generate_multisite_teacher",
+          "generate_recovery_teacher",
+          "joint_mapping",
+          "preview",
+          "run_position_generalization",
+          "run_task",
+          "task_dynamics"
+        ],
+        "external_roots": [
+          "mujoco",
+          "numpy"
+        ]
+      }
+    },
+    "external_import_roots": [
+      "PIL",
+      "av",
+      "cv2",
+      "dm_control",
+      "gym_aloha",
+      "gymnasium",
+      "lerobot",
+      "mujoco",
+      "numpy",
+      "pyarrow",
+      "safetensors",
+      "torch"
+    ],
+    "dynamic_runtime_dependencies": [
+      "CUDA worker launches .venv/Scripts/python.exe",
+      "Frozen source protocol, camera fit, reference XML and position plan now supplied as public runtime templates",
+      "Official44asset meshes/xml fetched by pinned manifest; not redistributed in Git",
+      "Selected six-file model from stage2 package via --model-dir"
+    ],
+    "verification_limit": "AST and dependency metadata only; no new installs or runtime ACT/physics"
+  },
+  "gitignore": {
+    "current_text": "/.venv/\n/.python/\n/tools/\n/cache/\n/tmp/\n/data/\n/models/\n/runs/\n/local/\n/delivery/\n/reports/training_cli_help.txt\n__pycache__/\n*.pyc\n",
+    "changed_by_auditor": false,
+    "roots_not_ignored_requiring_explicit_selection": [
+      "output",
+      "视频",
+      "cad",
+      "docs",
+      "reports",
+      "scripts"
+    ],
+    "already_ignored_large_roots": [
+      "models",
+      "data",
+      "runs",
+      "local",
+      "delivery",
+      ".venv",
+      ".python",
+      "cache",
+      "tools"
+    ]
+  },
+  "privacy_pattern_scan": {
+    "git_visible_files": 339,
+    "text_files_scanned": 259,
+    "scope": "UTF-8 text <=6MiB in cached+untracked unignored paths; known key/path patterns only, no credentials printed",
+    "credential_findings_redacted": [],
+    "private_path_findings_without_values": [
+      {
+        "path": "cad/pick_place_props_20261023/independent_verification.json",
+        "line": 4,
+        "kind": "personal_windows_user_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "reports/j4_return_review_20261022.json",
+        "line": 2,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "reports/j4_v2_return_review_20261022.json",
+        "line": 2,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "scripts/review_return_batch01_20261021.py",
+        "line": 12,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "scripts/review_return_batch02_20261021.py",
+        "line": 10,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "scripts/review_return_batch03_20261022.py",
+        "line": 10,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "scripts/review_return_batch04_20261022.py",
+        "line": 12,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      },
+      {
+        "path": "scripts/review_return_batch05_20261022.py",
+        "line": 13,
+        "kind": "wechat_private_path",
+        "private_value_omitted": true
+      }
+    ],
+    "source_scope_findings": [],
+    "new_reproduction_docs_findings": [],
+    "git_visible_files_over50MiB": [
+      {
+        "path": "output/ACT_stage2_handoff_20261024_v1.zip",
+        "bytes": 192548942,
+        "over100MiB": true
+      },
+      {
+        "path": "output/ACT_stage2_handoff_20261024_v1/models/act_long5000_step3000/model.safetensors",
+        "bytes": 206707932,
+        "over100MiB": true
+      }
+    ],
+    "claim": "No known credential formats found in selected source/public reconstruction scope; not a proof of complete absence."
+  },
+  "license_review": {
+    "root_license_files": [],
+    "project_root_license_missing": true,
+    "B601_model_and_dataset": "Pinned local publisher cards declare Apache-2.0",
+    "D405_mount": "Exact cached THIRD_PARTY_MODELS.md declares CERN-OHL-W-2.0; Bowen Zhu v1.0.0 commit ca379b9a4e19096730cd255dfc35ec419a7ad144",
+    "all_Seeed_mesh_licenses_verified": false,
+    "upstream_repository_root_LICENSE_cached": false,
+    "recommendation": "Publish own integration source, source URLs, pinned download manifest and attribution; do not include mesh binaries or assume a unified license over them."
+  },
+  "model_weight_policy": {
+    "selected_weight_bytes": 206707932,
+    "ordinary_git_over100MiB": true,
+    "Git_contents": "Six-file identity hashes only",
+    "actual_weight_delivery": "stage2 package models/act_long5000_step3000",
+    "files": [
+      {
+        "filename": "config.json",
+        "sha256": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "bytes": 1762,
+        "ordinary_git_publish": false,
+        "provided_by_stage2_local_model_package": true
+      },
+      {
+        "filename": "model.safetensors",
+        "sha256": "c25ffa08fd2b67343f37eab06bb948642e2a6d2578e387a563ba81105c506c2c",
+        "bytes": 206707932,
+        "ordinary_git_publish": false,
+        "provided_by_stage2_local_model_package": true
+      },
+      {
+        "filename": "policy_preprocessor.json",
+        "sha256": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "bytes": 1389,
+        "ordinary_git_publish": false,
+        "provided_by_stage2_local_model_package": true
+      },
+      {
+        "filename": "policy_postprocessor.json",
+        "sha256": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "bytes": 691,
+        "ordinary_git_publish": false,
+        "provided_by_stage2_local_model_package": true
+      },
+      {
+        "filename": "policy_preprocessor_step_3_normalizer_processor.safetensors",
+        "sha256": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "bytes": 7552,
+        "ordinary_git_publish": false,
+        "provided_by_stage2_local_model_package": true
+      },
+      {
+        "filename": "policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+        "sha256": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "bytes": 7552,
+        "ordinary_git_publish": false,
+        "provided_by_stage2_local_model_package": true
+      }
+    ]
+  },
+  "runtime_inputs": {
+    "public_directory": "docs/stage1_20261024/runtime_inputs",
+    "path_mapping": "docs/stage1_20261024/runtime_inputs/path_mapping.json",
+    "original_and_public_hashes_checked": true,
+    "originals_unchanged": true,
+    "public_root_placeholder": "<ACT_ROOT>",
+    "new_machine_restore": "Restore to documented project-relative targets; replace protocol paths; recompute actual camera/reference hashes and new protocol/plan hash; do not assert original identity after modifications.",
+    "guide": "docs/stage1_20261024/public_reproduction.md",
+    "minimal_reconstruction_inputs_in_Git": true,
+    "full_original_rollout_and_weights_in_Git": false
+  },
+  "recommended_git_add_whitelist": {
+    "source_and_public_metadata": [
+      "requirements.in",
+      "requirements.lock.txt",
+      "resources/dataset_info.json",
+      "resources/model_config.json",
+      "resources/model_postprocessor.json",
+      "resources/model_preprocessor.json",
+      "resources/model_train_config.json",
+      "resources/resource_manifest.json",
+      "scripts/cpu_budget.py",
+      "scripts/download_resources.py",
+      "simulation/MAPPING.md",
+      "simulation/OPEN_REPORT.ps1",
+      "simulation/OPEN_VIEWER.ps1",
+      "simulation/README.md",
+      "simulation/RUN_FIXED_FLAT40.ps1",
+      "simulation/adapt_act_multisite.py",
+      "simulation/adapt_act_multisite_20261024.py",
+      "simulation/adapt_act_sim.py",
+      "simulation/aloha_baseline_20261024.py",
+      "simulation/aloha_policy_worker_20261024.py",
+      "simulation/analyze_checkpoint_comparison.py",
+      "simulation/analyze_grasp_alignment.py",
+      "simulation/analyze_multisite_phase.py",
+      "simulation/analyze_multisite_validation.py",
+      "simulation/analyze_position_generalization.py",
+      "simulation/benchmark_feedback_cuda_20261024.py",
+      "simulation/check_task_reference.py",
+      "simulation/evaluate_act_ensemble.py",
+      "simulation/evaluate_feedback_20261024.py",
+      "simulation/evaluate_multisite_act.py",
+      "simulation/export_inputs.py",
+      "simulation/export_multisite_rgb.py",
+      "simulation/export_sim_demonstration.py",
+      "simulation/fetch_model.py",
+      "simulation/fit_wrist_camera.py",
+      "simulation/generate_multisite_teacher.py",
+      "simulation/generate_recovery_teacher.py",
+      "simulation/joint_mapping.py",
+      "simulation/policy_process_cuda_20261024.py",
+      "simulation/policy_worker.py",
+      "simulation/policy_worker_cuda_20261024.py",
+      "simulation/preview.py",
+      "simulation/render_feedback_20261024.py",
+      "simulation/render_multisite_evaluation.py",
+      "simulation/render_policy_replay.py",
+      "simulation/render_position_generalization.py",
+      "simulation/render_sim_teacher.py",
+      "simulation/requirements.lock.txt",
+      "simulation/run_checkpoint_comparison.py",
+      "simulation/run_long5000_validation_20261024.py",
+      "simulation/run_long5000_validation_20261024_v2.py",
+      "simulation/run_position_generalization.py",
+      "simulation/run_task.py",
+      "simulation/serve_report.py",
+      "simulation/task_dynamics.py",
+      "simulation/task_scene.py",
+      "simulation/test_adapt_act_multisite.py",
+      "simulation/test_adapt_act_multisite_20261024.py",
+      "simulation/test_evaluate_act_ensemble.py",
+      "simulation/test_evaluate_feedback_20261024.py",
+      "simulation/test_export_inputs.py",
+      "simulation/test_joint_mapping.py",
+      "simulation/test_policy_worker.py",
+      "simulation/test_preview.py",
+      "simulation/test_run_long5000_validation_20261024.py",
+      "simulation/test_run_long5000_validation_20261024_v2.py",
+      "simulation/test_run_task.py",
+      "simulation/test_task_dynamics.py",
+      "simulation/upstream_manifest.json",
+      "simulation/verify_feedback_outputs_20261024.py",
+      "simulation/verify_multisite_policy_outputs.py",
+      "simulation/verify_multisite_teacher.py",
+      "simulation/verify_position_policy_outputs.py",
+      "simulation/verify_recovery_teacher.py"
+    ],
+    "pure_summaries_and_runtime_templates": [
+      "reports/ACT_5000步与视觉反馈迭代_20261024.md",
+      "reports/ACT开源仿真路线与参数核对_20261024.md",
+      "docs/stage1_20261024/public_reproduction.md",
+      "docs/stage1_20261024/runtime_inputs/camera_fit.json",
+      "docs/stage1_20261024/runtime_inputs/compact_results.json",
+      "docs/stage1_20261024/runtime_inputs/final_selection.json",
+      "docs/stage1_20261024/runtime_inputs/path_mapping.json",
+      "docs/stage1_20261024/runtime_inputs/position_plan.json",
+      "docs/stage1_20261024/runtime_inputs/source_protocol.json",
+      "docs/stage1_20261024/runtime_inputs/successful_reference_scene.xml",
+      "docs/stage1_20261024/runtime_inputs/upstream_manifest.json",
+      "docs/stage1_20261024/source_manifest.json",
+      "reports/stage1_archive_20261024/git_scope_audit.json",
+      "reports/stage1_archive_20261024/git_scope_audit.md"
+    ],
+    "optional_selected_videos": [
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_同步回看.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_00_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_01_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_02_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_03_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_04_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_05_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_06_实际输入.mp4",
+      "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_07_实际输入.mp4",
+      "视频/ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_同步回看.mp4",
+      "视频/ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_extra_p10_0_实际输入.mp4"
+    ],
+    "optional_video_total_bytes": 29271305,
+    "video_details": [
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_同步回看.mp4",
+        "bytes": 2850856,
+        "sha256": "869f664c886f2456a1ffc533844ce8b7cd912154de3ae44a031651d882e1661e",
+        "ffprobe": {
+          "width": 1920,
+          "height": 832,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_00_实际输入.mp4",
+        "bytes": 2868553,
+        "sha256": "3daadb1655b727a69bcfbe6785ca877ddf283dddf7d271112cb37159cebfcb95",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_01_实际输入.mp4",
+        "bytes": 2831122,
+        "sha256": "1346d6922ef9b9990d053665540be4287784be53fe0c675b1404d835e178a749",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_02_实际输入.mp4",
+        "bytes": 2879830,
+        "sha256": "5fa8ee745eef49b70750b92b7bfe154f567b56706f90f8ad8ac9a70295654dce",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_03_实际输入.mp4",
+        "bytes": 2854887,
+        "sha256": "7c85536bb1ae2183e04bb10de6b3ca7d604a3cfedf95dbc417112f99de35792a",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_04_实际输入.mp4",
+        "bytes": 2831757,
+        "sha256": "10dc3f38eeab8a243f7c190f7a62398b1a451b393d61e1b5200cd3dd79beb109",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_05_实际输入.mp4",
+        "bytes": 2868652,
+        "sha256": "f6266c12f3662b594c74d2090eae2c08d873985f290fe7648e9d5d8beec0a9c9",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_06_实际输入.mp4",
+        "bytes": 2871918,
+        "sha256": "51371b84c3dd6a401d21d88572b503f07693345eadb96f01ce11f3e3307504e6",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_07_实际输入.mp4",
+        "bytes": 2827386,
+        "sha256": "0f745ddb46ea0a9a161efcc2830499cd209d6cce537e476c7cbc6ceba7414cd4",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_同步回看.mp4",
+        "bytes": 744047,
+        "sha256": "b3811923adc6785ecab7e64cfc30ffef118251813d6ee2c6e4e5f0a060a606fa",
+        "ffprobe": {
+          "width": 640,
+          "height": 560,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      },
+      {
+        "path": "视频/ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_extra_p10_0_实际输入.mp4",
+        "bytes": 2842297,
+        "sha256": "a2d7681bcac19417b07c394ae29fd7da93fa10a893bbb8380c895579d29928ef",
+        "ffprobe": {
+          "width": 1280,
+          "height": 800,
+          "r_frame_rate": "30/1",
+          "duration": "15.000000",
+          "nb_frames": "450",
+          "nb_read_frames": "450"
+        }
+      }
+    ],
+    "policy": "Explicit named paths; no git add . and no force-add of ignored model/data/runtime trees. Parent owns final staging and normal commit/push."
+  },
+  "do_not_stage_scope": [
+    "All model.safetensors, environments/caches and downloaded raw datasets",
+    "Whole output/,local/,runs/,delivery/,cad/ directories",
+    "Unrelated historical hardware/laptop/MIT/hand-eye/J4 changes",
+    "cad/pick_place_props_20261023/independent_verification.json",
+    "reports/j4_return_review_20261022.json",
+    "reports/j4_v2_return_review_20261022.json",
+    "scripts/review_return_batch01_20261021.py",
+    "scripts/review_return_batch02_20261021.py",
+    "scripts/review_return_batch03_20261022.py",
+    "scripts/review_return_batch04_20261022.py",
+    "scripts/review_return_batch05_20261022.py"
+  ],
+  "source_manifest_sha256": "0a0206da81da2e9b5783e9015689f72101f8250857c451eaf16d4a1b37048a23",
+  "source_files_unchanged_during_audit": true,
+  "actions_not_taken": {
+    "git_stage": 0,
+    "git_commit": 0,
+    "git_push": 0,
+    "branch_switch": 0,
+    "installation": 0,
+    "approval_request": 0,
+    "new_ACT_calls": 0,
+    "new_CUDA_calls": 0,
+    "new_physics_steps": 0,
+    "existing_source_edits": 0
+  },
+  "cpu_budget": {
+    "logical_cpus_allowed": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "system_logical_cpu_count": 20,
+    "priority": "below_normal",
+    "torch_threads": 2,
+    "torch_interop_threads": 1,
+    "scope": "This ACT process only; CPU affinity is not a temperature or power limit."
+  }
+}
