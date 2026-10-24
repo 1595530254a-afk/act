@@ -118,11 +118,12 @@ def make_table(doc, lines):
             cell=row.cells[i]; cell.width=Cm(widths[i]); cell.vertical_alignment=WD_CELL_VERTICAL_ALIGNMENT.CENTER
             pr=cell._tc.get_or_add_tcPr(); margin=OxmlElement('w:tcMar')
             for side in ['top','bottom','left','right']:
-                el=OxmlElement('w:'+side); el.set(qn('w:w'),'100');el.set(qn('w:type'),'dxa');margin.append(el)
+                el=OxmlElement('w:'+side); el.set(qn('w:w'),'80' if side in ['top','bottom'] else '100');el.set(qn('w:type'),'dxa');margin.append(el)
             pr.append(margin)
             if n==0:
                 fill=OxmlElement('w:shd');fill.set(qn('w:fill'),'EEF1F3');pr.append(fill)
             p=cell.paragraphs[0]; p.paragraph_format.space_after=Pt(1.5);p.paragraph_format.line_spacing=Pt(14)
+            p.paragraph_format.keep_with_next=(n==0)
             if n==0:font(p.add_run(value),10,True)
             else:runs(p,value,10)
             if i==0 and count==4:p.alignment=WD_ALIGN_PARAGRAPH.CENTER
@@ -130,7 +131,6 @@ def make_table(doc, lines):
     for side in ['top','left','bottom','right','insideH','insideV']:
         b=OxmlElement('w:'+side);b.set(qn('w:val'),'single' if side in ['top','bottom','insideH'] else 'nil');b.set(qn('w:sz'),'4');b.set(qn('w:color'),'DDE2E5');borders.append(b)
     table._tbl.tblPr.append(borders)
-    end=doc.add_paragraph();end.paragraph_format.space_after=Pt(1);end.paragraph_format.line_spacing=.5
 
 
 def main():
@@ -148,9 +148,11 @@ def main():
     for name,size in [('Normal',11.5),('Title',22),('Heading 1',16),('Heading 2',12.5),('Heading 3',11.5)]:
         st=doc.styles[name];st.font.name=LATIN_FONT;st.font.size=Pt(size);st.font.color.rgb=RGBColor(0,0,0)
         fs=st._element.get_or_add_rPr().rFonts;fs.set(qn('w:eastAsia'),FONT);fs.set(qn('w:ascii'),LATIN_FONT);fs.set(qn('w:hAnsi'),LATIN_FONT)
-        st.paragraph_format.space_after=Pt(7);st.paragraph_format.line_spacing=Pt(18 if name=='Normal' else 25 if name=='Title' else 22 if name=='Heading 1' else 19)
+        st.paragraph_format.space_after=Pt(5);st.paragraph_format.line_spacing=Pt(18 if name=='Normal' else 25 if name=='Title' else 22 if name=='Heading 1' else 19)
         st.paragraph_format.widow_control=True
-        if name.startswith('Heading'):st.font.bold=True;st.paragraph_format.space_before=Pt(11)
+        if name.startswith('Heading'):
+            st.font.bold=True;st.paragraph_format.space_before=Pt(10)
+            st.paragraph_format.keep_with_next=True;st.paragraph_format.keep_together=True
     doc.styles['Title'].paragraph_format.space_after=Pt(9)
     doc.styles['Title'].font.bold=True
     for name in ['Header','Footer','Caption','Hyperlink','Default Paragraph Font','List Bullet']:
@@ -179,9 +181,12 @@ def main():
         if image:
             p=doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER
             p.paragraph_format.line_spacing=1.0
+            p.paragraph_format.keep_with_next=True
             p.add_run().add_picture(str(output/image.group(2)),width=Cm(14.4 if image.group(2)=='positions.png' else 16.2))
             p.paragraph_format.space_after=Pt(2)
             caption=doc.add_paragraph();caption.alignment=WD_ALIGN_PARAGRAPH.CENTER
+            caption.paragraph_format.line_spacing=Pt(14)
+            caption.paragraph_format.keep_together=True
             font(caption.add_run('图  '+image.group(1)+('  ·  推理与仿真控制的关系' if image.group(2)=='pipeline.png' else '  ·  根据本项目保存数据绘制')),9);i+=1;continue
         if line.startswith('#'):
             marks,text=line.split(' ',1);level=0 if len(marks)==1 else len(marks)-1
@@ -191,7 +196,7 @@ def main():
         else:
             is_list=bool(re.match(r'^\d+\. |^- ',line))
             p=doc.add_paragraph(style='List Bullet' if line.startswith('- ') else 'Normal')
-            p.paragraph_format.space_after=Pt(7);p.paragraph_format.line_spacing=Pt(18)
+            p.paragraph_format.space_after=Pt(5);p.paragraph_format.line_spacing=Pt(18)
             size=10 if is_list or line.startswith('实现：') or line.startswith('资料入口') else 11.5
             if line.startswith('作者：'):size=9.5
             runs(p,line[2:] if line.startswith('- ') else line,size)

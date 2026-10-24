@@ -1,9 +1,9 @@
 {
   "author": "请输入名字QaQ",
   "report": "reports/ACT仿真训练复现与调参复盘_修订版.docx",
-  "report_sha256": "06bf3ca4f5820b9784346e75b68ea1e9df67848e44301445b7fb8e0779a60105",
+  "report_sha256": "da6ca69b201e36a334adac71d45f55f3afc89841497f4a0ac9d479d5588a5dc7",
   "pdf": "reports/ACT仿真训练复现与调参复盘.pdf",
-  "pdf_sha256": "75a19a8c7878bbfc799406451c2b32ca4a7e45717e9ff413f348e1806d631690",
+  "pdf_sha256": "b3d169447fd4aad390c4cf087d88568f09b460cf66f5df9bd1abb2317d7262fa",
   "pages_visually_reviewed": [
     1,
     2,
@@ -14,9 +14,7 @@
     7,
     8,
     9,
-    10,
-    11,
-    12
+    10
   ],
   "pdf_hyperlinks": 22,
   "pdf_font_names": [

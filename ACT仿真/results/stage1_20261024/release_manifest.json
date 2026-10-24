@@ -20,8 +20,8 @@
   "files": [
     {
       "path": "docs/stage1_20261024/ACT仿真训练复现与调参复盘.md",
-      "bytes": 26771,
-      "sha256": "27a29918d8ef21965d88db0181c22fecf24e0d8cf61860bee037eea0ee2ed903"
+      "bytes": 27669,
+      "sha256": "eeb750733bca8e0f088cb97247ec336c0f458a53bae5d57fe606dda650887c5a"
     },
     {
       "path": "docs/stage1_20261024/pipeline.png",
@@ -100,13 +100,13 @@
     },
     {
       "path": "reports/ACT仿真训练复现与调参复盘.pdf",
-      "bytes": 773024,
-      "sha256": "75a19a8c7878bbfc799406451c2b32ca4a7e45717e9ff413f348e1806d631690"
+      "bytes": 759961,
+      "sha256": "b3d169447fd4aad390c4cf087d88568f09b460cf66f5df9bd1abb2317d7262fa"
     },
     {
       "path": "reports/ACT仿真训练复现与调参复盘_修订版.docx",
-      "bytes": 273317,
-      "sha256": "06bf3ca4f5820b9784346e75b68ea1e9df67848e44301445b7fb8e0779a60105"
+      "bytes": 274747,
+      "sha256": "da6ca69b201e36a334adac71d45f55f3afc89841497f4a0ac9d479d5588a5dc7"
     },
     {
       "path": "requirements.in",
@@ -150,8 +150,8 @@
     },
     {
       "path": "results/stage1_20261024/publication_checks.json",
-      "bytes": 1093,
-      "sha256": "4e021fc36311c9d3725c82dabbd8388514a5221c925ca4112501676224f6167d"
+      "bytes": 1075,
+      "sha256": "1416e5034538db15721332a59b2e9675576a419e0a862fe2413972a93cfd3751"
     },
     {
       "path": "results/stage1_20261024/training_metrics.csv",
@@ -255,8 +255,8 @@
     },
     {
       "path": "scripts/build_simulation_tutorial_20261024.py",
-      "bytes": 13429,
-      "sha256": "844377eedcea666d9a60b4c78fe76ff7e9e43d30524e4c7aa59bedc032a82c13"
+      "bytes": 13684,
+      "sha256": "0badd607b0992f0e1c2573e566615ae7863b9ed6d58f4c6a0301c41040c94843"
     },
     {
       "path": "scripts/controlled_training.py",
