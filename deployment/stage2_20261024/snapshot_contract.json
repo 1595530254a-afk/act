@@ -1,0 +1,30 @@
+{
+  "contract": "ACT_stage2_observation_only_v1",
+  "npz_fields_exact": {
+    "state": "float32 or float64 [7], actual measured feedback in the model's public-degree convention",
+    "wrist": "uint8 RGB [480,640,3], D405 wrist camera",
+    "top": "uint8 RGB [480,640,3], actual top camera"
+  },
+  "state_order": ["shoulder_pan.pos", "shoulder_lift.pos", "elbow_flex.pos", "wrist_flex.pos", "wrist_yaw.pos", "wrist_roll.pos", "gripper.pos"],
+  "state_export_json": {
+    "state": "REPLACE_WITH_7_ACTUAL_MEASURED_NUMBERS_NOT_ZEROS_OR_COMMANDS",
+    "measured": true,
+    "mapping_id": "EXISTING_REAL_HARDWARE_MAPPING_FILE_AND_SHA",
+    "state_order": ["shoulder_pan.pos", "shoulder_lift.pos", "elbow_flex.pos", "wrist_flex.pos", "wrist_yaw.pos", "wrist_roll.pos", "gripper.pos"],
+    "units": "public_degree",
+    "receipt_monotonic_ns": "ACTUAL_LOCAL_MONOTONIC_RECEPTION_TIME"
+  },
+  "shadow_request_fields": {
+    "input": "absolute NPZ path, or path relative to this package",
+    "frame_index": "consecutive integer starting at0; one fresh pair per frame",
+    "capture_monotonic_ns": "actual local monotonic timestamp, not a device clock",
+    "source": "actual_read_only_capture",
+    "capture": {
+      "state": "measured=true, mapping_id, state_order, units=public_degree, receipt_monotonic_ns",
+      "wrist": "actual serial, frame_number, device_timestamp_ms, timestamp_domain, receipt_monotonic_ns, configured_fps and measured sustained FPS when available",
+      "top": "same metadata, distinct serial"
+    }
+  },
+  "forbidden": ["simulator coordinate mapping", "constant or cached feedback presented as fresh", "target angles presented as measured angles", "CAN/SDK send callback", "duplicate old frames to fake30Hz"],
+  "hardware_commands_sent": 0
+}

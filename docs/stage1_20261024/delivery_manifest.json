@@ -1,0 +1,132 @@
+{
+  "date": "2026-10-24",
+  "source_milestone_commit": "cd923eeb6963a5bdcc100bf93c212aeb77e45a3e",
+  "branch": "master",
+  "repository": "https://github.com/1595530254a-afk/act",
+  "report": {
+    "filename": "ACT抓放仿真第一阶段复盘报告.docx",
+    "bytes": 39272293,
+    "sha256": "cd94bd4c27f40718da6ef42ae46222f387aafc537f8e09a8064dd5034036e292",
+    "pages": 14,
+    "complete_embedded_MP4s": 14,
+    "all_pages_visually_reviewed": true,
+    "all_MP4_payload_bytes_and_SHA256_equal": true
+  },
+  "local_archives_not_in_git": [
+    {
+      "name": "ACT_stage1_report_20261024.zip",
+      "bytes": 77508182,
+      "sha256": "2420534d2b173ec4eed3c9f2cce6389ce20fcc6c386e69106ae311978286b480"
+    },
+    {
+      "name": "ACT_stage2_handoff_20261024_with_guide_v1.zip",
+      "bytes": 270057990,
+      "sha256": "a42746b17a5891892abc0428c472e0e0d86f14fb9a8da869944f4cde08b7e1c0"
+    }
+  ],
+  "selected_model_sha256": "c25ffa08fd2b67343f37eab06bb948642e2a6d2578e387a563ba81105c506c2c",
+  "extra_sources": [
+    {
+      "path": "deployment/stage2_20261024/NOTICE.md",
+      "bytes": 992,
+      "sha256": "ecd532a6de180a084b67cf3d7df55e112943652eb1b30c0b65029a3616fca657"
+    },
+    {
+      "path": "deployment/stage2_20261024/return_template.json",
+      "bytes": 756,
+      "sha256": "3b42789e62e8e905ceac0ee6e40e8f74d1d4bdeacc48b4203fd3ad04af72fa0e"
+    },
+    {
+      "path": "deployment/stage2_20261024/runtime/camera_snapshot.py",
+      "bytes": 6632,
+      "sha256": "54bdb9c2bcbae4d31e320625c738c24ef9304778e4fb48450a819f4618c5698f"
+    },
+    {
+      "path": "deployment/stage2_20261024/runtime/cpu_budget.py",
+      "bytes": 1133,
+      "sha256": "56a80cf864e0b47857729572e1ca3542ba4d59f5495cdc340e731117ef2092eb"
+    },
+    {
+      "path": "deployment/stage2_20261024/runtime/stage2_policy.py",
+      "bytes": 17059,
+      "sha256": "5c54bb3bac1571c41c5b99c1cb513604623fc84378a31bfea5bf6563aaa90267"
+    },
+    {
+      "path": "deployment/stage2_20261024/runtime/temporal_ensemble.py",
+      "bytes": 2241,
+      "sha256": "fcce1eb040b4f0ec6f08c3b79af88c382dc69a90863c1699b689bc5514df53ce"
+    },
+    {
+      "path": "deployment/stage2_20261024/runtime/test_stage2.py",
+      "bytes": 3751,
+      "sha256": "0b2e53e3f1ee0335d4e99799bf7cae42749e85c365e3acadb2ea92d6f270447f"
+    },
+    {
+      "path": "deployment/stage2_20261024/snapshot_contract.json",
+      "bytes": 1762,
+      "sha256": "1839fcba8c89ab2c66bcfc7d0c089b687eb84b32d464ac1fa81fb9155f4f5d3f"
+    },
+    {
+      "path": "deployment/stage2_20261024/先读我_给笔记本Codex.md",
+      "bytes": 6211,
+      "sha256": "360d773104a2a1ae459681fec77639e31484cb3b5a598f6e3c6b0331f8d3acb4"
+    },
+    {
+      "path": "docs/stage1_20261024/归档与笔记本交接.md",
+      "bytes": 3327,
+      "sha256": "e2efd6bed4257b642efc971041865c863b5c4d46249095dae05cdbfd7af1a305"
+    },
+    {
+      "path": "reports/stage1_archive_20261024/history_evidence.json",
+      "bytes": 88208,
+      "sha256": "3a6cf4d54b38f94911340df8ea86aef3947eed8340e9563d713a9b62d95b383b"
+    },
+    {
+      "path": "reports/stage1_archive_20261024/history_evidence.md",
+      "bytes": 26413,
+      "sha256": "2ffaaebd0934f610eb45df0994f49cefb56606f604a71b35649123a182baed44"
+    },
+    {
+      "path": "scripts/build_stage1_report_20261024.py",
+      "bytes": 38782,
+      "sha256": "08d1cbcc54b7b165367ebdad21f75deef7b6ecd5ccbba4b31a49c4d82070f100"
+    },
+    {
+      "path": "scripts/build_stage2_handoff_20261024.py",
+      "bytes": 10205,
+      "sha256": "a8ab6e8f63eaaebeeb752eb7949aa09b59061d9b355736e1a7c1c58cbf8ed0bb"
+    },
+    {
+      "path": "scripts/finalize_stage1_word_20261024.ps1",
+      "bytes": 7061,
+      "sha256": "26c287ac0b39ba6a1a52821f190e5a43b1f514182bdb6576fa3577842acdfe50"
+    },
+    {
+      "path": "scripts/render_stage1_report_20261024.py",
+      "bytes": 2191,
+      "sha256": "c3581028b96b711a7ef2499a04df81c863a9ab7d6a68486dbb02f4be89fad2cb"
+    },
+    {
+      "path": "scripts/verify_stage1_word_20261024.py",
+      "bytes": 10690,
+      "sha256": "a7e496fb50cfcfd06a0c8c47b553f034fa3f224f04c1de40b35cfb8317e07215"
+    }
+  ],
+  "narrow_checks": {
+    "visual_feedback_tests_passed": 9,
+    "limit_classification_tests_passed": 6,
+    "stage2_pure_tests_passed": 7,
+    "stage2_CPU_real_forwards_completed": 3,
+    "CPU_vs_CUDA_max_difference_degrees": 4.57763671875e-05,
+    "ensemble_frozen450frames_maxdiff": 0,
+    "zip_all_members_SHA256_and_CRC_verified": true
+  },
+  "scope": {
+    "new_training_steps": 0,
+    "new_physics_steps": 0,
+    "hardware_commands_sent": 0,
+    "hardware_execution_enabled_in_handoff": false,
+    "old_driver_or_hold_home_disable_chain_replaced": false,
+    "wallclock30Hz_verified_on_laptop": false
+  }
+}

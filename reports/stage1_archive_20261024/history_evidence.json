@@ -1,0 +1,1642 @@
+{
+  "status": "completed_read_only_history_evidence_review",
+  "created_local": "2026-10-24T12:15:39.015626+08:00",
+  "scope": "First-stage desktop ACT/MuJoCo history; no new model inference, physics, training, hardware, or Git mutation.",
+  "issues": [
+    {
+      "number": 1,
+      "title": "先区分运动学预览与接触物理闭环",
+      "date_or_project_batch": "2026-10-23（first_pass.date）",
+      "problem": "最初网页能播放机械臂运动，但不能由动画判定策略抓放成立。",
+      "measures": "接入Seeed reBot_RS_Sim固定commit438f7713d83fb8cd0d0cb05e8cc335264dd3997a的44个模型资产；先检查坐标映射和输入导出，再新增力矩伺服与ACT闭环。",
+      "observed_result": "first_pass记录MuJoCo3.17.0、21项测试通过；physics_control_tested、act_closed_loop_tested、grasp_success_verified均为false，真机命令0。初轮403帧示范状态回放和100×7单次预测仅是预览。",
+      "causal_boundary": "运动学qpos回放不能代替受力、接触或自主抓取；当前源码行只用于说明实现，不声称它与第一轮当时文件逐字相同。",
+      "evidence_ids": [
+        "first_pass",
+        "upstream"
+      ],
+      "code_anchor_ids": [
+        "preview",
+        "controller"
+      ]
+    },
+    {
+      "number": 2,
+      "title": "公开ACT失败与合成专家成功必须分开记",
+      "date_or_project_batch": "2026-10-23（task与teacher工件批次）",
+      "problem": "修正成红块入灰盒后，公开权重及本机真实数据续训1000步权重在重建仿真中仍未抓起；原始记录示范也未验证对准。",
+      "measures": "加入真实接触物理评分；先构造可成立的合成教师，用公开episode0的实测state作为新目标，明确记录夹爪松爪覆盖，而非把teacher动作交给学生冒充ACT。",
+      "observed_result": "task_default100两模型各15s、5次ACT查询均失败；参考演示最大抬升0.258mm。后来的平顶40mm教师403帧/30Hz，抬升99.040mm并完整入盒。",
+      "causal_boundary": "专家拥有明确的轨迹目标，成功属于专家，不是学生ACT。真实数据到近似仿真的失败不能唯一归咎于权重；相机、单位、映射和动力学迁移仍有不确定性。",
+      "evidence_ids": [
+        "task_failures",
+        "teacher_flat",
+        "download",
+        "real_data_audit"
+      ],
+      "code_anchor_ids": [
+        "score",
+        "worker",
+        "teacher"
+      ]
+    },
+    {
+      "number": 3,
+      "title": "道具尺寸与顶面形状先冻结",
+      "date_or_project_batch": "2026-10-23（CAD与fixed_flat40工件）",
+      "problem": "早期重建的积木外形、尺寸和凸点与用户希望制作的道具不一致，任务条件反复变化会混淆算法结果。",
+      "measures": "按用户确认的项目尺寸固定平顶方块和开口方盒，去顶部凸点；导出STL与STEP并核对实体尺寸，后续仿真不再用尺寸对照挑成功。",
+      "observed_result": "红块40×40×20mm、实心无凸点；灰盒外120×120×50mm，壁和底各4mm，内腔112×112×46mm。STL按毫米导入，颜色由材料/显示决定；另有STEP实体。",
+      "causal_boundary": "这些是本项目约定，不是Seeed或数据作者实物测量规格；STL不含标准单位/颜色，STEP也不是原生SLDPRT特征树。",
+      "evidence_ids": [
+        "props",
+        "props_verification"
+      ],
+      "code_anchor_ids": [
+        "scene"
+      ]
+    },
+    {
+      "number": 4,
+      "title": "固定单示范适配成功仍只是局部成立",
+      "date_or_project_batch": "2026-10-23；sim300训练开始2026-10-23T17:04:55.668688+08:00",
+      "problem": "单场景适配后，每次仅执行10步就重算会持续丢掉预测块后面的闭爪动作，仿真在抓取前相位停滞。",
+      "measures": "用物理成立的403帧合成示范继续学习300次更新；读取保存预测做相位诊断，在同checkpoint、同scene下恢复原定100动作执行长度。",
+      "observed_result": "batch2、lr1e-5、FP32、92.930s、峰值allocated1465.059MiB。sim300 SHA e82c8794497ab288c6c58fd16008b78770eddb39bc5f5faab3143b1a530c6c76。固定点15s/5次真实ACT推理，抬升94.691mm并入盒。",
+      "causal_boundary": "这次执行长度修复有同模型同场景的直接后续证据；不能推广成所有ACT都必须执行100步。单示范的重叠窗口误差不是独立泛化验证。",
+      "evidence_ids": [
+        "sim300_train",
+        "prefix_failure",
+        "sim300_success"
+      ],
+      "code_anchor_ids": [
+        "sim_train",
+        "legacy_closed_loop"
+      ]
+    },
+    {
+      "number": 5,
+      "title": "换位置暴露覆盖不足，而非证明模型完全不看图",
+      "date_or_project_batch": "2026-10-23（冻结五点测试与三模型比较）",
+      "problem": "用户质疑固定轨迹回放：固定起点成功是否只是记住路径。",
+      "measures": "先冻结模型/相机/场景/初始状态，再仅改变方块初始XY；保留原始双RGB、state、100×7预测和接触轨迹；另外将三阶段权重置于同一新循环比较。",
+      "observed_result": "sim300原位1/1、五新位0/5，最高抬升2.087mm，五新点无双侧共同夹持。三模型同条件18试次/90次查询：公开模型0/1+0/5，desktop1000为0/1+0/5，sim300为1/1+0/5。",
+      "causal_boundary": "初始状态相同时预测随图像变化，不能说“完全没识别红块”；但反应不足以形成抓持。结果与局部拟合/覆盖不足相符，不能证明灾难性遗忘是唯一根因，更不能概括ACT算法全部泛化能力。",
+      "evidence_ids": [
+        "generalization_protocol",
+        "generalization",
+        "generalization_diagnostics",
+        "checkpoint_comparison"
+      ],
+      "code_anchor_ids": [
+        "worker",
+        "action_audit"
+      ]
+    },
+    {
+      "number": 6,
+      "title": "增加25位置和恢复示范后，低离线MAE仍不能代替任务验收",
+      "date_or_project_batch": "2026-10-23 22:33至23:30（报告UTC转换为UTC+8）",
+      "problem": "单轨迹覆盖太窄；多训练一些是否就会自动纠错，需用物理结果检验。",
+      "measures": "基于同一403帧路径，通过六关节Jacobian IK制成25网格位置变体；4位置独立验证、旧5诊断+新6最终保留。新增clean和恢复分支，原位准入后按完整抓放选模型。",
+      "observed_result": "训练10075帧/25回合，验证1612帧/4回合。teacher严格通过39/40（一个旧诊断点1.020mm穿透保留不通过）。v1分支step600验证2/4；从v1step600出发的v2分支step600为2/4但原位失败，同一v2分支step1200的MAE降至1.535°而验证0/4（step600是该1200步分支中的中间检查点，不能额外相加）。clean v3选step1800为0/4。22条恢复专家成功、合并47条训练回合/14695帧后，恢复step1800和2400均0/4且原位失败。保留v1step600最终新6为0/6，旧5为1/5。",
+      "causal_boundary": "25条是合成IK变体，不是25次独立人工操作；恢复成功属于专家。恢复聚合只受DAgger启发，不是完整逐步交互DAgger。各分支不能相加成同一条连续训练；未评估checkpoint结果未知。",
+      "evidence_ids": [
+        "teacher_positions",
+        "teacher_positions_physics",
+        "teacher_trace_audit",
+        "multisite_rgb",
+        "adapt_v1",
+        "adapt_v2",
+        "adapt_v3",
+        "adapt_recovery_v1",
+        "recovery_experts",
+        "old_selection",
+        "old_final6",
+        "old_diagnostic5",
+        "teacher_old_diag_penetration"
+      ],
+      "code_anchor_ids": [
+        "grid",
+        "ik",
+        "multisite"
+      ]
+    },
+    {
+      "number": 7,
+      "title": "改为明确的5000步预算与每帧新视觉预测",
+      "date_or_project_batch": "2026-10-24；训练开始2026-10-24T10:27:01.937775+08:00",
+      "problem": "之前短分支和低频重规划不能回答足量训练及连续视觉反馈的效果；动作队列出队频率也不能冒称网络forward频率。",
+      "measures": "从sim300新开同一条5000更新分支，保留25/4数据分割；实际batch8、lr1e-5、FP32/AdamW，保留归一化。独立CUDA worker每请求真正predict_action_chunk；比较chunk100和ensemble1，后者每30Hz动作帧读取双RGB+state并做原版时间集成。",
+      "observed_result": "5000步全部batch8，40000个观察窗口，OOM0；训练循环含验证/保存1201.800s，峰值allocated3766.476MiB/reserved4118MiB。chunk100每15s真实5次forward，ensemble1真实450次。CUDA预检forward均19.153ms、往返均48.200ms，不含渲染和物理。",
+      "causal_boundary": "来源是sim300，不是前轮v1step600；选中step3000的累计仿真适配为3300。30Hz是仿真时间，不是墙钟实时。5000预算、batch、lr、CUDA和执行模式的组合没有全因子消融，不能单独给某项归功。",
+      "evidence_ids": [
+        "new_plan",
+        "train_preflight",
+        "train5000",
+        "cuda_preflight"
+      ],
+      "code_anchor_ids": [
+        "long_train",
+        "gradients",
+        "cuda",
+        "query",
+        "ensemble"
+      ]
+    },
+    {
+      "number": 8,
+      "title": "将策略越界与程序异常分开，保留全部未完成试次",
+      "date_or_project_batch": "2026-10-24（validation_matrix_v1）",
+      "problem": "step2000的夹爪原始预测轻微小于0，旧严格guard使矩阵停下；片段中已入盒也不能算450帧完整通过。",
+      "measures": "保留原runner、冻结协议和原中断目录；新v2 runner仅对raw chunk独立重建首次未施加目标、逐条确认此前目标合法、用原validate_target精确复现同一异常的候选分类policy_limit_abort。不clip、不放宽边界；未知错误仍停。",
+      "observed_result": "planned60=完整39+越界partial5+因对应baseline中断未尝试16，真实ACT查询11665。5次均为joint7负下限：step2000 chunk原位frame352；step3000 chunk第4val frame360；step4000 chunk原位352；step5000 chunk原位355；step5000 ensemble原位328。partial指标不计成功、未跑组计null。",
+      "causal_boundary": "这是模型/执行组合的越界行为，不伪装成完整任务失败，也不自动重试。界限近0的微小预测偏差暴露部署边界问题，但本轮保持原硬边界，未验证真实夹爪保护。",
+      "evidence_ids": [
+        "matrix_protocol",
+        "matrix_original_stop",
+        "matrix_amendment",
+        "matrix_completion",
+        "matrix_summary"
+      ],
+      "code_anchor_ids": [
+        "limits",
+        "limit_proof",
+        "limit_resume"
+      ]
+    },
+    {
+      "number": 9,
+      "title": "冻结模型与模式，再做8点以及用户追加1点",
+      "date_or_project_batch": "2026-10-24；选择冻结2026-10-24T11:13:21.458082+08:00",
+      "problem": "需要证明位置改动后由ACT重新预测，并避免从测试结果反向挑模型或只展示成功视频。",
+      "measures": "按同模式原位准入→验证完整成功数→稳态抓持数→离线MAE→chunk100→较早step排序；在测试前冻结step3000+ensemble1，最终8点各一次。用户随后另要求一点，先登记(+10,0)mm再单次测试；两组统计分开。另对保存输入做全量fresh网络复算及动作/接触/评分独立审计。",
+      "observed_result": "step3000与step2000 ensemble都val4/4，按较低归一化MAE .0354018胜出；原位1/1。新8点8/8、各450frame，抬升96.78–105.94mm、最长连续高举双指68–73frame，3600份chunk/2520000值fresh复算maxdiff0。追加点1/1、抬升101.374mm、双指97frame，450份chunk/315000值复算maxdiff0；距旧8最近25.495mm且不重合48已见本地偏移。",
+      "causal_boundary": "只证明固定本体、物体、盒子、相机、光照下的本地XY插值留出。8点是提前保留测试，追加点是在看过8点后由用户提出，不能混为预注册9点benchmark。视觉响应不是语义识别证明；D405真实标定、sim2real和任意场景泛化未验证。",
+      "evidence_ids": [
+        "proposal",
+        "final_selection",
+        "final_launch",
+        "final8",
+        "final8_fresh",
+        "initial_visual",
+        "final_completion",
+        "extra_registration",
+        "extra_evaluation",
+        "extra_fresh",
+        "extra_summary",
+        "novelty"
+      ],
+      "code_anchor_ids": [
+        "query",
+        "action_audit",
+        "contact_audit",
+        "fresh_verify"
+      ]
+    },
+    {
+      "number": 10,
+      "title": "用ALOHA配套公开任务单独校验标准链路",
+      "date_or_project_batch": "2026-10-24 10:37（protocol/evaluation UTC+8）",
+      "problem": "B601近似场景的失败不能单独判断通用ACT实现是否正常，需要模型与环境配套的独立链路检查。",
+      "measures": "加载LeRobot公开ALOHA transfer cube human ACT配套gym-aloha环境，冻结五个seed，CPU推理，14维状态和单顶部RGB，使用官方环境成功信号，保留失败及全部输入/预测。",
+      "observed_result": "gym_aloha/AlohaTransferCube-v0、gym-aloha0.1.5、MuJoCo3.2.7；5回合4成功1失败(seed20261025)，共17次真实CPU forward。控制50Hz、每100动作一次网络查询；无训练、真机和动作裁剪。",
+      "causal_boundary": "这是独立5-seed烟测，不能复现发布者500回合83%指标，也不是B601结果；14通道/单相机/50Hz不能直接替换B601七通道/双相机/30Hz权重。",
+      "evidence_ids": [
+        "aloha_protocol",
+        "aloha",
+        "aloha_audit"
+      ],
+      "code_anchor_ids": [
+        "aloha_run"
+      ]
+    }
+  ],
+  "training_branches_20261023": [
+    {
+      "branch": "adapt_v1",
+      "started_local": "2026-10-23T22:33:10.047751+08:00",
+      "source_model": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\adapt_flat40_v1\\checkpoints\\step_000300\\pretrained_model",
+      "new_updates": 600,
+      "batch_size": 2,
+      "learning_rate": 3e-06,
+      "frames": {
+        "train": 10075,
+        "validation": 1612
+      },
+      "test_episode_contents_opened": 0
+    },
+    {
+      "branch": "adapt_v2",
+      "started_local": "2026-10-23T22:37:01.409574+08:00",
+      "source_model": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v1\\checkpoints\\step_000600\\pretrained_model",
+      "new_updates": 1200,
+      "batch_size": 2,
+      "learning_rate": 3e-06,
+      "frames": {
+        "train": 10075,
+        "validation": 1612
+      },
+      "test_episode_contents_opened": 0
+    },
+    {
+      "branch": "adapt_v3",
+      "started_local": "2026-10-23T22:58:48.552406+08:00",
+      "source_model": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v1\\checkpoints\\step_000600\\pretrained_model",
+      "new_updates": 2400,
+      "batch_size": 2,
+      "learning_rate": 3e-06,
+      "frames": {
+        "train": 10075,
+        "validation": 1612
+      },
+      "test_episode_contents_opened": 0
+    },
+    {
+      "branch": "adapt_recovery_v1",
+      "started_local": "2026-10-23T23:17:28.601593+08:00",
+      "source_model": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v1\\checkpoints\\step_000600\\pretrained_model",
+      "new_updates": 2400,
+      "batch_size": 2,
+      "learning_rate": 1e-06,
+      "frames": {
+        "train": 14695,
+        "validation": 1612
+      },
+      "test_episode_contents_opened": 0
+    }
+  ],
+  "old_validation_results": [
+    {
+      "id": "validation_sim300",
+      "successes": 0,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T22:35:32.107501+08:00"
+    },
+    {
+      "id": "validation_v1_step600",
+      "successes": 2,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T22:36:20.679898+08:00"
+    },
+    {
+      "id": "validation_v2_step600",
+      "successes": 2,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T22:43:18.226739+08:00"
+    },
+    {
+      "id": "validation_v2_step1200",
+      "successes": 0,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T22:40:16.710431+08:00"
+    },
+    {
+      "id": "validation_v3_step1800",
+      "successes": 0,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T23:03:13.125199+08:00"
+    },
+    {
+      "id": "validation_recovery_step1800",
+      "successes": 0,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T23:22:42.403860+08:00"
+    },
+    {
+      "id": "validation_recovery_step2400",
+      "successes": 0,
+      "trials": 4,
+      "queries": 20,
+      "started_local": "2026-10-23T23:23:24.398111+08:00"
+    },
+    {
+      "id": "validation_v1_step600_ensemble10",
+      "successes": 1,
+      "trials": 4,
+      "queries": 180,
+      "started_local": "2026-10-23T22:55:23.246115+08:00"
+    }
+  ],
+  "latest_validation_matrix": [
+    {
+      "id": "retained_v1",
+      "checkpoint_step": 600,
+      "total_adaptation_steps": 900,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v1\\checkpoints\\step_000600\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "c0d56a47d3db9f99ec5a8635a0e0793045dd3693fd2f23fae506f82f9cbdfe85",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.08906910764726989,
+      "mode": "chunk100",
+      "eligible_for_selection": true,
+      "eligibility_status": "eligible_by_baseline",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "completed",
+      "validation_successes": 2,
+      "validation_sustained_grasps": 2,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\retained_v1\\chunk100\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\retained_v1\\chunk100\\validation"
+    },
+    {
+      "id": "retained_v1",
+      "checkpoint_step": 600,
+      "total_adaptation_steps": 900,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v1\\checkpoints\\step_000600\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "c0d56a47d3db9f99ec5a8635a0e0793045dd3693fd2f23fae506f82f9cbdfe85",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.08906910764726989,
+      "mode": "ensemble1",
+      "eligible_for_selection": true,
+      "eligibility_status": "eligible_by_baseline",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "completed",
+      "validation_successes": 1,
+      "validation_sustained_grasps": 1,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\retained_v1\\ensemble1\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\retained_v1\\ensemble1\\validation"
+    },
+    {
+      "id": "step_001000",
+      "checkpoint_step": 1000,
+      "total_adaptation_steps": 1300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_001000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "6904fe194f4bbfb45e6245f326d381df1670be591a1bb65851873d8e0a8e2b3d",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.07012509015970407,
+      "mode": "chunk100",
+      "eligible_for_selection": true,
+      "eligibility_status": "eligible_by_baseline",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "completed",
+      "validation_successes": 2,
+      "validation_sustained_grasps": 2,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_001000\\chunk100\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_001000\\chunk100\\validation"
+    },
+    {
+      "id": "step_001000",
+      "checkpoint_step": 1000,
+      "total_adaptation_steps": 1300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_001000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "6904fe194f4bbfb45e6245f326d381df1670be591a1bb65851873d8e0a8e2b3d",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.07012509015970407,
+      "mode": "ensemble1",
+      "eligible_for_selection": false,
+      "eligibility_status": "ineligible_baseline_task_failure",
+      "baseline_status": "completed",
+      "baseline_success": false,
+      "validation_status": "completed",
+      "validation_successes": 0,
+      "validation_sustained_grasps": 0,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_001000\\ensemble1\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_001000\\ensemble1\\validation"
+    },
+    {
+      "id": "step_002000",
+      "checkpoint_step": 2000,
+      "total_adaptation_steps": 2300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_002000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "bdf1fe902b4483fc7d70bbbcff6a97fea9388759a1af01c85a2c11eeb0433082",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.07968831417991208,
+      "mode": "chunk100",
+      "eligible_for_selection": false,
+      "eligibility_status": "ineligible_policy_limit_abort",
+      "baseline_status": "policy_limit_abort",
+      "baseline_success": false,
+      "validation_status": "not_attempted_due_policy_limit_abort",
+      "validation_successes": null,
+      "validation_sustained_grasps": null,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_002000\\chunk100\\baseline",
+      "validation_result": null
+    },
+    {
+      "id": "step_002000",
+      "checkpoint_step": 2000,
+      "total_adaptation_steps": 2300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_002000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "bdf1fe902b4483fc7d70bbbcff6a97fea9388759a1af01c85a2c11eeb0433082",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.07968831417991208,
+      "mode": "ensemble1",
+      "eligible_for_selection": true,
+      "eligibility_status": "eligible_by_baseline",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "completed",
+      "validation_successes": 4,
+      "validation_sustained_grasps": 4,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_002000\\ensemble1\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_002000\\ensemble1\\validation"
+    },
+    {
+      "id": "step_003000",
+      "checkpoint_step": 3000,
+      "total_adaptation_steps": 3300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_003000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "c25ffa08fd2b67343f37eab06bb948642e2a6d2578e387a563ba81105c506c2c",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.03540182478080919,
+      "mode": "chunk100",
+      "eligible_for_selection": false,
+      "eligibility_status": "ineligible_policy_limit_abort",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "policy_limit_abort",
+      "validation_successes": null,
+      "validation_sustained_grasps": null,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_003000\\chunk100\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_003000\\chunk100\\validation"
+    },
+    {
+      "id": "step_003000",
+      "checkpoint_step": 3000,
+      "total_adaptation_steps": 3300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_003000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "c25ffa08fd2b67343f37eab06bb948642e2a6d2578e387a563ba81105c506c2c",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.03540182478080919,
+      "mode": "ensemble1",
+      "eligible_for_selection": true,
+      "eligibility_status": "eligible_by_baseline",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "completed",
+      "validation_successes": 4,
+      "validation_sustained_grasps": 4,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_003000\\ensemble1\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_003000\\ensemble1\\validation"
+    },
+    {
+      "id": "step_004000",
+      "checkpoint_step": 4000,
+      "total_adaptation_steps": 4300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_004000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "c95cc0a484d13ea06ebbff4e1f7676732badd33534a114c4f238080822aaa363",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.04867163211927429,
+      "mode": "chunk100",
+      "eligible_for_selection": false,
+      "eligibility_status": "ineligible_policy_limit_abort",
+      "baseline_status": "policy_limit_abort",
+      "baseline_success": false,
+      "validation_status": "not_attempted_due_policy_limit_abort",
+      "validation_successes": null,
+      "validation_sustained_grasps": null,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_004000\\chunk100\\baseline",
+      "validation_result": null
+    },
+    {
+      "id": "step_004000",
+      "checkpoint_step": 4000,
+      "total_adaptation_steps": 4300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_004000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "c95cc0a484d13ea06ebbff4e1f7676732badd33534a114c4f238080822aaa363",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.04867163211927429,
+      "mode": "ensemble1",
+      "eligible_for_selection": true,
+      "eligibility_status": "eligible_by_baseline",
+      "baseline_status": "completed",
+      "baseline_success": true,
+      "validation_status": "completed",
+      "validation_successes": 3,
+      "validation_sustained_grasps": 3,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_004000\\ensemble1\\baseline",
+      "validation_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_004000\\ensemble1\\validation"
+    },
+    {
+      "id": "step_005000",
+      "checkpoint_step": 5000,
+      "total_adaptation_steps": 5300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_005000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "434a002e3f58c7f2142ca4bab8d0f55b662b1c0d01d92e9e19644cf0f83ebba0",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.04474833742013692,
+      "mode": "chunk100",
+      "eligible_for_selection": false,
+      "eligibility_status": "ineligible_policy_limit_abort",
+      "baseline_status": "policy_limit_abort",
+      "baseline_success": false,
+      "validation_status": "not_attempted_due_policy_limit_abort",
+      "validation_successes": null,
+      "validation_sustained_grasps": null,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_005000\\chunk100\\baseline",
+      "validation_result": null
+    },
+    {
+      "id": "step_005000",
+      "checkpoint_step": 5000,
+      "total_adaptation_steps": 5300,
+      "model_directory": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\checkpoints\\step_005000\\pretrained_model",
+      "model_files_sha256": {
+        "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+        "model.safetensors": "434a002e3f58c7f2142ca4bab8d0f55b662b1c0d01d92e9e19644cf0f83ebba0",
+        "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+        "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+        "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+        "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+      },
+      "offline_validation_normalized_mae": 0.04474833742013692,
+      "mode": "ensemble1",
+      "eligible_for_selection": false,
+      "eligibility_status": "ineligible_policy_limit_abort",
+      "baseline_status": "policy_limit_abort",
+      "baseline_success": false,
+      "validation_status": "not_attempted_due_policy_limit_abort",
+      "validation_successes": null,
+      "validation_sustained_grasps": null,
+      "baseline_result": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\step_005000\\ensemble1\\baseline",
+      "validation_result": null
+    }
+  ],
+  "latest_matrix_counts": {
+    "planned_trials": 60,
+    "completed_physical_trials": 39,
+    "policy_limit_partial_trials": 5,
+    "not_attempted_due_policy_limit_abort": 16,
+    "actual_ACT_queries": 11665
+  },
+  "latest_final8": [
+    {
+      "id": "newtest_00",
+      "offset_xy_m": [
+        -0.03,
+        -0.03
+      ],
+      "success": true,
+      "max_lift_mm": 99.62313277685244,
+      "longest_elevated_bilateral_frames": 73
+    },
+    {
+      "id": "newtest_01",
+      "offset_xy_m": [
+        -0.03,
+        0.03
+      ],
+      "success": true,
+      "max_lift_mm": 104.70892548574245,
+      "longest_elevated_bilateral_frames": 68
+    },
+    {
+      "id": "newtest_02",
+      "offset_xy_m": [
+        0.03,
+        -0.03
+      ],
+      "success": true,
+      "max_lift_mm": 96.782185009514,
+      "longest_elevated_bilateral_frames": 72
+    },
+    {
+      "id": "newtest_03",
+      "offset_xy_m": [
+        0.03,
+        0.03
+      ],
+      "success": true,
+      "max_lift_mm": 102.87159034842944,
+      "longest_elevated_bilateral_frames": 68
+    },
+    {
+      "id": "newtest_04",
+      "offset_xy_m": [
+        -0.035,
+        0.005
+      ],
+      "success": true,
+      "max_lift_mm": 105.93731698306351,
+      "longest_elevated_bilateral_frames": 69
+    },
+    {
+      "id": "newtest_05",
+      "offset_xy_m": [
+        0.035,
+        -0.005
+      ],
+      "success": true,
+      "max_lift_mm": 97.53986645966636,
+      "longest_elevated_bilateral_frames": 71
+    },
+    {
+      "id": "newtest_06",
+      "offset_xy_m": [
+        -0.005,
+        -0.035
+      ],
+      "success": true,
+      "max_lift_mm": 97.17651047603123,
+      "longest_elevated_bilateral_frames": 71
+    },
+    {
+      "id": "newtest_07",
+      "offset_xy_m": [
+        0.005,
+        0.035
+      ],
+      "success": true,
+      "max_lift_mm": 102.29569056469322,
+      "longest_elevated_bilateral_frames": 68
+    }
+  ],
+  "additional_point_summary": {
+    "status": "completed_additional_single_position_test",
+    "checked_utc": "2026-10-24T03:58:12.610515+00:00",
+    "offset_xy_mm": [
+      10,
+      0
+    ],
+    "nearest_previous_eight_distance_mm": 25.495097567963924,
+    "test_successes": 1,
+    "test_trials": 1,
+    "model_unchanged_from_previous_eight": true,
+    "model_sha256": "c25ffa08fd2b67343f37eab06bb948642e2a6d2578e387a563ba81105c506c2c",
+    "mode": "ensemble1",
+    "training_steps": 0,
+    "hardware_commands": 0,
+    "attempts": 1,
+    "actual_test_ACT_forwards": 450,
+    "fresh_reproduction_ACT_forwards": 450,
+    "reproduced_action_values": 315000,
+    "maximum_reproduction_difference_degrees": 0,
+    "metrics": {
+      "success": true,
+      "lifted_at_least_3cm": true,
+      "maximum_lift_m": 0.10137449411310984,
+      "entire_brick_footprint_inside_bin": true,
+      "resting_on_bin_floor": true,
+      "final_speed_m_s": 2.2095407891420706e-10,
+      "final_finger_contacts": 0,
+      "initial_position_m": [
+        0.35000000011526355,
+        -0.02500000112450626,
+        0.009999696622042848
+      ],
+      "final_position_m": [
+        0.4414823408926593,
+        0.18942629064496902,
+        0.013999696622042873
+      ],
+      "bin_interior_bounds_local_xy_m": [
+        -0.056,
+        0.056,
+        -0.056,
+        0.056
+      ],
+      "success_rule": "lift >= 0.03m, all brick box corners inside bin XY, rests at bin floor, speed <0.05m/s, no final finger contact",
+      "scope": "One reconstructed scene trial, not a benchmark success rate or hardware result."
+    },
+    "contact_audit": {
+      "all_applied_targets_exact_raw_prediction_conversion": true,
+      "all_weighted_actions_and_provenance_exact": true,
+      "all_query_states_match_actual_pre_action_state": true,
+      "query_count": 450,
+      "action_frames": 450,
+      "all_input_output_hashes_match_worker_records": true,
+      "physical_score_exact_qpos_qvel_recomputation": true,
+      "contact_trace_exact_recomputation": true,
+      "left_finger_contact_frames": 101,
+      "right_finger_contact_frames": 107,
+      "bilateral_contact_frames": 97,
+      "first_bilateral_frame": 171,
+      "longest_elevated_bilateral_frames": 70,
+      "physical_grasp_confirmed": true,
+      "audit_new_ACT_calls": 0,
+      "audit_new_physics_steps": 0
+    },
+    "video_count": 2,
+    "video_frames": 450,
+    "video_fps": 30,
+    "video_duration_s": 15,
+    "video_files": {
+      "montage": {
+        "path": "D:\\外置大脑\\ACT\\视频\\ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_同步回看.mp4",
+        "sha256": "b3811923adc6785ecab7e64cfc30ffef118251813d6ee2c6e4e5f0a060a606fa",
+        "bytes": 744047
+      },
+      "extra_p10_0": {
+        "path": "D:\\外置大脑\\ACT\\视频\\ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_extra_p10_0_实际输入.mp4",
+        "sha256": "a2d7681bcac19417b07c394ae29fd7da93fa10a893bbb8380c895579d29928ef",
+        "bytes": 2842297
+      },
+      "frame221": {
+        "path": "D:\\外置大脑\\ACT\\视频\\ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_frame221.png",
+        "sha256": "7a047e6c64a11a8ef2e1ee8bf7f2af0f33e1114baaf9be3e731aa4dbc84054fa",
+        "bytes": 140693
+      }
+    },
+    "page": "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\additional_position_20261024\\index.html",
+    "all_page_links_exist": true,
+    "files_sha256": {
+      "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\test_registration.json": "f3687fc5d5c7ca7e1e45730520f07b3d2f981559bc5b3300217bd33da304efac",
+      "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\position_plan.json": "50d085f3f6f9d614ba8c38ef23fc2dce58dbf33278649375cf0294a13e3cc4f1",
+      "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\extra_p10_0_rollout\\evaluation.json": "0d81cc98205f7092978d9c07510ee3cb7beda3d1c68cf9a3e243e2b740988eec",
+      "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\extra_p10_0_rollout\\fresh_cuda_output_reproduction.json": "d9722d327176189ad0080abfb214913d709210fac53e5e084e4a8e07e96c4ee8",
+      "D:\\外置大脑\\ACT\\视频\\ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_来源.json": "1fecd3d6664679effe151bacf5560327a79aa169b8dde303db92345f2794fbb0",
+      "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\additional_position_20261024\\index.html": "95ce1dd2ca897a2b411fe975f5a68038b7031bf0299709554d84e4af2cecfa32"
+    },
+    "scope": "One additional interpolation point requested after the previous eight, not a new benchmark success rate or extrapolation test."
+  },
+  "source_registry": {
+    "download": {
+      "id": "download",
+      "path": "D:\\外置大脑\\ACT\\reports\\download_manifest.json",
+      "relative_path": "reports/download_manifest.json",
+      "sha256": "38922007d05ef62ad763176c011d307231aca3194eec9248b7571a481a6a1958",
+      "size_bytes": 6490,
+      "json_pointers_or_notes": "$.model.repo_id/revision; $.dataset.repo_id/revision"
+    },
+    "real_data_audit": {
+      "id": "real_data_audit",
+      "path": "D:\\外置大脑\\ACT\\reports\\dataset_audit.json",
+      "relative_path": "reports/dataset_audit.json",
+      "sha256": "f03f683c9e0cb972eebe5defc375d7faf4d4eb296a7fc565b54a4ef245cfe72d",
+      "size_bytes": 2435,
+      "json_pointers_or_notes": "$.episodes=50; $.frames=20948; historical model normalization already saw source dataset"
+    },
+    "first_pass": {
+      "id": "first_pass",
+      "path": "D:\\外置大脑\\ACT\\reports\\mujoco_first_pass_20261023.json",
+      "relative_path": "reports/mujoco_first_pass_20261023.json",
+      "sha256": "596a86227759a8823b4d0f156d07869b1a26401acaa978823ba47ce18549f733",
+      "size_bytes": 1343,
+      "json_pointers_or_notes": "$.date; $.status; physics_control_tested/act_closed_loop_tested/grasp_success_verified=false"
+    },
+    "upstream": {
+      "id": "upstream",
+      "path": "D:\\外置大脑\\ACT\\simulation\\upstream_manifest.json",
+      "relative_path": "simulation/upstream_manifest.json",
+      "sha256": "e58d932076d74a15cd64b99e8632717e91c8c8b82790feea1fbc4d0e9a45bc88",
+      "size_bytes": 32177
+    },
+    "task_failures": {
+      "id": "task_failures",
+      "path": "D:\\外置大脑\\ACT\\reports\\mujoco_task_comparison_20261023.json",
+      "relative_path": "reports/mujoco_task_comparison_20261023.json",
+      "sha256": "c516457804159104ea6ca57d5b9a928ee264a11718f372882003bb00f1d56c7e",
+      "size_bytes": 9075,
+      "json_pointers_or_notes": "$.settings.task_default100; $.reference_check; historical source hashes retained in report"
+    },
+    "props": {
+      "id": "props",
+      "path": "D:\\外置大脑\\ACT\\cad\\pick_place_props_20261023\\尺寸说明.md",
+      "relative_path": "cad/pick_place_props_20261023/尺寸说明.md",
+      "sha256": "f2c8055d20cedf4a7426159086f0c4ceed3fb8a50c03cc52d38d51402ce51195",
+      "size_bytes": 736
+    },
+    "props_verification": {
+      "id": "props_verification",
+      "path": "D:\\外置大脑\\ACT\\cad\\pick_place_props_20261023\\independent_verification.json",
+      "relative_path": "cad/pick_place_props_20261023/independent_verification.json",
+      "sha256": "8eb916aefed4bce0bb3d727191d861a486f6e5aed42ba47b1f54c497fb5cf600",
+      "size_bytes": 2646
+    },
+    "teacher_flat": {
+      "id": "teacher_flat",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\synthetic_demo_flat40_v1\\manifest.json",
+      "relative_path": "runs/mujoco_iteration_20261023/synthetic_demo_flat40_v1/manifest.json",
+      "sha256": "2140dc85a83fa1890e479f2225578be8bf27c4599f2f22d4b8e595f9f59d736f",
+      "size_bytes": 28038,
+      "json_pointers_or_notes": "$.action_semantics; $.teacher_release_override; $.task_metrics"
+    },
+    "sim300_train": {
+      "id": "sim300_train",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\adapt_flat40_v1\\training_report.json",
+      "relative_path": "runs/mujoco_iteration_20261023/adapt_flat40_v1/training_report.json",
+      "sha256": "4264c62618569f16f2d70cd93e0981c11160a4c9e43e0e77d852b0e0b7293d3e",
+      "size_bytes": 10597,
+      "json_pointers_or_notes": "$.started_utc; $.completed_steps=300; $.source_model; $.checkpoints[2]"
+    },
+    "sim300_success": {
+      "id": "sim300_success",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\fixed_flat40_20261023\\policy_step300_progress_fix\\custom\\result.json",
+      "relative_path": "runs/mujoco_validation_20261023/fixed_flat40_20261023/policy_step300_progress_fix/custom/result.json",
+      "sha256": "d2b96ccf01acdf39e89b3808fe1fb412cbfc9ed0cf5c4187b4d30fd46fcb83c2",
+      "size_bytes": 14377,
+      "json_pointers_or_notes": "$.metrics; $.actual_inference_queries; $.evaluation"
+    },
+    "prefix_failure": {
+      "id": "prefix_failure",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\fixed_flat40_20261023\\policy_step300_v1\\custom\\analysis\\failure_analysis.json",
+      "relative_path": "runs/mujoco_validation_20261023/fixed_flat40_20261023/policy_step300_v1/custom/analysis/failure_analysis.json",
+      "sha256": "c69a67693d6af00b1b2b1078289e54db42c98dfb3ddc8a3ec9d43ddb4eb29bee",
+      "size_bytes": 118459,
+      "json_pointers_or_notes": "$.interpretation; $.followup_confirmation"
+    },
+    "generalization_protocol": {
+      "id": "generalization_protocol",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\position_generalization_20261023\\protocol.json",
+      "relative_path": "runs/mujoco_validation_20261023/position_generalization_20261023/protocol.json",
+      "sha256": "8e478a80b3433fba7c8809ba76952359dd6941cfed5198672168ddb290adcefc",
+      "size_bytes": 4504
+    },
+    "generalization": {
+      "id": "generalization",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\position_generalization_20261023\\generalization_report.json",
+      "relative_path": "runs/mujoco_validation_20261023/position_generalization_20261023/generalization_report.json",
+      "sha256": "dac13858ff878d37cd4165acdeceebfa95e3704c7f9610daafa83e61499cefae",
+      "size_bytes": 110262,
+      "json_pointers_or_notes": "$.new_position_successes=0; $.new_position_trials_completed=5; $.results"
+    },
+    "generalization_diagnostics": {
+      "id": "generalization_diagnostics",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_validation_20261023\\position_generalization_20261023\\position_diagnostics.json",
+      "relative_path": "runs/mujoco_validation_20261023/position_generalization_20261023/position_diagnostics.json",
+      "sha256": "2dbda4e8746dc3c8e3a957f8193eab2d4eb58c4f501992916c89b8d7f7278b91",
+      "size_bytes": 35772
+    },
+    "checkpoint_comparison": {
+      "id": "checkpoint_comparison",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\checkpoint_comparison_v3\\comparison.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/checkpoint_comparison_v3/comparison.json",
+      "sha256": "b26f3fb402827de5ab9dd710397a04797bab77fa042888cc894c64f140a9f988",
+      "size_bytes": 423881,
+      "json_pointers_or_notes": "$.summary; $.new_physical_trials=18; $.new_neural_forward_calls=90"
+    },
+    "teacher_positions": {
+      "id": "teacher_positions",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\teacher_v2\\protocol.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/teacher_v2/protocol.json",
+      "sha256": "d1ef6b5da7e308991bf39b215bdd67b6014b605d33d5190387b29139f64eb444",
+      "size_bytes": 7030
+    },
+    "teacher_positions_physics": {
+      "id": "teacher_positions_physics",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\teacher_v2\\manifest.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/teacher_v2/manifest.json",
+      "sha256": "3ef478a91bc7740867ae3f1f700edc3645a4107e1b437bdec93390b41bfd7e33",
+      "size_bytes": 20824,
+      "json_pointers_or_notes": "$.passed_count=39 of40 under strict penetration check; task_success separate"
+    },
+    "teacher_trace_audit": {
+      "id": "teacher_trace_audit",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\teacher_v2\\independent_trace_verification.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/teacher_v2/independent_trace_verification.json",
+      "sha256": "2b38345a910935f3ff9e33811a4e4f27569e1ed05937c217dc5260e982d1794d",
+      "size_bytes": 15233
+    },
+    "multisite_rgb": {
+      "id": "multisite_rgb",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\rgb_v2\\manifest.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/rgb_v2/manifest.json",
+      "sha256": "a953e7d259ecf0fa47b3c093ee10ce4b9b072294394e4bf54759bac880a60614",
+      "size_bytes": 27426
+    },
+    "adapt_v1": {
+      "id": "adapt_v1",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v1\\training_report.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/adapt_v1/training_report.json",
+      "sha256": "4d1d5fcb006c663ccc2ad3f7c8d1d74d0b8097ff6a70c021bd5140a6ebb6dab0",
+      "size_bytes": 47491,
+      "json_pointers_or_notes": "$.source_model; $.completed_steps; $.checkpoints; $.test_episode_contents_opened"
+    },
+    "adapt_v2": {
+      "id": "adapt_v2",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v2\\training_report.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/adapt_v2/training_report.json",
+      "sha256": "3a251d6ddf2131764f78087369d63878fae0855be2a50b3d61cff065716401b8",
+      "size_bytes": 63323,
+      "json_pointers_or_notes": "$.source_model; $.completed_steps; $.checkpoints; $.test_episode_contents_opened"
+    },
+    "adapt_v3": {
+      "id": "adapt_v3",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_v3\\training_report.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/adapt_v3/training_report.json",
+      "sha256": "9f75a22ba3002b69f2d9be228754c0be280b943e78df46855fbbbf8552771288",
+      "size_bytes": 95040,
+      "json_pointers_or_notes": "$.source_model; $.completed_steps; $.checkpoints; $.test_episode_contents_opened"
+    },
+    "adapt_recovery_v1": {
+      "id": "adapt_recovery_v1",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\adapt_recovery_v1\\training_report.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/adapt_recovery_v1/training_report.json",
+      "sha256": "2b6095717217626afffaa4c1c0f718be9a3012421b01cf28de52ca055a9d1e11",
+      "size_bytes": 111457,
+      "json_pointers_or_notes": "$.source_model; $.completed_steps; $.checkpoints; $.test_episode_contents_opened"
+    },
+    "validation_sim300": {
+      "id": "validation_sim300",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_sim300\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_sim300/evaluation.json",
+      "sha256": "82c44a0793723290cc3a115f20391581a042a59352bb577d008ba6fd9169a10a",
+      "size_bytes": 73523,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_v1_step600": {
+      "id": "validation_v1_step600",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_v1_step600\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_v1_step600/evaluation.json",
+      "sha256": "f6fe74904041bc5cb7715477ef075efeafd4a75712dfa8a78c372ecdc24f0897",
+      "size_bytes": 73699,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_v2_step600": {
+      "id": "validation_v2_step600",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_v2_step600\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_v2_step600/evaluation.json",
+      "sha256": "7fdcff20c7a811cb83566e9f14f89788bdf40a9c973426a2eeb066500587ab5d",
+      "size_bytes": 73710,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_v2_step1200": {
+      "id": "validation_v2_step1200",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_v2_step1200\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_v2_step1200/evaluation.json",
+      "sha256": "2acf903d05751936b58e202f09829419ec40bd8a29fd6f328d377def1797bed3",
+      "size_bytes": 73759,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_v3_step1800": {
+      "id": "validation_v3_step1800",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_v3_step1800\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_v3_step1800/evaluation.json",
+      "sha256": "477fa77d357dc2d7becd24361926e506ea2cf059e317af0c929b2a4715e58abe",
+      "size_bytes": 73758,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_recovery_step1800": {
+      "id": "validation_recovery_step1800",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_recovery_step1800\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_recovery_step1800/evaluation.json",
+      "sha256": "0d0ff2aff17c0944a9a519e0d24fb7eb46159f4219de35977796a5dcbf4e94de",
+      "size_bytes": 74051,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_recovery_step2400": {
+      "id": "validation_recovery_step2400",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_recovery_step2400\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_recovery_step2400/evaluation.json",
+      "sha256": "05d1caee537a971d249faa8d2a1b60272cd37c169eb9496acb11d4e0b47b3b78",
+      "size_bytes": 74047,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "validation_v1_step600_ensemble10": {
+      "id": "validation_v1_step600_ensemble10",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\validation_v1_step600_ensemble10\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/validation_v1_step600_ensemble10/evaluation.json",
+      "sha256": "53beff072768c66388fe7c4b0105008f9b193aab008fa6d8583f7e0ca2b2f4fe",
+      "size_bytes": 239697,
+      "json_pointers_or_notes": "$.successes; $.completed_trials; $.protocol.created_utc"
+    },
+    "baseline_v1_step600": {
+      "id": "baseline_v1_step600",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\baseline_v1_step600\\baseline_confirmation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/baseline_v1_step600/baseline_confirmation.json",
+      "sha256": "edca453951a47e6ebc331061ddf5dc0b5a53baa60ed95532f921b00a630dda80",
+      "size_bytes": 17347,
+      "json_pointers_or_notes": "$.result.metrics.success"
+    },
+    "baseline_v2_step600": {
+      "id": "baseline_v2_step600",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\baseline_v2_step600\\baseline_confirmation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/baseline_v2_step600/baseline_confirmation.json",
+      "sha256": "1ce42212e0bba810ee8510c7dfe45a697ffab8e7dee2857a22e5a05b6ae45f36",
+      "size_bytes": 17352,
+      "json_pointers_or_notes": "$.result.metrics.success"
+    },
+    "baseline_v2_step1200": {
+      "id": "baseline_v2_step1200",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\baseline_v2_step1200\\baseline_confirmation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/baseline_v2_step1200/baseline_confirmation.json",
+      "sha256": "ef7ab4f1e41d047c3b76a6ec9d25bd7d609d0826a68851b60037186fdd724f4c",
+      "size_bytes": 17320,
+      "json_pointers_or_notes": "$.result.metrics.success"
+    },
+    "baseline_v3_step1800": {
+      "id": "baseline_v3_step1800",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\baseline_v3_step1800\\baseline_confirmation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/baseline_v3_step1800/baseline_confirmation.json",
+      "sha256": "caf1001da5ad7d99ae7126de16a4be5d0de658b4a5ff8aefe79233fa40e78618",
+      "size_bytes": 17358,
+      "json_pointers_or_notes": "$.result.metrics.success"
+    },
+    "baseline_recovery_step1800": {
+      "id": "baseline_recovery_step1800",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\baseline_recovery_step1800\\baseline_confirmation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/baseline_recovery_step1800/baseline_confirmation.json",
+      "sha256": "6ff3e36363c6df9f789b69c7382d016d2f3b0ce85f671acee7ae729b3eb50f15",
+      "size_bytes": 17441,
+      "json_pointers_or_notes": "$.result.metrics.success"
+    },
+    "baseline_recovery_step2400": {
+      "id": "baseline_recovery_step2400",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\baseline_recovery_step2400\\baseline_confirmation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/baseline_recovery_step2400/baseline_confirmation.json",
+      "sha256": "d3fb8eab6cc8598eadc530657f1c139ed2deb6ac9a3d8c5fa450b629075f739a",
+      "size_bytes": 17441,
+      "json_pointers_or_notes": "$.result.metrics.success"
+    },
+    "recovery_experts": {
+      "id": "recovery_experts",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\recovery200_train25\\manifest.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/recovery200_train25/manifest.json",
+      "sha256": "dacf17d5ccbc869ff400fb7182a5ef77ffb3461f64b4c52a09fdc8ef9beb796b",
+      "size_bytes": 68376
+    },
+    "old_selection": {
+      "id": "old_selection",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\final_selection.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/final_selection.json",
+      "sha256": "ba327a08fe525341237dcb381d2ad2baf86cb0d1edaa5aa01487210842b828e9",
+      "size_bytes": 1773
+    },
+    "old_final6": {
+      "id": "old_final6",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\final_heldout_v1_step600\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/final_heldout_v1_step600/evaluation.json",
+      "sha256": "5579a870aa1155dd4ad186793f0f6864128abcfdc2fda10666eb015c45bb4798",
+      "size_bytes": 108381
+    },
+    "old_diagnostic5": {
+      "id": "old_diagnostic5",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\previous_diagnostic_v1_step600\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/previous_diagnostic_v1_step600/evaluation.json",
+      "sha256": "8cfff34408a989c7f764997414900babe624465711be92cbd490df10e6ac62a8",
+      "size_bytes": 91815
+    },
+    "new_plan": {
+      "id": "new_plan",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\position_plan.json",
+      "relative_path": "runs/mujoco_iteration_20261024/position_plan.json",
+      "sha256": "1b21f80f0841c1a3f6264522725f0ae42dc9d6b672fa698993adfba6fc496bab",
+      "size_bytes": 2899
+    },
+    "train_preflight": {
+      "id": "train_preflight",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_preflight_v1\\preflight.json",
+      "relative_path": "runs/mujoco_iteration_20261024/long5000_preflight_v1/preflight.json",
+      "sha256": "68f791f63b4ac6b179235615507a1539d4b6e7e281f724696f188b4fa0ae433a",
+      "size_bytes": 4020
+    },
+    "train5000": {
+      "id": "train5000",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\long5000_v1\\training_report.json",
+      "relative_path": "runs/mujoco_iteration_20261024/long5000_v1/training_report.json",
+      "sha256": "9824d723727e42e6bf85587f80440cf1e4ab4b06efa5d00a47790a5a5ce31fb0",
+      "size_bytes": 58503,
+      "json_pointers_or_notes": "$.source_model=sim300, not previous multisite_v1 step600; selected step3000 total_adaptation_steps3300"
+    },
+    "cuda_preflight": {
+      "id": "cuda_preflight",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\cuda_feedback_preflight_v1\\preflight.json",
+      "relative_path": "runs/mujoco_iteration_20261024/cuda_feedback_preflight_v1/preflight.json",
+      "sha256": "89aa710ec711f9932227c42c82fc05b0fb6a6325f6f5baee62165511a85f8c3b",
+      "size_bytes": 22729
+    },
+    "matrix_protocol": {
+      "id": "matrix_protocol",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\matrix_protocol.json",
+      "relative_path": "runs/mujoco_iteration_20261024/validation_matrix_v1/matrix_protocol.json",
+      "sha256": "4b6e68a4ec59471052bf2b0c94c5a36ae78e15844aba5c6402ff62ebf6730e0c",
+      "size_bytes": 10437
+    },
+    "matrix_original_stop": {
+      "id": "matrix_original_stop",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\running_summary.json",
+      "relative_path": "runs/mujoco_iteration_20261024/validation_matrix_v1/running_summary.json",
+      "sha256": "ac90367ff6a6c45159409d1f12310213f80b751a16493bfa49af8f3b5452ec41",
+      "size_bytes": 21850
+    },
+    "matrix_amendment": {
+      "id": "matrix_amendment",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\recovery_amendment_v2.json",
+      "relative_path": "runs/mujoco_iteration_20261024/validation_matrix_v1/recovery_amendment_v2.json",
+      "sha256": "51f118a39f7c1a3bbfb8bdc14e26eedf30647a7ce7297cc5b9453a06e577e4ad",
+      "size_bytes": 1104
+    },
+    "matrix_completion": {
+      "id": "matrix_completion",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\validation_completion.json",
+      "relative_path": "runs/mujoco_iteration_20261024/validation_matrix_v1/validation_completion.json",
+      "sha256": "16a884f123d294fbac813e9b7a4ee973cbeb80c3e9163ac70d2410a065a16651",
+      "size_bytes": 37085
+    },
+    "matrix_summary": {
+      "id": "matrix_summary",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\running_summary_v2.json",
+      "relative_path": "runs/mujoco_iteration_20261024/validation_matrix_v1/running_summary_v2.json",
+      "sha256": "e6f9012d5f494b64abd64950dea5e016c61a32aeaca8a004cc6d585e7a788fb8",
+      "size_bytes": 71887
+    },
+    "proposal": {
+      "id": "proposal",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\validation_matrix_v1\\selection_proposal.json",
+      "relative_path": "runs/mujoco_iteration_20261024/validation_matrix_v1/selection_proposal.json",
+      "sha256": "d57c413f917ec4178eb0f90c8c89483f4cfa4f29403b5f2d59b4c52ad0734867",
+      "size_bytes": 32004
+    },
+    "final_selection": {
+      "id": "final_selection",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\final_selection.json",
+      "relative_path": "runs/mujoco_iteration_20261024/final_selection.json",
+      "sha256": "e0a4f7db7498c53534558f2099513554d99ccc3bd3266087b4e5fcfd30bd3343",
+      "size_bytes": 4041
+    },
+    "final_launch": {
+      "id": "final_launch",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\final_test_launch.json",
+      "relative_path": "runs/mujoco_iteration_20261024/final_test_launch.json",
+      "sha256": "b6ebded7355f6b80fbb5416ee303745c05a4e5561aa9d9d0b0e215711367fa8b",
+      "size_bytes": 804
+    },
+    "final8": {
+      "id": "final8",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\final8_selected_v1\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+      "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+      "size_bytes": 4379589
+    },
+    "final8_fresh": {
+      "id": "final8_fresh",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\final8_selected_v1\\fresh_cuda_output_reproduction.json",
+      "relative_path": "runs/mujoco_iteration_20261024/final8_selected_v1/fresh_cuda_output_reproduction.json",
+      "sha256": "93e9fd3977a72dd8e2200c9f459ef719fe432b7976c836c2ef30fce56fb945c2",
+      "size_bytes": 3942448
+    },
+    "initial_visual": {
+      "id": "initial_visual",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\final8_selected_v1\\initial_visual_response_analysis.json",
+      "relative_path": "runs/mujoco_iteration_20261024/final8_selected_v1/initial_visual_response_analysis.json",
+      "sha256": "d84bde4ee9d7ca0a9b68f2d321898d6f907259037931a1c954c8c29a32cd4ac5",
+      "size_bytes": 77047
+    },
+    "final_completion": {
+      "id": "final_completion",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\completion_check.json",
+      "relative_path": "runs/mujoco_iteration_20261024/completion_check.json",
+      "sha256": "cd5c2fdf4c0d8eed16c826a97264d0f7b1ee9cf161cea04f209b25b093517bce",
+      "size_bytes": 2410
+    },
+    "extra_registration": {
+      "id": "extra_registration",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\test_registration.json",
+      "relative_path": "runs/mujoco_iteration_20261024/additional_point_p10_0_v1/test_registration.json",
+      "sha256": "f3687fc5d5c7ca7e1e45730520f07b3d2f981559bc5b3300217bd33da304efac",
+      "size_bytes": 3892
+    },
+    "extra_evaluation": {
+      "id": "extra_evaluation",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\extra_p10_0_rollout\\evaluation.json",
+      "relative_path": "runs/mujoco_iteration_20261024/additional_point_p10_0_v1/extra_p10_0_rollout/evaluation.json",
+      "sha256": "0d81cc98205f7092978d9c07510ee3cb7beda3d1c68cf9a3e243e2b740988eec",
+      "size_bytes": 577907
+    },
+    "extra_fresh": {
+      "id": "extra_fresh",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\extra_p10_0_rollout\\fresh_cuda_output_reproduction.json",
+      "relative_path": "runs/mujoco_iteration_20261024/additional_point_p10_0_v1/extra_p10_0_rollout/fresh_cuda_output_reproduction.json",
+      "sha256": "d9722d327176189ad0080abfb214913d709210fac53e5e084e4a8e07e96c4ee8",
+      "size_bytes": 526285
+    },
+    "extra_summary": {
+      "id": "extra_summary",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\additional_point_p10_0_v1\\test_summary.json",
+      "relative_path": "runs/mujoco_iteration_20261024/additional_point_p10_0_v1/test_summary.json",
+      "sha256": "e48ef5e100c48196a0cff303f443ab6a353c69f3e02a78a6d0ff8fa3fc28b333",
+      "size_bytes": 4556
+    },
+    "novelty": {
+      "id": "novelty",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261024\\singlepoint_novelty_audit.json",
+      "relative_path": "runs/mujoco_iteration_20261024/singlepoint_novelty_audit.json",
+      "sha256": "1f13959cb7dc863cd97a39fd37a004a12365e8cbf7c25e5f01df6e65d1b45445",
+      "size_bytes": 192690
+    },
+    "aloha_protocol": {
+      "id": "aloha_protocol",
+      "path": "D:\\外置大脑\\ACT\\runs\\aloha_baseline_20261024\\smoke_5seeds\\protocol.json",
+      "relative_path": "runs/aloha_baseline_20261024/smoke_5seeds/protocol.json",
+      "sha256": "951f62767fb43faf9d03d97384f3559a4b751f5f5c9941065f4b448a3d43f6cf",
+      "size_bytes": 9045
+    },
+    "aloha": {
+      "id": "aloha",
+      "path": "D:\\外置大脑\\ACT\\runs\\aloha_baseline_20261024\\smoke_5seeds\\evaluation.json",
+      "relative_path": "runs/aloha_baseline_20261024/smoke_5seeds/evaluation.json",
+      "sha256": "8ccf1853aede0cd7707bf53e10db4f0280d17a8cf5074ce154ce1189bf3e5e18",
+      "size_bytes": 28204
+    },
+    "aloha_audit": {
+      "id": "aloha_audit",
+      "path": "D:\\外置大脑\\ACT\\runs\\aloha_baseline_20261024\\smoke_5seeds\\artifact_audit.json",
+      "relative_path": "runs/aloha_baseline_20261024/smoke_5seeds/artifact_audit.json",
+      "sha256": "76b79b14ac2d2d1069fcaba5200fd764118cacdcb18d939a217481d54de542fe",
+      "size_bytes": 2158
+    },
+    "code:preview.py": {
+      "id": "code:preview.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\preview.py",
+      "relative_path": "simulation/preview.py",
+      "sha256": "fe86c82b3ae6f260f9448cb8144859cfdbefb70e3c71a8bef17acd26608d8050",
+      "size_bytes": 16248
+    },
+    "code:task_scene.py": {
+      "id": "code:task_scene.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\task_scene.py",
+      "relative_path": "simulation/task_scene.py",
+      "sha256": "0cf42237958352bc8ad9097f9ffb399c9ad6cd25b109c41d726e54517bc988b7",
+      "size_bytes": 14012
+    },
+    "code:task_dynamics.py": {
+      "id": "code:task_dynamics.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\task_dynamics.py",
+      "relative_path": "simulation/task_dynamics.py",
+      "sha256": "a39a7c74ac029935bdfaf9c3b585ab46b2d6a25c64fea273fd9cbe1599ef4af0",
+      "size_bytes": 6034
+    },
+    "code:run_task.py": {
+      "id": "code:run_task.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\run_task.py",
+      "relative_path": "simulation/run_task.py",
+      "sha256": "175206c8329af9cad3db90c1c46309e86ab033808778d2687dd5e0573a4be293",
+      "size_bytes": 27176
+    },
+    "code:policy_worker.py": {
+      "id": "code:policy_worker.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\policy_worker.py",
+      "relative_path": "simulation/policy_worker.py",
+      "sha256": "3f34f5d880187edd370d2154b32073e3a737d45f65fe4e43015783865a9a8dc4",
+      "size_bytes": 8255
+    },
+    "code:export_sim_demonstration.py": {
+      "id": "code:export_sim_demonstration.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\export_sim_demonstration.py",
+      "relative_path": "simulation/export_sim_demonstration.py",
+      "sha256": "644b9ccde31450e8e4a786afd16a7bc64dd72596f6847dc9069b6ba550d5dab6",
+      "size_bytes": 17768
+    },
+    "code:adapt_act_sim.py": {
+      "id": "code:adapt_act_sim.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_sim.py",
+      "relative_path": "simulation/adapt_act_sim.py",
+      "sha256": "375d6706925bfcae55aa13b612d09668c55f68d55b213f5eb7e7793225c9511a",
+      "size_bytes": 24620
+    },
+    "code:generate_multisite_teacher.py": {
+      "id": "code:generate_multisite_teacher.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\generate_multisite_teacher.py",
+      "relative_path": "simulation/generate_multisite_teacher.py",
+      "sha256": "da25530be477ab98d6a7e09f7447d16d3c86274908faf1fd44843938b46a301d",
+      "size_bytes": 17574
+    },
+    "code:adapt_act_multisite.py": {
+      "id": "code:adapt_act_multisite.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_multisite.py",
+      "relative_path": "simulation/adapt_act_multisite.py",
+      "sha256": "0653d01da84385a776ee6a19bbaafc70fd892b4ed780c2f9975e39f9d6b5dd39",
+      "size_bytes": 23339
+    },
+    "code:adapt_act_multisite_20261024.py": {
+      "id": "code:adapt_act_multisite_20261024.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_multisite_20261024.py",
+      "relative_path": "simulation/adapt_act_multisite_20261024.py",
+      "sha256": "f0044886fa81496b603d89ad591d78309f880b6ed9a5dda7347f1bac624ba93c",
+      "size_bytes": 25539
+    },
+    "code:policy_worker_cuda_20261024.py": {
+      "id": "code:policy_worker_cuda_20261024.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\policy_worker_cuda_20261024.py",
+      "relative_path": "simulation/policy_worker_cuda_20261024.py",
+      "sha256": "d0eff424114f23de12d3cada78f94c1dc95571c05d9f85a0d20ad11338a026cd",
+      "size_bytes": 3236
+    },
+    "code:evaluate_feedback_20261024.py": {
+      "id": "code:evaluate_feedback_20261024.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\evaluate_feedback_20261024.py",
+      "relative_path": "simulation/evaluate_feedback_20261024.py",
+      "sha256": "b7e183ec5fd941bfb53b37be572369608f0210b761778ed3e6412da0bc71b55c",
+      "size_bytes": 23154
+    },
+    "code:evaluate_act_ensemble.py": {
+      "id": "code:evaluate_act_ensemble.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\evaluate_act_ensemble.py",
+      "relative_path": "simulation/evaluate_act_ensemble.py",
+      "sha256": "7220fe5ca2b25b7fbc30797c1bf2f1e5cb764ecf4528a08997ecfb2111a9e03f",
+      "size_bytes": 24764
+    },
+    "code:run_long5000_validation_20261024_v2.py": {
+      "id": "code:run_long5000_validation_20261024_v2.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\run_long5000_validation_20261024_v2.py",
+      "relative_path": "simulation/run_long5000_validation_20261024_v2.py",
+      "sha256": "28f0865bb282bcad5369baa8d7866eeda6f40d5da44beff641a9d5fcaf3775dc",
+      "size_bytes": 20192
+    },
+    "code:verify_feedback_outputs_20261024.py": {
+      "id": "code:verify_feedback_outputs_20261024.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\verify_feedback_outputs_20261024.py",
+      "relative_path": "simulation/verify_feedback_outputs_20261024.py",
+      "sha256": "cc8733acd45e74d24be4754cba9859e8759da69361a8b5290dd1f5f214333bf1",
+      "size_bytes": 8917
+    },
+    "code:aloha_baseline_20261024.py": {
+      "id": "code:aloha_baseline_20261024.py",
+      "path": "D:\\外置大脑\\ACT\\simulation\\aloha_baseline_20261024.py",
+      "relative_path": "simulation/aloha_baseline_20261024.py",
+      "sha256": "9be6cea94927ce69b6802b3da197c5ebdac861c4469ec25e77fd9e9bd0c0c4b4",
+      "size_bytes": 26480
+    },
+    "teacher_old_diag_penetration": {
+      "id": "teacher_old_diag_penetration",
+      "path": "D:\\外置大脑\\ACT\\runs\\mujoco_iteration_20261023\\multisite_v1\\teacher_v2\\test_xy_plus30_minus40\\manifest.json",
+      "relative_path": "runs/mujoco_iteration_20261023/multisite_v1/teacher_v2/test_xy_plus30_minus40/manifest.json",
+      "sha256": "c336f07151e5c6e583751f4678ee13f38e6f4905560b5ce62e6058f5a20b5177",
+      "size_bytes": 16987,
+      "json_pointers_or_notes": "$.minimum_reported_penetration_distance_m=-0.00102008284550782; task success true but strict physical acceptance false"
+    }
+  },
+  "code_anchors_current_at_archive": {
+    "preview": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\preview.py",
+      "relative_path": "simulation/preview.py",
+      "sha256": "fe86c82b3ae6f260f9448cb8144859cfdbefb70e3c71a8bef17acd26608d8050",
+      "definition": "set_pose",
+      "start_line": 61,
+      "end_line": 71
+    },
+    "scene": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\task_scene.py",
+      "relative_path": "simulation/task_scene.py",
+      "sha256": "0cf42237958352bc8ad9097f9ffb399c9ad6cd25b109c41d726e54517bc988b7",
+      "definition": "build_scene",
+      "start_line": 50,
+      "end_line": 241
+    },
+    "limits": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\task_dynamics.py",
+      "relative_path": "simulation/task_dynamics.py",
+      "sha256": "a39a7c74ac029935bdfaf9c3b585ab46b2d6a25c64fea273fd9cbe1599ef4af0",
+      "definition": "validate_target",
+      "start_line": 35,
+      "end_line": 44
+    },
+    "controller": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\task_dynamics.py",
+      "relative_path": "simulation/task_dynamics.py",
+      "sha256": "a39a7c74ac029935bdfaf9c3b585ab46b2d6a25c64fea273fd9cbe1599ef4af0",
+      "definition": "ServoController",
+      "start_line": 80,
+      "end_line": 138
+    },
+    "score": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\run_task.py",
+      "relative_path": "simulation/run_task.py",
+      "sha256": "175206c8329af9cad3db90c1c46309e86ab033808778d2687dd5e0573a4be293",
+      "definition": "brick_metrics",
+      "start_line": 126,
+      "end_line": 168
+    },
+    "worker": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\policy_worker.py",
+      "relative_path": "simulation/policy_worker.py",
+      "sha256": "3f34f5d880187edd370d2154b32073e3a737d45f65fe4e43015783865a9a8dc4",
+      "definition": "predict_chunk",
+      "start_line": 105,
+      "end_line": 118
+    },
+    "teacher": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\export_sim_demonstration.py",
+      "relative_path": "simulation/export_sim_demonstration.py",
+      "sha256": "644b9ccde31450e8e4a786afd16a7bc64dd72596f6847dc9069b6ba550d5dab6",
+      "definition": "main",
+      "start_line": 86,
+      "end_line": 296
+    },
+    "sim_train": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_sim.py",
+      "relative_path": "simulation/adapt_act_sim.py",
+      "sha256": "375d6706925bfcae55aa13b612d09668c55f68d55b213f5eb7e7793225c9511a",
+      "definition": "train",
+      "start_line": 269,
+      "end_line": 375
+    },
+    "ik": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\generate_multisite_teacher.py",
+      "relative_path": "simulation/generate_multisite_teacher.py",
+      "sha256": "da25530be477ab98d6a7e09f7447d16d3c86274908faf1fd44843938b46a301d",
+      "definition": "shifted_targets",
+      "start_line": 94,
+      "end_line": 133
+    },
+    "grid": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\generate_multisite_teacher.py",
+      "relative_path": "simulation/generate_multisite_teacher.py",
+      "sha256": "da25530be477ab98d6a7e09f7447d16d3c86274908faf1fd44843938b46a301d",
+      "definition": "positions",
+      "start_line": 57,
+      "end_line": 71
+    },
+    "multisite": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_multisite.py",
+      "relative_path": "simulation/adapt_act_multisite.py",
+      "sha256": "0653d01da84385a776ee6a19bbaafc70fd892b4ed780c2f9975e39f9d6b5dd39",
+      "definition": "train",
+      "start_line": 209,
+      "end_line": 339
+    },
+    "long_train": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_multisite_20261024.py",
+      "relative_path": "simulation/adapt_act_multisite_20261024.py",
+      "sha256": "f0044886fa81496b603d89ad591d78309f880b6ed9a5dda7347f1bac624ba93c",
+      "definition": "train",
+      "start_line": 222,
+      "end_line": 362
+    },
+    "gradients": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\adapt_act_sim.py",
+      "relative_path": "simulation/adapt_act_sim.py",
+      "sha256": "375d6706925bfcae55aa13b612d09668c55f68d55b213f5eb7e7793225c9511a",
+      "definition": "compute_gradients",
+      "start_line": 232,
+      "end_line": 253
+    },
+    "cuda": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\policy_worker_cuda_20261024.py",
+      "relative_path": "simulation/policy_worker_cuda_20261024.py",
+      "sha256": "d0eff424114f23de12d3cada78f94c1dc95571c05d9f85a0d20ad11338a026cd",
+      "definition": "load_policy",
+      "start_line": 18,
+      "end_line": 42
+    },
+    "query": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\evaluate_feedback_20261024.py",
+      "relative_path": "simulation/evaluate_feedback_20261024.py",
+      "sha256": "b7e183ec5fd941bfb53b37be572369608f0210b761778ed3e6412da0bc71b55c",
+      "definition": "run_feedback",
+      "start_line": 121,
+      "end_line": 237
+    },
+    "action_audit": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\evaluate_feedback_20261024.py",
+      "relative_path": "simulation/evaluate_feedback_20261024.py",
+      "sha256": "b7e183ec5fd941bfb53b37be572369608f0210b761778ed3e6412da0bc71b55c",
+      "definition": "audit_arrays",
+      "start_line": 81,
+      "end_line": 118
+    },
+    "contact_audit": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\evaluate_feedback_20261024.py",
+      "relative_path": "simulation/evaluate_feedback_20261024.py",
+      "sha256": "b7e183ec5fd941bfb53b37be572369608f0210b761778ed3e6412da0bc71b55c",
+      "definition": "audit_rollout",
+      "start_line": 240,
+      "end_line": 284
+    },
+    "ensemble": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\evaluate_act_ensemble.py",
+      "relative_path": "simulation/evaluate_act_ensemble.py",
+      "sha256": "7220fe5ca2b25b7fbc30797c1bf2f1e5cb764ecf4528a08997ecfb2111a9e03f",
+      "definition": "SparseTemporalEnsembler",
+      "start_line": 29,
+      "end_line": 64
+    },
+    "limit_proof": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\run_long5000_validation_20261024_v2.py",
+      "relative_path": "simulation/run_long5000_validation_20261024_v2.py",
+      "sha256": "28f0865bb282bcad5369baa8d7866eeda6f40d5da44beff641a9d5fcaf3775dc",
+      "definition": "prove_limit_rejection",
+      "start_line": 31,
+      "end_line": 89
+    },
+    "limit_resume": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\run_long5000_validation_20261024_v2.py",
+      "relative_path": "simulation/run_long5000_validation_20261024_v2.py",
+      "sha256": "28f0865bb282bcad5369baa8d7866eeda6f40d5da44beff641a9d5fcaf3775dc",
+      "definition": "main",
+      "start_line": 162,
+      "end_line": 290
+    },
+    "fresh_verify": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\verify_feedback_outputs_20261024.py",
+      "relative_path": "simulation/verify_feedback_outputs_20261024.py",
+      "sha256": "cc8733acd45e74d24be4754cba9859e8759da69361a8b5290dd1f5f214333bf1",
+      "definition": "verify",
+      "start_line": 27,
+      "end_line": 130
+    },
+    "aloha_run": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\aloha_baseline_20261024.py",
+      "relative_path": "simulation/aloha_baseline_20261024.py",
+      "sha256": "9be6cea94927ce69b6802b3da197c5ebdac861c4469ec25e77fd9e9bd0c0c4b4",
+      "definition": "smoke",
+      "start_line": 194,
+      "end_line": 417
+    },
+    "legacy_closed_loop": {
+      "path": "D:\\外置大脑\\ACT\\simulation\\run_task.py",
+      "relative_path": "simulation/run_task.py",
+      "sha256": "175206c8329af9cad3db90c1c46309e86ab033808778d2687dd5e0573a4be293",
+      "definition": "run_checkpoint",
+      "start_line": 171,
+      "end_line": 318
+    }
+  },
+  "all_read_sources_unchanged": true,
+  "unknown_or_unverified": [
+    "真实B601七轴物理零位、关节符号/单位及夹爪开度映射独立标定文件，本轮仿真证据不能替代。",
+    "真实D405手眼外参/安装刚性、相机曝光和真实观察域，未在本轮完成验证。",
+    "5000步、batch8、lr1e-5、CUDA和ensemble1各自因果贡献未被全因子消融分离。",
+    "未接受物体/盒位置外推、尺寸颜色变化、相机变化、光照变化或实机安全成功验收。",
+    "用户原始遥操作现场的全部具体问题不由本仿真归档重新判定；不要把台式机仿真成功写成真机已完成。",
+    "没有独立实物测量证据支持把项目40mm道具尺寸说成原数据作者统一标准。"
+  ],
+  "important_wording": [
+    "pretrained dataset is not weights; source weights are nikodembartnik community model, not automatically an official Seeed policy.",
+    "Training-script selected_model means offline diagnostic choice; final deployed candidate requires separately frozen physical selection.",
+    "Dates come from record timestamps when available; artifact directory suffix alone is not an exact execution time.",
+    "Current code line numbers describe current implementation; historical reports retain their original hashes even when current source has evolved."
+  ],
+  "new_ACT_calls": 0,
+  "new_physics_steps": 0,
+  "new_training_steps": 0,
+  "hardware_commands_sent": 0,
+  "git_writes": 0,
+  "cpu_budget": {
+    "logical_cpus_allowed": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "system_logical_cpu_count": 20,
+    "priority": "below_normal",
+    "torch_threads": 2,
+    "torch_interop_threads": 1,
+    "scope": "This ACT process only; CPU affinity is not a temperature or power limit."
+  }
+}
