@@ -1,0 +1,602 @@
+{
+  "status": "verified_credited_stage1_display_copies",
+  "created_utc": "2026-10-24T05:05:48.548015+00:00",
+  "author": "请输入名字QaQ",
+  "github_repository": "1595530254a-afk/act",
+  "author_utf8_file": "author_utf8.txt",
+  "author_utf8_sha256": "02bd8c8c0595aa83b1dc6b96deb26ce12b633e5984378544c6d2c7cb21f60207",
+  "source_manifest_relative": "output/ACT第一阶段记录_20261024/media_manifest.json",
+  "source_manifest_sha256": "18d03af259d40c86a872302b2103e8ba68e9ac3a3e79dd91ec4c071dc2717428",
+  "included_ids": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12",
+    "V13"
+  ],
+  "excluded_ids": [
+    "V14"
+  ],
+  "display_copy_only": true,
+  "bar_height_px": 64,
+  "pixel_identity_note": "Re-encoded display copies append a credit bar. Original video bytes and original policy-input files are untouched; display pixels are not byte-identical evidence.",
+  "ffmpeg_threads": 2,
+  "cpu_budget": {
+    "logical_cpus_allowed": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "system_logical_cpu_count": 20,
+    "priority": "below_normal",
+    "torch_threads": 2,
+    "torch_interop_threads": 1,
+    "scope": "This ACT process only; CPU affinity is not a temperature or power limit."
+  },
+  "entries": [
+    {
+      "id": "V01",
+      "title": "单位置sim300成功",
+      "source_relative_path": "视频/ACT_平顶红块抓取入盒_仿真成功_20261023.mp4",
+      "source_sha256": "9470c95a865a0ac2a10392f1337d0fdef35a465cbb83e36d168943068d2fbd54",
+      "source_bytes": 468940,
+      "source_probe": {
+        "width": 960,
+        "height": 560,
+        "r_frame_rate": "15/1",
+        "avg_frame_rate": "15/1",
+        "duration": "15.000000",
+        "nb_frames": "225",
+        "nb_read_frames": "225",
+        "frames": 225
+      },
+      "output_filename": "v01_sim300.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_validation_20261023/fixed_flat40_20261023/policy_step300_progress_fix/custom/result.json",
+        "sha256": "d2b96ccf01acdf39e89b3808fe1fb412cbfc9ed0cf5c4187b4d30fd46fcb83c2",
+        "run_id": "policy_step300_progress_fix",
+        "trial_ids": [
+          "baseline"
+        ],
+        "source_status": "completed"
+      },
+      "output_sha256": "6c3f08270dc8317a70d7b713f671566a45946eed8765f07829bafdc708a4bc22",
+      "output_bytes": 562833,
+      "output_probe": {
+        "width": 960,
+        "height": 624,
+        "r_frame_rate": "15/1",
+        "avg_frame_rate": "15/1",
+        "duration": "15.000000",
+        "nb_frames": "225",
+        "nb_read_frames": "225",
+        "frames": 225
+      },
+      "credit_bar_relative": "watermark_assets/v01_bar.png",
+      "credit_bar_sha256": "1e4bff82b6f10b16bf38c93bbf2806adbb2fa50d3a85669c5a27826f7e388545"
+    },
+    {
+      "id": "V02",
+      "title": "固定示范后换位置失败",
+      "source_relative_path": "视频/ACT_位置泛化_六组同步回看_20261023.mp4",
+      "source_sha256": "43ce0e0f59fa1f2b968ba14ca90fc768cbfe9e736544b377199f3e3f5fbbcc67",
+      "source_bytes": 4240530,
+      "source_probe": {
+        "width": 1920,
+        "height": 1120,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v02_shifted_positions.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_validation_20261023/position_generalization_20261023/generalization_report.json",
+        "sha256": "dac13858ff878d37cd4165acdeceebfa95e3704c7f9610daafa83e61499cefae",
+        "run_id": "position_generalization_20261023",
+        "trial_ids": [
+          "baseline",
+          "x_plus30",
+          "x_minus30",
+          "y_plus30",
+          "y_minus30",
+          "xy_plus30_minus40"
+        ],
+        "source_status": "completed_frozen_position_evaluation"
+      },
+      "output_sha256": "a307becf130ca64e4ab6364df242daa4c857d1d585ee7a78df2a1ff9d1f4c241",
+      "output_bytes": 3594240,
+      "output_probe": {
+        "width": 1920,
+        "height": 1184,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v02_bar.png",
+      "credit_bar_sha256": "05c158cf7c93737d622e73919b2fa92c8967afb1d8129ff205599a6998a2d8ab"
+    },
+    {
+      "id": "V03",
+      "title": "旧多位置step600六点测试",
+      "source_relative_path": "视频/ACT_多位置_final_heldout_v1_step600_同步回看.mp4",
+      "source_sha256": "7258e72f97a7fa81e1cb969dc7a941951099072b2d2ffa5bb74647b2c5eaf51b",
+      "source_bytes": 4833397,
+      "source_probe": {
+        "width": 1920,
+        "height": 1120,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v03_old_step600_test6.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261023/multisite_v1/final_heldout_v1_step600/evaluation.json",
+        "sha256": "5579a870aa1155dd4ad186793f0f6864128abcfdc2fda10666eb015c45bb4798",
+        "run_id": "final_heldout_v1_step600",
+        "trial_ids": [
+          "final_00",
+          "final_01",
+          "final_02",
+          "final_03",
+          "final_04",
+          "final_05"
+        ],
+        "source_status": "completed_frozen_multisite_ACT_evaluation"
+      },
+      "output_sha256": "de17d0f52830002963742d002f0ccaa507f436eaf9fe3e86993f7793834c9e53",
+      "output_bytes": 4071602,
+      "output_probe": {
+        "width": 1920,
+        "height": 1184,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v03_bar.png",
+      "credit_bar_sha256": "625c10624ea959f3119ea309360fbf4514adda77a2b7b5d58c97498d3dcb9666"
+    },
+    {
+      "id": "V04",
+      "title": "最终八点同步回看",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_同步回看.mp4",
+      "source_sha256": "869f664c886f2456a1ffc533844ce8b7cd912154de3ae44a031651d882e1661e",
+      "source_bytes": 2850856,
+      "source_probe": {
+        "width": 1920,
+        "height": 832,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v04_final8_overview.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_00",
+          "newtest_01",
+          "newtest_02",
+          "newtest_03",
+          "newtest_04",
+          "newtest_05",
+          "newtest_06",
+          "newtest_07"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "eae23bfb794f510ba8770fba634cf3b0873970f1fc283c006582b44d385d4a23",
+      "output_bytes": 2421725,
+      "output_probe": {
+        "width": 1920,
+        "height": 896,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v04_bar.png",
+      "credit_bar_sha256": "cf625664d42f9e780f97afbd9cd31f66c8c05d962b2bb3d4d658054b405a9453"
+    },
+    {
+      "id": "V05",
+      "title": "最终测试newtest_00实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_00_实际输入.mp4",
+      "source_sha256": "3daadb1655b727a69bcfbe6785ca877ddf283dddf7d271112cb37159cebfcb95",
+      "source_bytes": 2868553,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v05_final8_test00.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_00"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "d560b42a0cd9d44a7179963ee7d5a5aeb3c237132c2ad36715d8235ffe3bfbf8",
+      "output_bytes": 2632809,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v05_bar.png",
+      "credit_bar_sha256": "391f6a9361a46ae4107cb4051b43b39cdffe57d331c6e4a8f536c659c9193c1e"
+    },
+    {
+      "id": "V06",
+      "title": "最终测试newtest_01实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_01_实际输入.mp4",
+      "source_sha256": "1346d6922ef9b9990d053665540be4287784be53fe0c675b1404d835e178a749",
+      "source_bytes": 2831122,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v06_final8_test01.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_01"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "47cf70b438cf634a486a4887caa9c6902dad4528abe8e4ba41fcff5f7c32ba6a",
+      "output_bytes": 2570681,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v06_bar.png",
+      "credit_bar_sha256": "eba9c6af282cb70af25d333edcb0199b1c6ab6cd5c4d7778b9077444f52eb796"
+    },
+    {
+      "id": "V07",
+      "title": "最终测试newtest_02实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_02_实际输入.mp4",
+      "source_sha256": "5fa8ee745eef49b70750b92b7bfe154f567b56706f90f8ad8ac9a70295654dce",
+      "source_bytes": 2879830,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v07_final8_test02.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_02"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "8480c2733656aa69127da569e4b427d3ac3d64cc57bee9855029c401785039a7",
+      "output_bytes": 2664378,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v07_bar.png",
+      "credit_bar_sha256": "0320d2432b4e9463ba506935118f639d70e2cf091f9172f3da0c32b3259cad88"
+    },
+    {
+      "id": "V08",
+      "title": "最终测试newtest_03实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_03_实际输入.mp4",
+      "source_sha256": "7c85536bb1ae2183e04bb10de6b3ca7d604a3cfedf95dbc417112f99de35792a",
+      "source_bytes": 2854887,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v08_final8_test03.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_03"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "612c35b0c0d249a9739e826c678cff73b6ce286a7874648303dcbbba25c08a91",
+      "output_bytes": 2583316,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v08_bar.png",
+      "credit_bar_sha256": "f8e1b54823ffaaafd9afc909d6649b2c7af32f3de24fc9f39069152594d8de3a"
+    },
+    {
+      "id": "V09",
+      "title": "最终测试newtest_04实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_04_实际输入.mp4",
+      "source_sha256": "10dc3f38eeab8a243f7c190f7a62398b1a451b393d61e1b5200cd3dd79beb109",
+      "source_bytes": 2831757,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v09_final8_test04.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_04"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "77e2d5d019b8aab530debea9163f36b0a0b0d58f16940b4c0f2460cc9fcb5d81",
+      "output_bytes": 2612124,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v09_bar.png",
+      "credit_bar_sha256": "9e927bbf7adb79c00a55647a50c268137eb83c48c9e4879c9d8268cd5ed79423"
+    },
+    {
+      "id": "V10",
+      "title": "最终测试newtest_05实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_05_实际输入.mp4",
+      "source_sha256": "f6266c12f3662b594c74d2090eae2c08d873985f290fe7648e9d5d8beec0a9c9",
+      "source_bytes": 2868652,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v10_final8_test05.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_05"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "5b09d5a19229977941247dbd86b90f9d8b79e29f3ca4a9925c8f07d38e104da1",
+      "output_bytes": 2582189,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v10_bar.png",
+      "credit_bar_sha256": "7996647e134b15c9e58b067577e6a5cd22b108965aff3e6723d40f4538b49444"
+    },
+    {
+      "id": "V11",
+      "title": "最终测试newtest_06实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_06_实际输入.mp4",
+      "source_sha256": "51371b84c3dd6a401d21d88572b503f07693345eadb96f01ce11f3e3307504e6",
+      "source_bytes": 2871918,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v11_final8_test06.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_06"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "631813f13d2c7fc6efbfb49ccec3b5620183d47facdd13810aa33cc2551cf9a6",
+      "output_bytes": 2626690,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v11_bar.png",
+      "credit_bar_sha256": "bd7cb2d8d7ce04e083d8fb2c2e79a0d34552c5bd98416d5637b174c14cc37285"
+    },
+    {
+      "id": "V12",
+      "title": "最终测试newtest_07实际双路输入",
+      "source_relative_path": "视频/ACT_5000_final8_selected_v1_ensemble1_6ef257e2_newtest_07_实际输入.mp4",
+      "source_sha256": "0f745ddb46ea0a9a161efcc2830499cd209d6cce537e476c7cbc6ceba7414cd4",
+      "source_bytes": 2827386,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v12_final8_test07.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/final8_selected_v1/evaluation.json",
+        "sha256": "6ef257e217f20b51412dd82fbb80a590103cf97b08c47694b6656dc271ba8c3b",
+        "run_id": "final8_selected_v1",
+        "trial_ids": [
+          "newtest_07"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "11d35f2e2ded088ef2ac99ae59c23ccfe9143d03afbbd0e7089b9393264c7b31",
+      "output_bytes": 2570504,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v12_bar.png",
+      "credit_bar_sha256": "f384e06ba172be12306441d74dceb961f8cc6c6bbaf78fa9193bebb8622c495e"
+    },
+    {
+      "id": "V13",
+      "title": "追加位置(+10,0)mm实际输入",
+      "source_relative_path": "视频/ACT_5000_extra_p10_0_rollout_ensemble1_0d81cc98_extra_p10_0_实际输入.mp4",
+      "source_sha256": "a2d7681bcac19417b07c394ae29fd7da93fa10a893bbb8380c895579d29928ef",
+      "source_bytes": 2842297,
+      "source_probe": {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "output_filename": "v13_extra_p10_0.mp4",
+      "evaluation": {
+        "path": "runs/mujoco_iteration_20261024/additional_point_p10_0_v1/extra_p10_0_rollout/evaluation.json",
+        "sha256": "0d81cc98205f7092978d9c07510ee3cb7beda3d1c68cf9a3e243e2b740988eec",
+        "run_id": "extra_p10_0_rollout",
+        "trial_ids": [
+          "extra_p10_0"
+        ],
+        "source_status": "completed_frozen_feedback_ACT_evaluation"
+      },
+      "output_sha256": "25e2b754821275f00a9511b9e3c8cc2b5dda722fdce2836bd4731ed9f5bf4df7",
+      "output_bytes": 2575767,
+      "output_probe": {
+        "width": 1280,
+        "height": 864,
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "duration": "15.000000",
+        "nb_frames": "450",
+        "nb_read_frames": "450",
+        "frames": 450
+      },
+      "credit_bar_relative": "watermark_assets/v13_bar.png",
+      "credit_bar_sha256": "112655588b82d1fd539969b2c8a00ce239c22b08c53aeb5288baf3f04e7b2014"
+    }
+  ],
+  "completed_utc": "2026-10-24T05:06:17.647805+00:00",
+  "original_videos_unchanged": true,
+  "original_policy_observation_files_modified": false,
+  "new_ACT_calls": 0,
+  "new_physics_steps": 0
+}

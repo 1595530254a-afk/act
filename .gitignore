@@ -1,13 +1,23 @@
-/.venv/
-/.python/
-/tools/
-/cache/
-/tmp/
-/data/
-/models/
-/runs/
-/local/
-/delivery/
-/reports/training_cli_help.txt
+# Only publish the two stage directories and root entry points.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/AUTHORS.md
+!/ACT仿真/
+!/ACT真机/
+
+# Generated training/runtime assets stay outside normal Git.
+/ACT仿真/.venv/
+/ACT仿真/.python/
+/ACT仿真/tools/
+/ACT仿真/cache/
+/ACT仿真/tmp/
+/ACT仿真/data/
+/ACT仿真/models/
+/ACT仿真/runs/
+/ACT仿真/local/
+/ACT仿真/output/
+/ACT仿真/delivery/
 __pycache__/
 *.pyc

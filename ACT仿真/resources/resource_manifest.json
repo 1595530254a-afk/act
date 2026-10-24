@@ -1,0 +1,57 @@
+{
+  "verified_on_client_date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "model": {
+    "repo_id": "nikodembartnik/act_rebot_cube",
+    "revision": "409b639946cc4140b3934a6e3d2c255f4335ee9d",
+    "url": "https://huggingface.co/nikodembartnik/act_rebot_cube",
+    "license": "apache-2.0",
+    "evaluation_status": "No evaluation results provided by publisher; local inference and robot transfer unverified"
+  },
+  "dataset": {
+    "repo_id": "nikodembartnik/rebot_cube",
+    "revision": "c5cdae89d2e1f474a8e2f1ac5f16302126d0c33f",
+    "url": "https://huggingface.co/datasets/nikodembartnik/rebot_cube",
+    "license": "apache-2.0",
+    "robot_type": "rebot_b601_follower",
+    "motor_family_status": "RS collection attribution; exact hardware/calibration compatibility not verified"
+  },
+  "files": [
+    {
+      "file": "model_config.json",
+      "source": "https://huggingface.co/nikodembartnik/act_rebot_cube/resolve/409b639946cc4140b3934a6e3d2c255f4335ee9d/config.json",
+      "sha256": "4fa4bd1119d5f481b50a498d90c66d3985877a66db6fd9a05fb9f188f8c142ad"
+    },
+    {
+      "file": "model_train_config.json",
+      "source": "https://huggingface.co/nikodembartnik/act_rebot_cube/resolve/409b639946cc4140b3934a6e3d2c255f4335ee9d/train_config.json",
+      "sha256": "2e775b9ad7b29919e4290d1f850634fb981abb1fd1864631d07d30682ae84e2a"
+    },
+    {
+      "file": "model_preprocessor.json",
+      "source": "https://huggingface.co/nikodembartnik/act_rebot_cube/resolve/409b639946cc4140b3934a6e3d2c255f4335ee9d/policy_preprocessor.json",
+      "sha256": "5d146dc2a41aea0b7efd716381890d97929e92974fb8202b326dea2bff15819a"
+    },
+    {
+      "file": "model_postprocessor.json",
+      "source": "https://huggingface.co/nikodembartnik/act_rebot_cube/resolve/409b639946cc4140b3934a6e3d2c255f4335ee9d/policy_postprocessor.json",
+      "sha256": "762cd99712b09cc51f8fcc89a09b88e5f4c4a3eb8c03b14e379d33ec55d18ae7"
+    },
+    {
+      "file": "dataset_info.json",
+      "source": "https://huggingface.co/datasets/nikodembartnik/rebot_cube/resolve/c5cdae89d2e1f474a8e2f1ac5f16302126d0c33f/meta/info.json",
+      "sha256": "821a0a043fdbbc33342de7fa6249b3866147e27c6d711953e88bdb73ac41dc3a"
+    }
+  ],
+  "download_status": {
+    "configuration_snapshots": "downloaded",
+    "model_weights": "downloaded_and_hash_verified",
+    "dataset_videos_and_trajectories": "downloaded_and_hash_verified",
+    "normalization_tensor_files": "downloaded_and_hash_verified"
+  },
+  "references": [
+    "https://huggingface.co/docs/lerobot/en/act",
+    "https://huggingface.co/docs/lerobot/main/rebot_b601",
+    "https://wiki.seeedstudio.com/rebot_arm_b601_rs_lerobot/"
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "PID": 40928,
-  "ProcessPriority": "BelowNormal",
-  "ProcessorAffinityMask": 15,
-  "SystemLogicalProcessors": 20,
-  "MeasurementSeconds": 5.017827,
-  "ProcessPercentOfTotalCPU": 18.17,
-  "Note": "ACT evaluation process only; no CPU temperature sensor was read"
-}

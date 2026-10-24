@@ -1,0 +1,30 @@
+{
+  "author": "请输入名字QaQ",
+  "report": "reports/ACT仿真训练复现与调参复盘.docx",
+  "report_sha256": "189caac8eef2fd829f83796f45147819420cf3acf34ab4bf03d96380d2f33a75",
+  "pages_visually_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "hyperlinks": 23,
+  "embedded_videos": 0,
+  "video_links": 0,
+  "plots": 2,
+  "training_csv_rows": 5000,
+  "authored_video_count": 13,
+  "video_sha256_and_frame_counts_verified": true,
+  "narrow_unit_tests": {
+    "feedback_evaluation": 9,
+    "long5000_validation_runner": 6
+  },
+  "new_training_steps": 0,
+  "new_physics_steps": 0,
+  "hardware_io": 0
+}

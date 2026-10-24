@@ -1,0 +1,115 @@
+{
+  "author": "请输入名字QaQ",
+  "source_report_sha256": "9824d723727e42e6bf85587f80440cf1e4ab4b06efa5d00a47790a5a5ce31fb0",
+  "source_report_relative_to_original_project": "runs/mujoco_iteration_20261024/long5000_v1/training_report.json",
+  "scope": "Saved historical run; publication did not retrain or rerun physics.",
+  "completed_steps": 5000,
+  "batch_size": 8,
+  "learning_rate": 1e-05,
+  "optimizer": {
+    "type": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0001,
+    "state_restored": false
+  },
+  "gradient_clip_norm": 10.0,
+  "seed": 20261024,
+  "precision": "float32",
+  "prior_adaptation_steps": 300,
+  "training_observation_windows_seen": 40000,
+  "cuda_peak_allocated_mib": 3766.4755859375,
+  "cuda_peak_reserved_mib": 4118.0,
+  "elapsed_wall_s": 1201.7998216999995,
+  "source_files_sha256": {
+    "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+    "model.safetensors": "e82c8794497ab288c6c58fd16008b78770eddb39bc5f5faab3143b1a530c6c76",
+    "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+    "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+    "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+    "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+  },
+  "dataset_manifest_sha256": "a953e7d259ecf0fa47b3c093ee10ce4b9b072294394e4bf54759bac880a60614",
+  "training_script_sha256": "f0044886fa81496b603d89ad591d78309f880b6ed9a5dda7347f1bac624ba93c",
+  "shared_training_script_sha256": "375d6706925bfcae55aa13b612d09668c55f68d55b213f5eb7e7793225c9511a",
+  "optimizer_groups": "Single AdamW group over policy.parameters(); lr is also used for the trainable vision backbone. No scheduler or gradient accumulation.",
+  "objective": {
+    "loss": "masked_L1 + 10 * KL",
+    "action_chunk_size": 100,
+    "action_dim": 7,
+    "latent_dim": 32
+  },
+  "historical_sim300_precision": "bfloat16_autocast_with_float32_parameters",
+  "checkpoints": [
+    {
+      "step": 1000,
+      "recent100_loss_mean": 0.04952885445207358,
+      "validation_normalized_mae": 0.07012509015970407,
+      "validation_degree_mae": 1.9650892626784815,
+      "at_step_loss": 0.04525288566946983,
+      "at_step_l1": 0.04458911344408989,
+      "at_step_kl": 6.637722253799438e-05
+    },
+    {
+      "step": 2000,
+      "recent100_loss_mean": 0.04072450259700418,
+      "validation_normalized_mae": 0.07968831417991208,
+      "validation_degree_mae": 2.1370333047111902,
+      "at_step_loss": 0.05814291164278984,
+      "at_step_l1": 0.0573657788336277,
+      "at_step_kl": 7.771328091621399e-05
+    },
+    {
+      "step": 3000,
+      "recent100_loss_mean": 0.03388455366715789,
+      "validation_normalized_mae": 0.03540182478080919,
+      "validation_degree_mae": 0.9531935368265424,
+      "at_step_loss": 0.03243694826960564,
+      "at_step_l1": 0.031923528760671616,
+      "at_step_kl": 5.13419508934021e-05
+    },
+    {
+      "step": 4000,
+      "recent100_loss_mean": 0.03160162966698408,
+      "validation_normalized_mae": 0.04867163211927429,
+      "validation_degree_mae": 1.307183986441453,
+      "at_step_loss": 0.027628347277641296,
+      "at_step_l1": 0.02674705535173416,
+      "at_step_kl": 8.81291925907135e-05
+    },
+    {
+      "step": 5000,
+      "recent100_loss_mean": 0.03000002874061465,
+      "validation_normalized_mae": 0.04474833742013692,
+      "validation_degree_mae": 1.1696621951659378,
+      "at_step_loss": 0.03406229615211487,
+      "at_step_l1": 0.033503204584121704,
+      "at_step_kl": 5.5909156799316406e-05
+    }
+  ],
+  "selected_after_baseline_and_four_validation_positions": {
+    "id": "step_003000",
+    "checkpoint_step": 3000,
+    "total_adaptation_steps": 3300,
+    "model_files_sha256": {
+      "config.json": "17c5fcd0fcfcc0b1b5ede559adb9ad5ae9684a255d596e009e9ce2e5ec21ffac",
+      "model.safetensors": "c25ffa08fd2b67343f37eab06bb948642e2a6d2578e387a563ba81105c506c2c",
+      "policy_preprocessor.json": "4eb6b62c33e4ced8e83d41c72b6a761e170c046af2895ab78389543e07a00743",
+      "policy_postprocessor.json": "97a63387d1bbd79ba31998997ec60c442b4803a48e7c3b45330d8ab5a8b64396",
+      "policy_preprocessor_step_3_normalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee",
+      "policy_postprocessor_step_0_unnormalizer_processor.safetensors": "7a3394bed871438a2cf3fe4333754d1d1212862596438a05833b2420f11b5aee"
+    },
+    "offline_validation_normalized_mae": 0.03540182478080919,
+    "mode": "ensemble1",
+    "eligible_for_selection": true,
+    "eligibility_status": "eligible_by_baseline",
+    "baseline_status": "completed",
+    "baseline_success": true,
+    "validation_status": "completed",
+    "validation_successes": 4,
+    "validation_sustained_grasps": 4
+  }
+}

@@ -1,0 +1,2 @@
+# Preserve the exact published bytes used by SHA256 manifests on every OS.
+* -text whitespace=trailing-space,space-before-tab,cr-at-eol

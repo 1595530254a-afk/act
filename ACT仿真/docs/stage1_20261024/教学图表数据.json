@@ -1,0 +1,144 @@
+{
+  "author": "请输入名字QaQ",
+  "source_code_commit": "ad5ac9f685ca7f7d28e8266d6d040fadf89ab41c",
+  "checkpoints": [
+    {
+      "step": 1000,
+      "recent100_loss_mean": 0.04952885445207358,
+      "validation_normalized_mae": 0.07012509015970407,
+      "validation_degree_mae": 1.9650892626784815,
+      "at_step_loss": 0.04525288566946983,
+      "at_step_l1": 0.04458911344408989,
+      "at_step_kl": 6.637722253799438e-05
+    },
+    {
+      "step": 2000,
+      "recent100_loss_mean": 0.04072450259700418,
+      "validation_normalized_mae": 0.07968831417991208,
+      "validation_degree_mae": 2.1370333047111902,
+      "at_step_loss": 0.05814291164278984,
+      "at_step_l1": 0.0573657788336277,
+      "at_step_kl": 7.771328091621399e-05
+    },
+    {
+      "step": 3000,
+      "recent100_loss_mean": 0.03388455366715789,
+      "validation_normalized_mae": 0.03540182478080919,
+      "validation_degree_mae": 0.9531935368265424,
+      "at_step_loss": 0.03243694826960564,
+      "at_step_l1": 0.031923528760671616,
+      "at_step_kl": 5.13419508934021e-05
+    },
+    {
+      "step": 4000,
+      "recent100_loss_mean": 0.03160162966698408,
+      "validation_normalized_mae": 0.04867163211927429,
+      "validation_degree_mae": 1.307183986441453,
+      "at_step_loss": 0.027628347277641296,
+      "at_step_l1": 0.02674705535173416,
+      "at_step_kl": 8.81291925907135e-05
+    },
+    {
+      "step": 5000,
+      "recent100_loss_mean": 0.03000002874061465,
+      "validation_normalized_mae": 0.04474833742013692,
+      "validation_degree_mae": 1.1696621951659378,
+      "at_step_loss": 0.03406229615211487,
+      "at_step_l1": 0.033503204584121704,
+      "at_step_kl": 5.5909156799316406e-05
+    }
+  ],
+  "final8": [
+    {
+      "id": "newtest_00",
+      "offset_xy_m": [
+        -0.03,
+        -0.03
+      ],
+      "success": true,
+      "max_lift_mm": 99.62313277685244,
+      "longest_elevated_bilateral_frames": 73
+    },
+    {
+      "id": "newtest_01",
+      "offset_xy_m": [
+        -0.03,
+        0.03
+      ],
+      "success": true,
+      "max_lift_mm": 104.70892548574245,
+      "longest_elevated_bilateral_frames": 68
+    },
+    {
+      "id": "newtest_02",
+      "offset_xy_m": [
+        0.03,
+        -0.03
+      ],
+      "success": true,
+      "max_lift_mm": 96.782185009514,
+      "longest_elevated_bilateral_frames": 72
+    },
+    {
+      "id": "newtest_03",
+      "offset_xy_m": [
+        0.03,
+        0.03
+      ],
+      "success": true,
+      "max_lift_mm": 102.87159034842944,
+      "longest_elevated_bilateral_frames": 68
+    },
+    {
+      "id": "newtest_04",
+      "offset_xy_m": [
+        -0.035,
+        0.005
+      ],
+      "success": true,
+      "max_lift_mm": 105.93731698306351,
+      "longest_elevated_bilateral_frames": 69
+    },
+    {
+      "id": "newtest_05",
+      "offset_xy_m": [
+        0.035,
+        -0.005
+      ],
+      "success": true,
+      "max_lift_mm": 97.53986645966636,
+      "longest_elevated_bilateral_frames": 71
+    },
+    {
+      "id": "newtest_06",
+      "offset_xy_m": [
+        -0.005,
+        -0.035
+      ],
+      "success": true,
+      "max_lift_mm": 97.17651047603123,
+      "longest_elevated_bilateral_frames": 71
+    },
+    {
+      "id": "newtest_07",
+      "offset_xy_m": [
+        0.005,
+        0.035
+      ],
+      "success": true,
+      "max_lift_mm": 102.29569056469322,
+      "longest_elevated_bilateral_frames": 68
+    }
+  ],
+  "additional_point": {
+    "offset_xy_mm": [
+      10,
+      0
+    ],
+    "successes": 1,
+    "trials": 1
+  },
+  "sim300_actual_precision": "bfloat16_autocast_with_float32_parameters",
+  "long5000_actual_precision": "float32",
+  "source_note": "Values extracted from saved training_report.json, training_metrics.csv and final8 physical results; no training or physics rerun."
+}
